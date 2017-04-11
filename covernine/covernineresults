@@ -1,0 +1,24 @@
+highest_first_pop: 12.1  -  11.6  -  5%
+	this first pops the element if it is open (if you throw 9 it will remove 9) and then attempt to find a solution with the highest number (if you throw 11 it will prefer 9-2 over 8-3)
+	time to execute 100000 games: 2.02 seconds
+
+highest_last_pop: 20.3  -  20.1  -  2%
+	this will attempt to find 2 elements with the highest number (if you throw 9 it will remove 8-1 over 7-2, but also 8-1 over 9)
+	time to execute 100000 games: 2.25 seconds
+
+closest_first_pop: 13.2  -  12.8  -  3.7%
+	this will first pop the element if it is open (if you throw 9 it will remove 9) and then attempt to find a solution with the numbers closest to each other (it will prefer 5-4 over 6-3 or 8-1)
+	time to execute 100000 games: 2.5 seconds
+
+closest_last_pop: 21.5  -  21.4  -  1.5%
+	this will attempt to find 2 elements closest to each other (if you throw 9 it will first remove 5-4 over 6-3, but also 5-4 over 9)
+	time to execute 100000 games: 3.0 seconds
+
+random_first_pop: 12.8  -  12.4  -  4%
+	this will first pop the element if it is open and then find random solutions until it has found one (it will first determine if it is possible to find a solution)
+	time to execute 100000 games: 2.5 seconds
+
+random_last_pop: 21.1  -  20.9  -  1.7%
+	this will find random solutions until it has found one (if no solution is possible with 2 elements, THEN (after) it will remove 1 element (so if you throw 9 it will first do random things such as 7-2. If there is no possible 
+solution for 2 elements only then will it remove 9)
+	time to execute 100000 games: 3.5 seconds
