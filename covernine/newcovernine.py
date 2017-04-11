@@ -1,3 +1,6 @@
+import random
+
+
 class CoverNineAlgorithm():
 
     def __init__(self, board_size=9, max_pops=2):
@@ -82,7 +85,7 @@ class RandomFirst(CoverNineAlgorithm):
 
 
 def main():
-
+    pass
 
 
 if __name__ == "__main__":
