@@ -19,6 +19,7 @@ hand, or discard pile, board, etc.
 # =============================================================================
 # import random
 from collections import deque
+import random
 
 from cards.const import (
     TOP,
@@ -26,7 +27,11 @@ from cards.const import (
     BOTTOM,
 )
 from cards.tools import (
+        sort_card_indices,
+        sort_cards,
         check_term,
+        check_sorted,
+        random_card,
 )
 
 # =============================================================================
@@ -439,3 +444,246 @@ class Stack(object):
             found_indices = sort_card_indices(self, found_indices, ranks)
 
         return found_indices
+
+    def get(self, term, limit=0, sort=False, ranks=None):
+        """
+        Get the specified card from the stack.
+
+        :arg term:
+            The search term. Can be a card full name, value, suit,
+            abbreviation, or stack indice.
+        :arg int limit:
+            The number of items to retrieve for each term.
+        :arg bool sort:
+            Whether or not to sort the results, by poker ranks.
+        :arg dict ranks:
+            The rank dict to reference for sorting. If ``None``, it will
+            default to ``DEFAULT_RANKS``.
+
+        :returns:
+            A list of the specified cards, if found.
+        """
+        ranks = ranks or self.ranks
+        got_cards = []
+
+        try:
+            indices = self.find(term, limit=limit)
+            got_cards = [self.cards[i] for i in indices]
+            self.cards = [v for i, v in enumerate(self.cards)
+                          if i not in indices]
+        except:
+            got_cards = [self.cards[term]]
+            self.cards = [v for i, v in enumerate(self.cards) if i is not term]
+
+        if sort:
+            got_cards = sort_cards(got_cards, ranks)
+
+        return got_cards
+
+    def get_list(self, terms, limit=0, sort=False, ranks=None):
+        """
+        Get the specified cards from the stack.
+
+        :arg term:
+            The search term. Can be a card full name, value, suit,
+            abbreviation, or stack indice.
+        :arg int limit:
+            The number of items to retrieve for each term.
+        :arg bool sort:
+            Whether or not to sort the results, by poker ranks.
+        :arg dict ranks:
+            The rank dict to reference for sorting. If ``None``, it will
+            default to ``DEFAULT_RANKS``.
+
+        :returns:
+            A list of the specified cards, if found.
+        """
+        ranks = ranks or self.ranks
+        got_cards = []
+
+        try:
+            indices = self.find_list(terms, limit=limit)
+            got_cards = [self.cards[i] for i in indices
+                         if self.cards[i] not in got_cards]
+            self.cards = [v for i, v in enumerate(self.cards)
+                          if i not in indices]
+        except:
+            indices = []
+            for item in terms:
+                try:
+                    card = self.cards[item]
+                    if card not in got_cards:
+                        got_cards.append(card)
+                        indices.append(item)
+                except:
+                    indices += self.find(item, limit=limit)
+                    got_cards += [self.cards[i] for i in indices
+                                  if self.cards[i] not in got_cards]
+                self.cards = [v for i, v in enumerate(self.cards)
+                              if i not in indices]
+
+        if sort:
+            got_cards = sort_cards(got_cards, ranks)
+
+        return got_cards
+
+    def insert(self, card, indice=-1):
+        """
+        Inserrt a given card into the stack at a given indice.
+
+        :arg card card:
+            The card to insert into the stack.
+        :arg int indice:
+            Where to insert the given card.
+        """
+        self_size = len(self.cards)
+
+        if indice == -1:
+            self.cards.append(card)
+        elif indice == 0:
+            self.cards.appendleft(card)
+        elif indice != self_size:
+            half_x, half_y = self.split(indice)
+            self.cards = list(half_x.cards) + [card] + list(half_y.cards)
+
+    def insert_list(self, cards, indice=-1):
+        """
+        Insert a list of given cards into the stack at a given indice.
+
+        :arg list cards:
+            The list of cards to insert into the stack.
+        :arg int indice:
+            Where to insert the given cards.
+        """
+        self_size = len(self.cards)
+
+        if indice == -1:
+            self.cards += cards
+        elif indice == 0:
+            self.cards.extendleft(cards)
+        elif indice != self_size:
+            half_x, half_y = self.split(indice)
+            self.cards = list(half_x.cards) + list(cards) + list(half_y.cards)
+
+    def is_sorted(self, ranks=None):
+        """
+        Checks whether the stack is sorted.
+
+        :arg dict ranks:
+            The rank dict to reference for checking. If ``None``, it will
+            default to ``DEFAULT_RANKS``.
+
+        :returns:
+            Whether or not the cards are sorted.
+        """
+        ranks = ranks or self.ranks
+
+        return check_sorted(self, ranks)
+
+    def remove(self, card):
+        # self.cards.pop(card)
+        print(self.cards)
+
+    def random_card(self, remove=False):
+        """
+        Returns a random card from the Stack. If ``remove=Ture``, it will
+        also remove the card from the deck.
+
+        :arg bool remove:
+            Whether or not to remove the card from the deck.
+
+        :returns:
+            A random Card object, from the Stack.
+        """
+        return random_card(self, remove)
+
+    def reverse(self):
+        """Reverse the order of the Stack in place."""
+
+        self.cards = self[::-1]
+
+    def set_cards(self, cards):
+        """
+        Change the Deck's current contents to the given cards.
+
+        :arg list cards:
+            The Cards to assign to the stack.
+        """
+        self.cards = cards
+
+    def shuffle(self, times=1):
+        """
+        Shuffles the Stack.
+
+        .. note:
+            Shuffling large numbers of cards (100,000+) may take a while.
+
+        :arg int times:
+            The number of times to shuffle.
+        """
+        for _ in range(times):
+            random.shuffle(self.cards)
+
+    @property
+    def size(self):
+        """
+        Counts the number of cards currently in the stack.
+
+        :returns:
+            The numberf of cards in the stack.
+        """
+        return len(self.cards)
+
+    def sort(self, ranks=None):
+        """
+        Sorts the stack.
+
+        :arg dict ranks:
+            The rank dict to reference for sorting. IT ``None``, it will
+            default to ``DEFAULT_RANKS``.
+
+        :returns:
+            The sorted cards.
+        """
+        ranks = ranks or self.ranks
+        self.cards = sort_cards(self.cards, ranks)
+
+    def split(self, indice=None):
+        """
+        Splits the Stack, either in half, or at the given indice, into two
+        separate Stacks.
+
+        :arg int indice:
+            The indice to split the Stack at. Defaults to the middle of the
+            ``Stack``.
+
+        :returns:
+            The two parts of the Stack, as separate Stack instances.
+        """
+        self_size = self.size
+        if self_size > 1:
+            if not indice:
+                mid = self_size // 2
+                return Stack(cards=self[::mid]), Stack(cards=self[mid::])
+            else:
+                return Stack(cards=self[::indice]), Stack(cards=self[indice::])
+        else:
+            return Stack(cards=self.cards), Stack()
+
+
+# =============================================================================
+# Helper Functions
+# =============================================================================
+
+def convert_to_stack(deck):
+    """
+    Convert a ``Deck`` to a ``Stack``.
+
+    :arg Deck deck:
+        The ``Deck`` to convert.
+
+    :returns:
+        A new ``Stack``  instance, containing the cards from the given ``Deck``
+        instance.
+    """
+    return Stack(list(deck.cards))

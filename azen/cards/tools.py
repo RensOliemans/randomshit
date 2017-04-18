@@ -18,7 +18,7 @@ of which are used by the classes in the Cards package, such as the functions
 # ============================================================================
 
 import random
-import time
+# import time
 
 from cards.card import Card
 from cards.const import (
@@ -341,7 +341,7 @@ def sort_card_indices(cards, indices, ranks=None):
     ``Stack``, ``Deck``, or ``list`` that the indices are from.
 
     :arg cards:
-        The cards the indices are from. Can be a ``Stack``, ``Deck``, or 
+        The cards the indices are from. Can be a ``Stack``, ``Deck``, or
         ``list`` of card instances.
     :arg list indices:
         The indices to sort.
@@ -359,3 +359,31 @@ def sort_card_indices(cards, indices, ranks=None):
                 indices,
                 key=None
         )
+
+
+def sort_cards(cards, ranks=None):
+    """
+    Sorts a given list of cards
+
+    :arg cards:
+        The cards to sort.
+    :arg dict ranks:
+        The rank dict to reference for sorting. If ``None``, it will
+        defulat to ``DEFAULT_RANKS``.
+
+    :returns:
+        The sorted cards.
+    """
+    ranks = ranks or DEFAULT_RANKS
+
+    if ranks.get("suits"):
+        cards = sorted(
+            cards,
+            key=lambda x: ranks["suits"][x.suit] if x.suit is not None else 0
+        )
+    if ranks.get("values"):
+        cards = sorted(
+            cards,
+            key=lambda x: ranks["values"][x.value]
+        )
+    return cards
