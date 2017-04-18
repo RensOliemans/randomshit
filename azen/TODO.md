@@ -6,7 +6,7 @@ What to do in total:
 4. Write game implementation of popfour
 5. Write AI superclass
 6. Write AI subclasses (implementations)
-7. Write report  
+7. Write report
 
 In progress:
 * 1
