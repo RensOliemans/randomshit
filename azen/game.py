@@ -9,7 +9,7 @@ class Board(object):
     The board object. It has four lists of cards.
     """
 
-    def __init__(self, cards=None, deck=None, stacks=4, copy=None):
+    def __init__(self, cards=None, deck=None, stacks=4):
         """
         Board constructor method.
 
@@ -19,22 +19,17 @@ class Board(object):
             The deck of cards, if you want a specifically shuffled
             (or sorted) deck of cards.
         """
-        if copy is None:
-            self.deck = deck or card_deck.Deck()
-            self.deck.shuffle()
-            if len(self.deck.cards) % stacks != 0:
-                raise ValueError("Deck has to be divisible by amount of stacks")
-            self.stacks = stacks
-            if cards:
-                self.board = cards
-            else:
-                self.board = dict()
-                for i in range(self.stacks):
-                    self.board[i] = list()
+        self.deck = deck or card_deck.Deck()
+        self.deck.shuffle()
+        if len(self.deck.cards) % stacks != 0:
+            raise ValueError("Deck has to be divisible by amount of stacks")
+        self.stacks = stacks
+        if cards:
+            self.field = cards
         else:
-            self.deck = copy.deck
-            self.stacks = copy.stacks
-            self.board = copy.board
+            self.field = dict()
+            for i in range(self.stacks):
+                self.field[i] = list()
 
     def __str__(self):
         """
@@ -43,7 +38,7 @@ class Board(object):
         result = ""
         for i in range(self.stacks):
             result += "Stack {0}: ".format(i)
-            for card in self.board[i][::-1]:
+            for card in self.field[i][::-1]:
                 result += "{0}\t".format(card)
             result += "\n"
         return result
@@ -54,14 +49,14 @@ class Board(object):
         """
         result = "Board: (Stack 1: {b[0]}, Stack 2: {b[1]}, " + \
                  "Stack 3: {b[2]}, Stack 4: {b[3]}"
-        return result.format(b=self.board)
+        return result.format(b=self.field)
 
     def add_cards(self):
         """
         Adds a card on each of the stacks from the deck.
         """
         for i in range(self.stacks):
-            self.board[i] += self.deck.deal(1)
+            self.field[i] += self.deck.deal(1)
 
     def remove_card(self, location_of_low_card, location_of_high_card):
         """
@@ -75,8 +70,8 @@ class Board(object):
         """
         if location_of_low_card == location_of_high_card:
             raise InvalidMoveException("You have to give two different stacks!")
-        if (len(self.board[location_of_low_card]) == 0
-                or len(self.board[location_of_high_card]) == 0):
+        if (len(self.field[location_of_low_card]) == 0
+                or len(self.field[location_of_high_card]) == 0):
             raise InvalidMoveException(
                 "{0} or {1} can't be zero!".format(location_of_low_card, 
                                                    location_of_high_card)
@@ -86,13 +81,13 @@ class Board(object):
                 "{0} or {1} can't be larger than the amount of stacks!".format(
                     location_of_low_card, location_of_high_card)
             )
-        low_card = self.board[location_of_low_card][-1]
-        high_card = self.board[location_of_high_card][-1]
+        low_card = self.field[location_of_low_card][-1]
+        high_card = self.field[location_of_high_card][-1]
         if high_card.suit != low_card.suit or high_card < low_card:
             raise InvalidMoveException("Can't remove a {0} with a {1}!".format(
                                         high_card, low_card))
-        # print("removing {0}".format(self.board[location_of_low_card][-1]))
-        del self.board[location_of_low_card][-1]
+        # print("removing {0}".format(self.field[location_of_low_card][-1]))
+        del self.field[location_of_low_card][-1]
 
     def move_card(self, location_of_first_card, location_of_empty_stack):
         """
@@ -106,17 +101,17 @@ class Board(object):
         if (location_of_first_card >= self.stacks or
             location_of_empty_stack >= self.stacks):
             raise InvalidMoveException("Stack out of range!")
-        if len(self.board[location_of_empty_stack]) != 0:
+        if len(self.field[location_of_empty_stack]) != 0:
             raise InvalidMoveException(
                     "Stack {0} isn't empty!".format(location_of_empty_stack)
             )
-        if len(self.board[location_of_first_card]) == 0:
+        if len(self.field[location_of_first_card]) == 0:
             raise InvalidMoveException(
                     "There is no card on stack {0}!".format(location_of_first_card)
             )
-        first_card = self.board[location_of_first_card][-1]
-        del self.board[location_of_first_card][-1]
-        self.board[location_of_empty_stack].append(first_card)
+        first_card = self.field[location_of_first_card][-1]
+        del self.field[location_of_first_card][-1]
+        self.field[location_of_empty_stack].append(first_card)
 
     def is_game_over(self):
         return len(self.deck.cards) == 0
@@ -124,7 +119,7 @@ class Board(object):
     def end_score(self):
         end_score = 0
         for i in range(self.stacks):
-            end_score += len(self.board[i])
+            end_score += len(self.field[i])
         return end_score
 
 def main(loops=1):
@@ -133,7 +128,7 @@ def main(loops=1):
     for _ in range(loops):
         board = Board()
         player_ui = ui.TUI()
-        rens = players.HumanPlayer("rens", player_ui)
+        rens = players.FastNaivePlayer("rens", player_ui)
         game_over = board.is_game_over()
         while not game_over:
             board.add_cards()

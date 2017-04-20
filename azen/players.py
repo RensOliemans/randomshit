@@ -53,14 +53,14 @@ class NaivePlayer(Player):
     so, it sets them. If not, it requests new cards.
     """
     def __init__(self, username, ui):
-        super()
+        Player.__init__(self, username, ui)
 
     def make_move(self, board):
         # Create a copy of the board before there are any changes.
         # old_board = copy.deepcopy(board)
         # board is Board object.
         # board.board is the field
-        field = board.board
+        field = board.field
         for i in range(len(field)):
             if len(field[i]) != 0:
                 first_card = field[i][-1]
@@ -83,4 +83,19 @@ class NaivePlayer(Player):
         self.ui.show_invalid_move(board)
 
 class FastNaivePlayer(Player):
-    pass
+    def __init__(self, username, ui):
+        Player.__init__(self, username, ui)
+
+    def make_move(self, board):
+        field = board.field
+        open_cards = [x[-1] for x in list(field.values())]
+        duplicate_suits = list()
+        for card in open_cards:
+            if (len([x for x in open_cards if (x.suit == card.suit 
+                                              and x.value != card.value)]) > 0 
+                and card.suit not in duplicate_suits):
+                duplicate_suits.append(card.suit)
+            if card.suit in duplicate_suits:
+
+                
+        return "next"
