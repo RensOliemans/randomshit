@@ -220,7 +220,7 @@ class Stack(object):
         :returns:
             A representation of the ``Stack`` instance.
         """
-        return "Stack(cards=%r)" % (self.cards)
+        return "Stack(cards={})".format(self.cards)
 
     def __setitem__(self, indice, value):
         """
