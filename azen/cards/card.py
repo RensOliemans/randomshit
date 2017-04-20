@@ -136,7 +136,7 @@ class Card(object):
             A string representation of the Card instance.
 
         """
-        return "Card(value={0}, suit={1}".format(self.value, self.suit)
+        return "Card(value={0}, suit={1})".format(self.value, self.suit)
 
     def __str__(self):
         """

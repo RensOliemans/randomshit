@@ -1,6 +1,7 @@
 import cards.deck as card_deck
 from azenerrors import InvalidMoveException
-from players import HumanPlayer
+import sys
+import players
 import ui
 
 class Board(object):
@@ -8,7 +9,7 @@ class Board(object):
     The board object. It has four lists of cards.
     """
 
-    def __init__(self, cards=None, deck=None, stacks=4):
+    def __init__(self, cards=None, deck=None, stacks=4, copy=None):
         """
         Board constructor method.
 
@@ -18,17 +19,22 @@ class Board(object):
             The deck of cards, if you want a specifically shuffled
             (or sorted) deck of cards.
         """
-        self.deck = deck or card_deck.Deck()
-        self.deck.shuffle()
-        if len(self.deck.cards) % stacks != 0:
-            raise ValueError("Deck has to be divisible by amount of stacks")
-        self.stacks = stacks
-        if cards:
-            self.board = cards
+        if copy is None:
+            self.deck = deck or card_deck.Deck()
+            self.deck.shuffle()
+            if len(self.deck.cards) % stacks != 0:
+                raise ValueError("Deck has to be divisible by amount of stacks")
+            self.stacks = stacks
+            if cards:
+                self.board = cards
+            else:
+                self.board = dict()
+                for i in range(self.stacks):
+                    self.board[i] = list()
         else:
-            self.board = dict()
-            for i in range(self.stacks):
-                self.board[i] = list()
+            self.deck = copy.deck
+            self.stacks = copy.stacks
+            self.board = copy.board
 
     def __str__(self):
         """
@@ -37,8 +43,8 @@ class Board(object):
         result = ""
         for i in range(self.stacks):
             result += "Stack {0}: ".format(i)
-            for card in self.board[i]:
-                result += "{0}\n".format(card)
+            for card in self.board[i][::-1]:
+                result += "{0}\t".format(card)
             result += "\n"
         return result
 
@@ -69,11 +75,23 @@ class Board(object):
         """
         if location_of_low_card == location_of_high_card:
             raise InvalidMoveException("You have to give two different stacks!")
-        high_card = self.board[location_of_high_card][-1]
+        if (len(self.board[location_of_low_card]) == 0
+                or len(self.board[location_of_high_card]) == 0):
+            raise InvalidMoveException(
+                "{0} or {1} can't be zero!".format(location_of_low_card, 
+                                                   location_of_high_card)
+            )
+        if location_of_low_card > self.stacks or location_of_high_card > self.stacks:
+            raise InvalidMoveException(
+                "{0} or {1} can't be larger than the amount of stacks!".format(
+                    location_of_low_card, location_of_high_card)
+            )
         low_card = self.board[location_of_low_card][-1]
-        if high_card.suit != low_card.suit or high_card.value < low_card.value:
+        high_card = self.board[location_of_high_card][-1]
+        if high_card.suit != low_card.suit or high_card < low_card:
             raise InvalidMoveException("Can't remove a {0} with a {1}!".format(
                                         high_card, low_card))
+        # print("removing {0}".format(self.board[location_of_low_card][-1]))
         del self.board[location_of_low_card][-1]
 
     def move_card(self, location_of_first_card, location_of_empty_stack):
@@ -85,6 +103,9 @@ class Board(object):
         :arg int location_of_empty_stack:
             Location of the empty stack that the card has to be moved to.
         """
+        if (location_of_first_card >= self.stacks or
+            location_of_empty_stack >= self.stacks):
+            raise InvalidMoveException("Stack out of range!")
         if len(self.board[location_of_empty_stack]) != 0:
             raise InvalidMoveException(
                     "Stack {0} isn't empty!".format(location_of_empty_stack)
@@ -106,16 +127,40 @@ class Board(object):
             end_score += len(self.board[i])
         return end_score
 
-def main():
-    board = Board()
-    player_ui = ui.TUI()
-    rens = HumanPlayer("rens", player_ui)
-    game_over = board.is_game_over()
-    while not game_over:
-        rens.make_move(board)
+def main(loops=1):
+    total_score = 0
+    highscores = 0
+    for _ in range(loops):
+        board = Board()
+        player_ui = ui.TUI()
+        rens = players.NaivePlayer("rens", player_ui)
         game_over = board.is_game_over()
-    end_score = board.end_score()
-    print("Your end score: {0}".format(end_score))
+        while not game_over:
+            board.add_cards()
+            choice = -1
+            while choice != "next":
+                try:
+                    choice = rens.make_move(board)
+                except InvalidMoveException as inst:
+                    raise ValueError
+                    print(inst)
+                    rens.invalid_move(board)
+                    # choice = rens.make_move(board)
+            game_over = board.is_game_over()
+        end_score = board.end_score()
+        total_score += end_score
+        if end_score == 4:
+            print("COMPLETED!")
+            highscores += 1
+        # print("Your end score: {0}".format(end_score))
+    print("Average score: {0}".format(total_score / loops))
+    print("Highscores: {0}".format(highscores))
 
 if __name__ == "__main__":
-    main()
+    loops = 1
+    if len(sys.argv) > 1:
+        try:
+            loops = int(sys.argv[1])
+        except:
+            loops = 1
+    main(loops)
