@@ -133,7 +133,7 @@ def main(loops=1):
     for _ in range(loops):
         board = Board()
         player_ui = ui.TUI()
-        rens = players.NaivePlayer("rens", player_ui)
+        rens = players.HumanPlayer("rens", player_ui)
         game_over = board.is_game_over()
         while not game_over:
             board.add_cards()
@@ -142,7 +142,6 @@ def main(loops=1):
                 try:
                     choice = rens.make_move(board)
                 except InvalidMoveException as inst:
-                    raise ValueError
                     print(inst)
                     rens.invalid_move(board)
                     # choice = rens.make_move(board)

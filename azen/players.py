@@ -26,7 +26,8 @@ class HumanPlayer(Player):
     This is, as the name suggests, a class for a Human Player
     """
     def __init__(self, username, ui):
-        super()
+        Player.__init__(self, username, ui)
+
 
     def make_move(self, board):
         move = self.ui.ask_for_move(board)
@@ -39,7 +40,7 @@ class HumanPlayer(Player):
             location_of_high_card = move[2]
             board.remove_card(location_of_low_card, location_of_high_card)
         elif move == "next":
-            return 1
+            return "next"
 
     def invalid_move(self, board):
         self.ui.show_invalid_move(board)
