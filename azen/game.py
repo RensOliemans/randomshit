@@ -1,8 +1,10 @@
 import cards.deck as card_deck
 from azenerrors import InvalidMoveException
 import sys
+import time
 import players
-import ui
+import uis
+
 
 class Board(object):
     """
@@ -58,7 +60,28 @@ class Board(object):
         for i in range(self.stacks):
             self.field[i] += self.deck.deal(1)
 
-    def remove_card(self, location_of_low_card, location_of_high_card):
+    def remove_card(self, low_card, high_card):
+        """
+        Removes a card, when two cards are given.
+        Requires the cards to have the same suits, and the first argument
+        (low_card) to have a lower value than the second argument (high_card).
+
+        :arg ``Card`` low_card:
+            Card object with the lower value.
+        :arg ``Card`` high_card:
+            Card object with the higher value.
+        """
+        location_of_low_card = 0
+        location_of_high_card = 0
+        for i in range(len(self.field)):
+            if low_card in self.field[i]:
+                location_of_low_card = i
+            if high_card in self.field[i]:
+                location_of_high_card = i
+        self.remove_card_location(location_of_low_card, location_of_high_card)
+
+    def remove_card_location(self,
+                             location_of_low_card, location_of_high_card):
         """
         Removes a card. This requires there to be a card with a higher value,
         in the same suit as a card of the card you want to remove (low value).
@@ -69,14 +92,15 @@ class Board(object):
             Stack of the high card (has to be on top)
         """
         if location_of_low_card == location_of_high_card:
-            raise InvalidMoveException("You have to give two different stacks!")
+            raise InvalidMoveException("You have to give two different stacks")
         if (len(self.field[location_of_low_card]) == 0
                 or len(self.field[location_of_high_card]) == 0):
             raise InvalidMoveException(
-                "{0} or {1} can't be zero!".format(location_of_low_card, 
+                "{0} or {1} can't be zero!".format(location_of_low_card,
                                                    location_of_high_card)
             )
-        if location_of_low_card > self.stacks or location_of_high_card > self.stacks:
+        if (location_of_low_card > self.stacks
+           or location_of_high_card > self.stacks):
             raise InvalidMoveException(
                 "{0} or {1} can't be larger than the amount of stacks!".format(
                     location_of_low_card, location_of_high_card)
@@ -98,8 +122,8 @@ class Board(object):
         :arg int location_of_empty_stack:
             Location of the empty stack that the card has to be moved to.
         """
-        if (location_of_first_card >= self.stacks or
-            location_of_empty_stack >= self.stacks):
+        if (location_of_first_card >= self.stacks
+           or location_of_empty_stack >= self.stacks):
             raise InvalidMoveException("Stack out of range!")
         if len(self.field[location_of_empty_stack]) != 0:
             raise InvalidMoveException(
@@ -107,7 +131,8 @@ class Board(object):
             )
         if len(self.field[location_of_first_card]) == 0:
             raise InvalidMoveException(
-                    "There is no card on stack {0}!".format(location_of_first_card)
+                    "There is no card on stack {0}!"
+                    .format(location_of_first_card)
             )
         first_card = self.field[location_of_first_card][-1]
         del self.field[location_of_first_card][-1]
@@ -122,13 +147,14 @@ class Board(object):
             end_score += len(self.field[i])
         return end_score
 
-def main(loops=1):
+
+def main(algorithm, loops=1):
     total_score = 0
     highscores = 0
     for _ in range(loops):
         board = Board()
-        player_ui = ui.TUI()
-        rens = players.FastNaivePlayer("rens", player_ui)
+        player_ui = uis.TUI()
+        rens = algorithm("rens", player_ui)
         game_over = board.is_game_over()
         while not game_over:
             board.add_cards()
@@ -150,11 +176,17 @@ def main(loops=1):
     print("Average score: {0}".format(total_score / loops))
     print("Highscores: {0}".format(highscores))
 
+
 if __name__ == "__main__":
-    loops = 1
     if len(sys.argv) > 1:
+        start = time.time()
         try:
             loops = int(sys.argv[1])
+            algorithm = players.parse(sys.argv[2])
         except:
+            print("Incorrect parameter value, using defaults")
             loops = 1
-    main(loops)
+            algorithm = players.NaivePlayer
+    main(algorithm, loops)
+    print("Program took {0} seconds for {1} loops with algorithm {2}".format(
+        time.time() - start, loops, repr(algorithm)))

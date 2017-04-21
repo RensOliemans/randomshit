@@ -14,6 +14,7 @@ class UI(object):
     def show_invalid_move(self, board):
         raise NotImplementedError
 
+
 class TUI(UI):
     """
     Subclass of the UI class, a Textual User Interface.
