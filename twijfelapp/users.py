@@ -90,3 +90,4 @@ class AdminUser(User):
 
     def remove_user(self, user_to_remove):
         # assert admincode is valid
+        pass

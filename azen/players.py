@@ -1,8 +1,3 @@
-import uis
-import game
-import copy
-
-
 class Player(object):
     """
     Superclass Player. This class is the main class for a user or AI that
@@ -21,7 +16,7 @@ class Player(object):
         return "{0} object with username {1}".format("Player",
                                                      self.username)
 
-    def make_move(self, board):
+    def make_move(self, board, verbose):
         raise NotImplementedError("make_move method is not impleemnted yet!")
 
 
@@ -33,7 +28,7 @@ class HumanPlayer(Player):
     def __init__(self, username, ui):
         Player.__init__(self, username, ui)
 
-    def make_move(self, board):
+    def make_move(self, board, verbose):
         move = self.ui.ask_for_move(board)
         if move[0] == "move":
             location_of_first_card = move[1]
@@ -47,7 +42,7 @@ class HumanPlayer(Player):
         elif move == "next":
             return "next"
 
-    def invalid_move(self, board):
+    def invalid_move(self, board, verbose):
         self.ui.show_invalid_move(board)
 
 
@@ -60,7 +55,7 @@ class NaivePlayer(Player):
     def __init__(self, username, ui):
         Player.__init__(self, username, ui)
 
-    def make_move(self, board):
+    def make_move(self, board, verbose):
         # Create a copy of the board before there are any changes.
         # old_board = copy.deepcopy(board)
         # board is Board object.
@@ -74,93 +69,92 @@ class NaivePlayer(Player):
                         other_card = field[j][-1]
                         if first_card.suit == other_card.suit:
                             if first_card > other_card:
+                                if verbose >= 2:
+                                    print("Removing {0} using {1}"
+                                          .format(first_card, other_card))
                                 board.remove_card_location(j, i)
                                 # Make a change, so start looking again
-                                return self.make_move(board)
+                                return self.make_move(board, verbose)
                             else:
+                                if verbose >= 2:
+                                    print("Removing {0} using {1}"
+                                          .format(other_card, first_card))
                                 board.remove_card_location(i, j)
                                 # Make a change, so start looking again
-                                return self.make_move(board)
+                                return self.make_move(board, verbose)
         # No changes made (otherwise it would have returned) so return "next"
         return "next"
 
-    def invalid_move(self, board):
+    def invalid_move(self, board, verbose):
         self.ui.show_invalid_move(board)
 
 
-class FastNaivePlayer(Player):
-    """
-    Ugly fast implementation of NaivePlayer
-    """
+class MovingPlayer(Player):
     def __init__(self, username, ui):
         Player.__init__(self, username, ui)
 
-    def make_move(self, board):
-        # Create a copy of the board before there are any changes.
-        # old_board = copy.deepcopy(board)
-        # board is Board object.
-        # board.board is the field
+    def make_move(self, board, verbose):
         field = board.field
         for i in range(len(field)):
             if len(field[i]) != 0:
-                # first_card = field[i][-1]
+                first_card = field[i][-1]
                 for j in range(len(field)):
-                    if (i != j
-                       and len(field[j]) != 0
-                       and field[i][-1].suit == field[j][-1].suit):
-                        if field[i][-1] > field[j][-1]:
-                            board.remove_card_location(j, i)
-                            # Make a change, so start looking again
-                            return self.make_move(board)
+                    if i != j:
+                        if len(field[j]) != 0:
+                            other_card = field[j][-1]
+                            if first_card.suit == other_card.suit:
+                                if first_card > other_card:
+                                    if verbose >= 2:
+                                        self.ui.show_board(board)
+                                        print("Removing {0} using {1}"
+                                              .format(first_card, other_card))
+                                    board.remove_card_location(j, i)
+                                    return self.make_move(board, verbose)
+                                else:
+                                    if verbose >= 2:
+                                        self.ui.show_board(board)
+                                        print("Removing {0} using {1}"
+                                              .format(other_card, first_card))
+                                    board.remove_card_location(i, j)
+                                    return self.make_move(board, verbose)
                         else:
-                            board.remove_card_location(i, j)
-                            # Make a change, so start looking again
-                            return self.make_move(board)
-        # No changes made (otherwise it would have returned) so return "next"
+                            self.swap(board, verbose)
+#                             return self.make_move(board, verbose)
+            else:
+                self.swap(board, verbose)
+#                 return self.make_move(board, verbose)
         return "next"
 
-
-class OtherPlayer(Player):
-    def __init__(self, username, ui):
-        Player.__init__(self, username, ui)
-
-    def __repr__(self):
-        return "{0} object with username {1}".format("FastNaivePlayer",
-                                                     self.username)
-
-    def make_move(self, board):
+    def swap(self, board, verbose):
         field = board.field
-        open_cards = [x[-1] for x in list(field.values()) if len(x) > 0]
-        duplicate_suits = list()
-        for card in open_cards:
-            if (len([x for x in open_cards if (x.suit == card.suit
-                                               and x.value != card.value)]) > 0
-               and card.suit not in duplicate_suits):
-                duplicate_suits.append(card.suit)
-            if card.suit in duplicate_suits:
-                for other_card in filter(
-                        lambda x: (x.suit == card.suit
-                                   and not x.value == card.value),
-                        open_cards):
-                    if card > other_card:
-                        board.remove_card(other_card, card)
-                        return self.make_move(board)
-                    else:
-                        board.remove_card(card, other_card)
-                        return self.make_move(board)
-        return "next"
+        filled_field = {i: field[i] for i in field if len(field[i]) > 1}
+        try:
+            index = max(filled_field.keys(),
+                        key=lambda key: filled_field[key][0])
+        except:
+            return
+        for i in range(len(field)):
+            if len(field[i]) == 0:
+                if verbose >= 2:
+                    self.ui.show_board(board)
+                    print("Index of card to swap: {0}, place to swap: {1}"
+                          .format(index, i))
+                board.move_card(index, i)
+                return
 
-    def invalid_move(self, board):
+    def invalid_move(self, board, verbose):
         self.ui.show_invalid_move(board)
 
 
-def parse(name):
-    if not isinstance(name, str):
-        raise ValueError("algorithm name must be str")
-    if name == "HumanPlayer":
-        return HumanPlayer
-    if name == "NaivePlayer":
-        return NaivePlayer
-    if name == "FastNaivePlayer":
-        return FastNaivePlayer
-    raise ValueError("Wrong algorithm name.")
+algorithms = {
+    0: HumanPlayer,
+    1: NaivePlayer,
+    2: MovingPlayer,
+}
+
+
+def parse(message):
+    for i in range(len(algorithms)):
+        if message == str(i):
+            return algorithms[i]
+    raise ValueError("Wrong algorithm number.")

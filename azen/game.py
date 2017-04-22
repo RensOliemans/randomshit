@@ -1,7 +1,9 @@
-import cards.deck as card_deck
-from azenerrors import InvalidMoveException
 import sys
 import time
+import math
+
+import cards.deck as card_deck
+from azenerrors import InvalidMoveException
 import players
 import uis
 
@@ -113,7 +115,7 @@ class Board(object):
         # print("removing {0}".format(self.field[location_of_low_card][-1]))
         del self.field[location_of_low_card][-1]
 
-    def move_card(self, location_of_first_card, location_of_empty_stack):
+    def move_card(self, location_of_card, location_of_empty_stack):
         """
         Moves a card to an empty stack.
 
@@ -122,20 +124,20 @@ class Board(object):
         :arg int location_of_empty_stack:
             Location of the empty stack that the card has to be moved to.
         """
-        if (location_of_first_card >= self.stacks
+        if (location_of_card >= self.stacks
            or location_of_empty_stack >= self.stacks):
             raise InvalidMoveException("Stack out of range!")
         if len(self.field[location_of_empty_stack]) != 0:
             raise InvalidMoveException(
                     "Stack {0} isn't empty!".format(location_of_empty_stack)
             )
-        if len(self.field[location_of_first_card]) == 0:
+        if len(self.field[location_of_card]) == 0:
             raise InvalidMoveException(
                     "There is no card on stack {0}!"
-                    .format(location_of_first_card)
+                    .format(location_of_card)
             )
-        first_card = self.field[location_of_first_card][-1]
-        del self.field[location_of_first_card][-1]
+        first_card = self.field[location_of_card][-1]
+        del self.field[location_of_card][-1]
         self.field[location_of_empty_stack].append(first_card)
 
     def is_game_over(self):
@@ -148,10 +150,15 @@ class Board(object):
         return end_score
 
 
-def main(algorithm, loops=1):
+def main(algorithm, loops=1, verbose=0):
     total_score = 0
-    highscores = 0
-    for _ in range(loops):
+    completions = 0
+    ten_percent_mark = math.ceil(loops / 10)
+    percent = 0
+    for i in range(loops):
+        if verbose == 1 and i != 0 and i % ten_percent_mark == 0:
+            percent += 10
+            print("{}%".format(percent))
         board = Board()
         player_ui = uis.TUI()
         rens = algorithm("rens", player_ui)
@@ -161,32 +168,67 @@ def main(algorithm, loops=1):
             choice = -1
             while choice != "next":
                 try:
-                    choice = rens.make_move(board)
+                    choice = rens.make_move(board, verbose)
                 except InvalidMoveException as inst:
                     print(inst)
-                    rens.invalid_move(board)
+                    rens.invalid_move(board, verbose)
                     # choice = rens.make_move(board)
             game_over = board.is_game_over()
         end_score = board.end_score()
         total_score += end_score
         if end_score == 4:
             print("COMPLETED!")
-            highscores += 1
-        # print("Your end score: {0}".format(end_score))
+            completions += 1
+        print("------------------------------------------------------------"
+              "END OF GAME, SCORE: {0}".format(end_score))
     print("Average score: {0}".format(total_score / loops))
-    print("Highscores: {0}".format(highscores))
+    print("Completions: {0}".format(completions))
+
+
+def handle_arguments():
+    algorithm = players.NaivePlayer
+    loops = 1
+    verbose = 0
+
+    default_message = "Incorrect number, using default {default}"
+    help_arguments = ['-h', '--help']
+    verbose_arguments = ['-v', '--verbose']
+    if len(sys.argv) > 1:
+        for i in range(len(sys.argv)):
+            argument = sys.argv[i]
+            if argument == '-a':
+                try:
+                    algorithm = players.parse(sys.argv[i + 1])
+                except:
+                    message = "Available algorithms: \n{algorithms}\n"
+                    print((default_message + "\n" + message)
+                          .format(algorithms=players.algorithms,
+                                  default="algorithm"))
+            elif argument == '-l':
+                try:
+                    loops = int(sys.argv[i + 1])
+                    if loops <= 0:
+                        raise Exception
+                except:
+                    loops = 1
+                    print(default_message.format(default="loops"))
+            elif argument in verbose_arguments:
+                verbose = 1
+            elif argument == '-vv':
+                verbose = 2
+            elif argument in help_arguments:
+                usage()
+    return algorithm, loops, verbose
+
+
+def usage():
+    message = "Usage: python game.py [-a algorithm_number] [-l loops]"
+    print(message)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        start = time.time()
-        try:
-            loops = int(sys.argv[1])
-            algorithm = players.parse(sys.argv[2])
-        except:
-            print("Incorrect parameter value, using defaults")
-            loops = 1
-            algorithm = players.NaivePlayer
-    main(algorithm, loops)
+    algorithm, loops, verbose = handle_arguments()
+    start = time.time()
+    main(algorithm, loops, verbose)
     print("Program took {0} seconds for {1} loops with algorithm {2}".format(
         time.time() - start, loops, repr(algorithm)))
