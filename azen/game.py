@@ -156,7 +156,7 @@ def main(algorithm, loops=1, verbose=0):
     ten_percent_mark = math.ceil(loops / 10)
     percent = 0
     for i in range(loops):
-        if verbose == 1 and i != 0 and i % ten_percent_mark == 0:
+        if verbose >= 1 and i != 0 and i % ten_percent_mark == 0:
             percent += 10
             print("{}%".format(percent))
         board = Board()
@@ -177,12 +177,16 @@ def main(algorithm, loops=1, verbose=0):
         end_score = board.end_score()
         total_score += end_score
         if end_score == 4:
-            print("COMPLETED!")
+            if verbose >= 1:
+                print("COMPLETED!")
             completions += 1
-        print("------------------------------------------------------------"
-              "END OF GAME, SCORE: {0}".format(end_score))
-    print("Average score: {0}".format(total_score / loops))
-    print("Completions: {0}".format(completions))
+        if verbose >= 2:
+            print("----------------END OF GAME, SCORE: {0}---------------"
+                  .format(end_score))
+    if verbose >= 1:
+        print("Average score: {0}".format(total_score / loops))
+        print("Completions: {0}".format(completions))
+        print("Percent of completion: {0}%".format(completions / loops))
 
 
 def handle_arguments():
@@ -192,7 +196,6 @@ def handle_arguments():
 
     default_message = "Incorrect number, using default {default}"
     help_arguments = ['-h', '--help']
-    verbose_arguments = ['-v', '--verbose']
     if len(sys.argv) > 1:
         for i in range(len(sys.argv)):
             argument = sys.argv[i]
@@ -212,10 +215,8 @@ def handle_arguments():
                 except:
                     loops = 1
                     print(default_message.format(default="loops"))
-            elif argument in verbose_arguments:
-                verbose = 1
-            elif argument == '-vv':
-                verbose = 2
+            elif argument[:2] == '-v':
+                verbose = argument.count('v')
             elif argument in help_arguments:
                 usage()
     return algorithm, loops, verbose
@@ -230,5 +231,6 @@ if __name__ == "__main__":
     algorithm, loops, verbose = handle_arguments()
     start = time.time()
     main(algorithm, loops, verbose)
-    print("Program took {0} seconds for {1} loops with algorithm {2}".format(
-        time.time() - start, loops, repr(algorithm)))
+    if verbose >= 1:
+        print("Program took {0} seconds for {1} loops with algorithm {2}"
+              .format(time.time() - start, loops, repr(algorithm)))
