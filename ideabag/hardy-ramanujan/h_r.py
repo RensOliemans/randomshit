@@ -11,10 +11,10 @@ def is_h_r_number(number, pow_level=3):
     return ways
                 
 
-def find_hr_numbers(start=1, end=1000, pow_level=3):
+def find_hr_numbers(start=1, end=1000, pow_level=3, ways=2):
     numbers = dict()
     for i in range(start, end):
         result = is_h_r_number(i, pow_level)
-        if len(result) > 1:
+        if len(result) >= ways:
             numbers[i] = result
     return numbers
