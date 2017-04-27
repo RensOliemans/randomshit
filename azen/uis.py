@@ -5,7 +5,7 @@ class UI(object):
     def __init__(self):
         pass
 
-    def show_board(self, board):
+    def show_board(self, board, additional_message=""):
         raise NotImplementedError
 
     def ask_for_move(self, board):
@@ -22,9 +22,9 @@ class TUI(UI):
     def __init__(self):
         pass
 
-    def show_board(self, board):
-        message = "The board is: \n{0}There are {1} cards left\n"
-        print(message.format(board, len(board.deck.cards)))
+    def show_board(self, board, additional_message=""):
+        message = "The board is: \n{0}There are {1} cards left{2}\n"
+        print(message.format(board, len(board.deck.cards), additional_message))
 
     def ask_for_move(self, board):
         self.show_board(board)

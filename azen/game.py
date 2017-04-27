@@ -93,6 +93,12 @@ class Board(object):
         :arg int location_of_high_card:
             Stack of the high card (has to be on top)
         """
+        if self.check_validity_removal(location_of_low_card,
+                                       location_of_high_card):
+            del self.field[location_of_low_card][-1]
+        else:
+            raise InvalidMoveException("Invalid move!")
+        """
         if location_of_low_card == location_of_high_card:
             raise InvalidMoveException("You have to give two different stacks")
         if (len(self.field[location_of_low_card]) == 0
@@ -112,8 +118,30 @@ class Board(object):
         if high_card.suit != low_card.suit or high_card < low_card:
             raise InvalidMoveException("Can't remove a {0} with a {1}!".format(
                                         high_card, low_card))
-        # print("removing {0}".format(self.field[location_of_low_card][-1]))
+        print("removing {0}".format(self.field[location_of_low_card][-1]))
         del self.field[location_of_low_card][-1]
+        """
+
+    def check_validity_removal(self, location_of_low_card,
+                               location_of_high_card):
+        try:
+            low_card = self.field[location_of_low_card][-1]
+            high_card = self.field[location_of_high_card][-1]
+            return not (location_of_low_card == location_of_high_card
+                        or len(self.field[location_of_low_card]) == 0
+                        or len(self.field[location_of_high_card]) == 0
+                        or location_of_low_card >= self.stacks
+                        or location_of_high_card >= self.stacks
+                        or high_card.suit != low_card.suit
+                        or high_card < low_card)
+        except KeyError:
+            return False
+
+    def check_validity_move(self, location_of_card, location_of_empty_stack):
+        return not (location_of_card >= self.stacks
+                    or location_of_empty_stack >= self.stacks
+                    or len(self.field[location_of_empty_stack]) != 0
+                    or len(self.field[location_of_card]) == 0)
 
     def move_card(self, location_of_card, location_of_empty_stack):
         """
@@ -124,21 +152,12 @@ class Board(object):
         :arg int location_of_empty_stack:
             Location of the empty stack that the card has to be moved to.
         """
-        if (location_of_card >= self.stacks
-           or location_of_empty_stack >= self.stacks):
-            raise InvalidMoveException("Stack out of range!")
-        if len(self.field[location_of_empty_stack]) != 0:
-            raise InvalidMoveException(
-                    "Stack {0} isn't empty!".format(location_of_empty_stack)
-            )
-        if len(self.field[location_of_card]) == 0:
-            raise InvalidMoveException(
-                    "There is no card on stack {0}!"
-                    .format(location_of_card)
-            )
-        first_card = self.field[location_of_card][-1]
-        del self.field[location_of_card][-1]
-        self.field[location_of_empty_stack].append(first_card)
+        if self.check_validity_move(location_of_card, location_of_empty_stack):
+            first_card = self.field[location_of_card][-1]
+            del self.field[location_of_card][-1]
+            self.field[location_of_empty_stack].append(first_card)
+        else:
+            raise InvalidMoveException("Not a valid move!")
 
     def is_game_over(self):
         return len(self.deck.cards) == 0
@@ -150,15 +169,16 @@ class Board(object):
         return end_score
 
 
-def main(algorithm, loops=1, verbose=0):
+def main(algorithm, loops=1, verbose=0, percentage=10):
     total_score = 0
     completions = 0
-    ten_percent_mark = math.ceil(loops / 10)
+    percent_mark = math.ceil(loops / ((1 / percentage) * 100))
     percent = 0
     for i in range(loops):
-        if verbose >= 1 and i != 0 and i % ten_percent_mark == 0:
-            percent += 10
-            print("{}%".format(percent))
+        if i != 0 and i % percent_mark == 0:
+            percent += percentage
+            if verbose >= 1:
+                print("{0:.2f}%".format(percent))
         board = Board()
         player_ui = uis.TUI()
         rens = algorithm("rens", player_ui)
@@ -184,17 +204,18 @@ def main(algorithm, loops=1, verbose=0):
             print("----------------END OF GAME, SCORE: {0}---------------"
                   .format(end_score))
     if verbose >= 1:
-        print("Average score: {0}".format(total_score / loops))
-        print("Completions: {0}".format(completions))
-        print("Percent of completion: {0}%".format(completions / loops))
+        print("Average score:\t\t{0:.2f}".format(total_score / loops))
+        print("Completions:\t\t{0}".format(completions))
+        print("Percent of completion:\t{0:.6g}%".format(completions / loops))
 
 
 def handle_arguments():
     algorithm = players.NaivePlayer
     loops = 1
     verbose = 0
+    percentage = 10
 
-    default_message = "Incorrect number, using default {default}"
+    default_message = "Incorrect {default} number, using default {default}"
     help_arguments = ['-h', '--help']
     if len(sys.argv) > 1:
         for i in range(len(sys.argv)):
@@ -217,20 +238,32 @@ def handle_arguments():
                     print(default_message.format(default="loops"))
             elif argument[:2] == '-v':
                 verbose = argument.count('v')
+            elif argument == '-p':
+                try:
+                    percentage = float(sys.argv[i + 1])
+                    if not 0 <= percentage < 100:
+                        raise Exception
+                except:
+                    percentage = 10
+                    print(default_message.format(default="percentage"))
             elif argument in help_arguments:
                 usage()
-    return algorithm, loops, verbose
+    return algorithm, loops, verbose, percentage
 
 
 def usage():
-    message = "Usage: python game.py [-a algorithm_number] [-l loops]"
+    message = "Usage: python game.py [-v verbose (add more v's for more " \
+              "text)] [-p perctage_interval] [-l loops] " \
+              "[-a algorithm_number]"
     print(message)
 
 
 if __name__ == "__main__":
-    algorithm, loops, verbose = handle_arguments()
+    algorithm, loops, verbose, percentage = handle_arguments()
     start = time.time()
-    main(algorithm, loops, verbose)
+    main(algorithm, loops, verbose, percentage)
     if verbose >= 1:
-        print("Program took {0} seconds for {1} loops with algorithm {2}"
+        print("Execution time:\t\t{0:.4f}s\n"
+              "Amount of loops:\t{1}\n"
+              "Algorithm:\t\t{2}"
               .format(time.time() - start, loops, repr(algorithm)))
