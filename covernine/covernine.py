@@ -1,8 +1,14 @@
 import random
 import time
+import sys
+
+ALGORITHM = None
 
 
 def game(rounds=1):
+    if ALGORITHM is None:
+        print("Initialize algorithm first")
+        return
     total_sum = 0
     finished = 0
     start_time = time.time()
@@ -15,17 +21,21 @@ def game(rounds=1):
             total = dice1 + dice2
             # print("Total: " + str(total))
             # print("Board: " + str(board))
-            result = good_highest(board, total)
+            result = ALGORITHM(board, total)
             if result == -1:
                 points = sum(board)
                 if points == 0:
                     finished += 1
                     total_sum -= 10
+                    # -10 points or 0?
                 else:
                     total_sum += points
                 game_over = True
-    print("Average score: " + str(total_sum / rounds) + " (total = " + str(total_sum) + ", " + str(rounds) + " rounds). It took " + str(time.time() - start_time) + " seconds.")
-    print(finished)
+    print("Average score: {} (total: {}, {} rounds).\nIt took {} seconds.\n"
+          "Amount of finished games: {}. Percent of finished: {:.2f}%"
+          .format(total_sum / rounds, total_sum, rounds,
+                  time.time() - start_time, finished,
+                  (finished / rounds) * 100))
 
 
 def highest_first_pop(board, throw):
@@ -71,7 +81,8 @@ def closest_first_pop(board, throw):
                     min_diff = diff
     for elem in board:
         for other_elem in board:
-            if abs(elem - other_elem) == min_diff and elem + other_elem == throw:
+            if (abs(elem - other_elem) == min_diff and
+                    elem + other_elem == throw):
                 board.pop(board.index(elem))
                 board.pop(board.index(other_elem))
                 return board
@@ -88,7 +99,8 @@ def closest_last_pop(board, throw):
                     min_diff = diff
     for elem in board:
         for other_elem in board:
-            if abs(elem - other_elem) == min_diff and elem + other_elem == throw:
+            if (abs(elem - other_elem) == min_diff and
+                    elem + other_elem == throw):
                 board.pop(board.index(elem))
                 board.pop(board.index(other_elem))
                 return board
@@ -139,3 +151,18 @@ def random_last_pop(board, throw):
         board.pop(board.index(throw))
         return board
     return -1
+
+
+if __name__ == "__main__":
+    print("Using default method: highest_first_pop.")
+    ALGORITHM = highest_first_pop
+    input_rounds = True
+    if len(sys.argv) > 1:
+        try:
+            rounds = int(sys.argv[1])
+            input_rounds = False
+        except:
+            input_rounds = True
+    if input_rounds:
+        rounds = int(input("How many rounds do you want to play? "))
+    game(rounds)
