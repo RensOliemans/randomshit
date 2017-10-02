@@ -1,10 +1,11 @@
 import random
+import sys, getopt, os
 
-MIN_NUMBER = 1
-MAX_NUMBER = 100
+min_number = 1
+max_number = 10
 
 def play():
-    number = random.randrange(MIN_NUMBER, MAX_NUMBER + 1)
+    number = random.randrange(min_number, max_number + 1)
     guessed = False
     while not guessed:
         guess = int(input("Number? "))
@@ -18,10 +19,10 @@ def play():
 
 def guess():
     number = -1
-    # make sure number is between 1 and 10
-    while number < MIN_NUMBER or number > MAX_NUMBER:
+    # make sure number is between min_number and max_number
+    while number < min_number or number > max_number:
         number = int(input("What's the number the AI should guess? "))
-    possible_numbers = list(range(MIN_NUMBER, MAX_NUMBER + 1))
+    possible_numbers = list(range(min_number, max_number + 1))
     correct = False
     while not correct:
         try:
@@ -32,7 +33,7 @@ def guess():
         except IndexError:
             # impossible, incorrect instructions from user, start the guessing process over
             print("Are you sure? I'm starting over")
-            possible_numbers = list(range(MIN_NUMBER, MAX_NUMBER + 1))
+            possible_numbers = list(range(min_number, max_number + 1))
             to_guess_number = possible_numbers[len(possible_numbers) // 2]
         answer = input("The AI guessed {}. Say 'lower', 'higher', or 'yes' ".format(to_guess_number))
         if answer.lower() == "lower":
@@ -44,6 +45,28 @@ def guess():
         # if another instruction is used, nothing changes, so the AI asks the same number
 
 
-if __name__ == "__main__":
+def main(argv):
+    global min_number, max_number
+    program_file = os.path.basename(__file__)
+    usage_string = "{} -i <min_number> -a <max_number>".format(program_file)
+    try:
+        opts, args = getopt.getopt(argv, "hi:a:", ["min=", "max="])
+    except getopt.GetoptError as e:
+        print(usage_string)
+        sys.exit(2)
+
+    # set min and max numbers
+    for opt, arg in opts:
+        if opt == "-h":
+            print(usage_string)
+            sys.exit()
+        elif opt in ("-i", "--min"):
+            min_number = int(arg)
+        elif opt in ("-a", "--max"):
+            max_number = int(arg)
     play()
     guess()
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
