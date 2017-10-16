@@ -49,4 +49,4 @@ if __name__ == "__main__":
             if is_het_getal(dobbelstenen=x + 1, getal=getal):
                 zessen += 1
         print("Met {} dobbelstenen: {}. Kans: {}%".format(
-            x, zessen, (zessen / worpen) * 100))
+            x + 1, zessen, (zessen / worpen) * 100))
