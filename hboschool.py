@@ -1,8 +1,11 @@
 import random
-import sys, getopt, os
+import sys
+import getopt
+import os
 
 min_number = 1
 max_number = 10
+
 
 def play():
     counts = 0
@@ -21,6 +24,7 @@ def play():
             counts += 1
             print("Correct! In {} tries!".format(counts))
 
+
 def guess(quick=False, verbose=False, rand=False):
     number = -1
     # make sure number is between min_number and max_number
@@ -32,7 +36,8 @@ def guess(quick=False, verbose=False, rand=False):
     while not correct:
         try:
             if rand:
-                to_guess_number = random.randrange(min(possible_numbers), max(possible_numbers) + 1)
+                to_guess_number = random.randrange(
+                        min(possible_numbers), max(possible_numbers) + 1)
             else:
                 to_guess_number = possible_numbers[len(possible_numbers) // 2]
         except IndexError:
