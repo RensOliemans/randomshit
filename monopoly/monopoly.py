@@ -32,16 +32,16 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
     chest = [i for i in CHEST_CARDS]
     shuffle(chest)
 
+    position = 0
     for game in range(amount_of_games):
         roll = 0
         position = 0
         doubles = 0
+        jail_turns = 0
         while roll < rolls_per_game:
             dice1 = random.randrange(1, 7)
             dice2 = random.randrange(1, 7)
             total = dice1 + dice2
-
-            position = (position + total) % 40
 
             if dice1 == dice2:
                 doubles += 1
@@ -50,7 +50,24 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
             if doubles >= 3:
                 position = JAIL
 
+            # Following lines of code are if you want to have to throw doubles
+            # to get out of jail
+#            if position == JAIL:
+#                if dice1 == dice2 or jail_turns >= 2:
+#                    position = (position + total) % 40
+#                    jail_turns = 0
+#                else:
+#                    jail_turns += 1
+#            else:
+#                position = (position + total) % 40
+
+            # Following line of code is if you want to ignore the throwing of
+            # doubles to get out of jail
+
+            position = (position + total) % 40
+
             if position == GO_TO_JAIL:
+                tiles_count[GO_TO_JAIL] += 1
                 position = JAIL
             elif position in CHANCES:
                 if chance == []:
@@ -92,11 +109,14 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
 
     result = ""
     throws = 0
+    max_num = 0
     for item in tiles_count:
         throws += tiles_count[item]
+        if tiles_count[item] > max_num:
+            max_num = tiles_count[item]
     for item in tiles_count:
         result += "Item: {}, chance: {:.3%}\n".format(
-                item, (tiles_count[item] / throws))
+                   item, (tiles_count[item] / throws))
     print(result)
     print("Running {:,} games (with {} rounds) took {:.3} seconds".format(
           amount_of_games, rolls_per_game, time.time() - start))
