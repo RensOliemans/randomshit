@@ -38,6 +38,7 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
         position = 0
         doubles = 0
         jail_turns = 0
+        double = False
         while roll < rolls_per_game:
             dice1 = random.randrange(1, 7)
             dice2 = random.randrange(1, 7)
@@ -45,8 +46,10 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
 
             if dice1 == dice2:
                 doubles += 1
+                double = True
             else:
                 doubles = 0
+                double = False
             if doubles >= 3:
                 position = JAIL
 
@@ -104,7 +107,8 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
                     except ValueError as e:
                         print(e)
 
-            roll += 1
+            if not double:
+                roll += 1
             tiles_count[position] += 1
 
     result = ""
