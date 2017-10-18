@@ -5,9 +5,13 @@ import getopt
 
 from random import shuffle
 
+NL = "nl_NL.dic"
+EN = "en_EN.dic"
+DIR = "dicts/"
 
-def get_word(filename="nl_NL.dic", amount_of_words=5, length_of_words=10):
-    f = io.open(filename, encoding='latin-1')
+
+def get_word(lang=NL, amount_of_words=5, length_of_words=10):
+    f = io.open(DIR + lang, encoding='latin-1')
     words = list()
     for word in f:
         word = word[:-1]
@@ -28,20 +32,27 @@ def get_word(filename="nl_NL.dic", amount_of_words=5, length_of_words=10):
 def parse_arguments(argv):
     length_of_words = 10
     amount_of_words = 5
+    lang = EN
 
     program_file = os.path.basename(__file__)
-    usage_string = "Usage: python3 {} -l <length_of_words> " \
-                   " -a <amount_of_words>".format(program_file)
+    usage_string = "Usage: python3 {} " \
+                   "-l <length_of_words> " \
+                   "-a <amount_of_words> " \
+                   "-t <language>".format(program_file)
+
+    help_string = "<length_of_words> is the amount of characters in a word\n" \
+                  "<amount_of_words> means the amount of words printed\n" \
+                  "<language> is the language of the words, NL or EN."
 
     try:
-        opts, args = getopt.getopt(argv, "hl:a:")
+        opts, args = getopt.getopt(argv, "ht:l:a:")
     except getopt.GetoptError as e:
         print(usage_string)
         sys.exit(2)
 
     for opt, arg in opts:
         if opt == "-h":
-            print(usage_string)
+            print(help_string)
             sys.exit()
         elif opt == "-l":
             try:
@@ -55,12 +66,18 @@ def parse_arguments(argv):
             except ValueError:
                 print("amount_of_words has to be a number")
                 sys.exit(2)
-    return length_of_words, amount_of_words
+        elif opt == "-t":
+            if arg == "NL":
+                lang = NL
+            else:
+                lang = EN
+    return length_of_words, amount_of_words, lang
 
 
 if __name__ == "__main__":
-    length_of_words, amount_of_words = parse_arguments(sys.argv[1:])
+    length_of_words, amount_of_words, lang = parse_arguments(sys.argv[1:])
     words = get_word(
+            lang=lang,
             length_of_words=length_of_words,
             amount_of_words=amount_of_words)
     for word in words:
