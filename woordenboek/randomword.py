@@ -52,6 +52,7 @@ def parse_arguments(argv):
 
     for opt, arg in opts:
         if opt == "-h":
+            print(usage_string)
             print(help_string)
             sys.exit()
         elif opt == "-l":
