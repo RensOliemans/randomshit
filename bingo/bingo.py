@@ -3,7 +3,10 @@ import getopt
 import os
 
 from random import sample, shuffle
-from scipy.special import binom
+try:
+    from scipy.special import binom
+except ModuleNotFoundError:
+    print("Scipy library not installed, beware if -n and -m are small, and -a is large")
 
 
 def create_cards(numbers, amount, maximum):
@@ -71,10 +74,20 @@ def parse_arguments(argv):
     if maximum_number < numbers_per_card:
         print("maximum_number has to be larger than numbers_per_card")
         sys.exit(2)
-    if binom(maximum_number, numbers_per_card) < amount_of_cards:
-        print("Can't create enough permutations with these parameters to ensure "
-              "that all cards are unique")
-        sys.exit(2)
+    try:
+        if binom(maximum_number, numbers_per_card) < amount_of_cards:
+            print("Can't create enough permutations with these parameters to ensure "
+                  "that all cards are unique")
+            sys.exit(2)
+    except NameError:
+        # scipy module is not installed, so `binom` can't be found. Ignore this,
+        # there is nothing you can do to prevent this (except for implementing a
+        # binom function yourself, but that sucks)
+        # Be wary of there not being enough permutations, then the program will hang
+        # (see `while len(cards) < amount` in `create_cards`, that will never
+        # become True then
+        pass
+
     return (numbers_per_card, amount_of_cards, maximum_number, print_shuffled)
 
 
