@@ -1,17 +1,18 @@
-import random
 import sys
 import getopt
 import os
 import time
 
-from random import shuffle
+from random import shuffle, randrange
 
 
-def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
+def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     start = time.time()
     # there are 40 tiles in a monopoly board, so the indices are 0-39
-    tiles = [i for i in range(40)]
+    tiles = list(range(40))
     tiles_count = dict()
+
+    # these all refer to the locations on the board
     JAIL = 10
     GO_TO_JAIL = 30
     CHANCES = [7, 22, 26]
@@ -19,6 +20,7 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
     UTILITIES = [12, 28]
     RAILROADS = [5, 15, 25, 35]
 
+    # these refer to the location jumping the chance/chest cards send you to
     CHANCE_CARDS = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5,
                     39, 40, 40, 40]
     CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
@@ -27,9 +29,9 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
     for tile in tiles:
         tiles_count[tile] = 0
 
-    chance = [i for i in CHANCE_CARDS]
+    chance = list(CHANCE_CARDS)
     shuffle(chance)
-    chest = [i for i in CHEST_CARDS]
+    chest = list(CHEST_CARDS)
     shuffle(chest)
 
     position = 0
@@ -40,8 +42,8 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
         # jail_turns = 0
         double = False
         while roll < rolls_per_game:
-            dice1 = random.randrange(1, 7)
-            dice2 = random.randrange(1, 7)
+            dice1 = randrange(1, 7)
+            dice2 = randrange(1, 7)
             total = dice1 + dice2
 
             if dice1 == dice2:
@@ -53,7 +55,7 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
             if doubles >= 3:
                 position = JAIL
 
-            # Following lines of code are if you want to have to throw doubles
+            # Following if statement is if you want to have to throw doubles
             # to get out of jail
 #            if position == JAIL:
 #                if dice1 == dice2 or jail_turns >= 2:
@@ -73,13 +75,15 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
                 tiles_count[GO_TO_JAIL] += 1
                 position = JAIL
             elif position in CHANCES:
-                if chance == []:
+                if not chance:
                     # chance cards are empty, refill and shuffle
-                    chance = [i for i in CHANCE_CARDS]
+                    chance = list(CHANCE_CARDS)
                     shuffle(chance)
                 card = chance.pop(0)
+                # 40 means no jumping
                 if not card == 40:
                     try:
+                        tiles_count[position] += 1
                         position = int(card)
                     except ValueError:
                         if position == 'B':
@@ -96,31 +100,31 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
                                 if (position + x) % 40 in RAILROADS:
                                     position = (position + x) % 40
             elif position in CHESTS:
-                if chest == []:
+                if not chest:
                     # chest cards are empty, refill and shuffle
-                    chest = [i for i in CHEST_CARDS]
+                    chest = list(CHEST_CARDS)
                     shuffle(chest)
                 card = chest.pop(0)
+                # 40 means no jumping
                 if not card == 40:
-                    try:
-                        position = int(card)
-                    except ValueError as e:
-                        print(e)
+                    position = int(card)
 
             if not double:
                 roll += 1
             tiles_count[position] += 1
 
     result = ""
-    throws = 0
-    max_num = 0
+    # get total number of throws, necessary for percentage
+    throws = sum([tiles_count[x] for x in tiles_count])
+    if excel:
+        result += "Item;chance\n"
     for item in tiles_count:
-        throws += tiles_count[item]
-        if tiles_count[item] > max_num:
-            max_num = tiles_count[item]
-    for item in tiles_count:
-        result += "Item: {}, chance: {:.3%}\n".format(
-                   item, (tiles_count[item] / throws))
+        if excel:
+            result += "{};{:.3%}\n".format(
+                      item, (tiles_count[item] / throws))
+        else:
+            result += "Item: {}, chance: {:.3%}\n".format(
+                       item, (tiles_count[item] / throws))
     print(result)
     print("Running {:,} games (with {} rounds) took {:.3} seconds".format(
           amount_of_games, rolls_per_game, time.time() - start))
@@ -129,14 +133,14 @@ def run(amount_of_games=1000, rolls_per_game=30, verbose=False):
 def parse_arguments(argv):
     amount_of_games = 1000
     rolls_per_game = 30
-    verbose = False
+    excel = False
 
     program_file = os.path.basename(__file__)
     usage_string = "Usage: python3 {} -g <amount_of_games> -r <rolls_per_game>"
     usage_string = usage_string.format(program_file)
 
     try:
-        opts, args = getopt.getopt(argv, "hvg:r:")
+        opts, args = getopt.getopt(argv, "ehg:r:")
     except getopt.GetoptError as e:
         print(usage_string)
         sys.exit(2)
@@ -157,11 +161,11 @@ def parse_arguments(argv):
             except ValueError:
                 print("rolls_per_game has to be a number")
                 sys.exit(2)
-        elif opt == "-v":
-            verbose = True
-    return amount_of_games, rolls_per_game, verbose
+        elif opt == "-e":
+            excel = True
+    return amount_of_games, rolls_per_game, excel
 
 
 if __name__ == "__main__":
-    amount_of_games, rolls_per_game, verbose = parse_arguments(sys.argv[1:])
-    run(amount_of_games, rolls_per_game, verbose)
+    amount_of_games, rolls_per_game, excel = parse_arguments(sys.argv[1:])
+    run(amount_of_games, rolls_per_game, excel)
