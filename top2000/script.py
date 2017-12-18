@@ -16,6 +16,13 @@ def parse_line(line):
     return Song(title, artist, position, year)
 
 
+def get_choice(choices):
+    choice = ""
+    while choice not in choices:
+        choice = input("Choose one of {}:".format(", ".join(choices)))
+    return choice
+
+
 def main():
     filename = 'songs'
     songs = get_songs(filename)
