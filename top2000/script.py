@@ -9,7 +9,7 @@ def parse_excel(filename):
     pos = sheet0[COLNAME]
     titles = sheet0['titel']
     artists = sheet0['artiest']
-    position, title, artist= None, None, None
+    position, title, artist = None, None, None
     songs = list()
     for index, song in enumerate(pos):
         try:
@@ -63,11 +63,10 @@ def main():
                 else:
                     print("Artist not found")
             elif choice == "max":
-                artists = artists_dict(songs)
-                top_artist = sorted(artists, key=lambda key: artists[key])[-1]
-                count = artists[top_artist]
-                print("Artist with most songs: {} ({} songs).\nTop song: {}"
-                      .format(top_artist, count, songs[-1]))
+                amount = int(input("Amount:\t"))
+                top_artists, top_songs = maximum(songs, amount)
+                print(top_artists)
+                print(print_songs(top_songs))
             elif choice == "list":
                 for song in songs:
                     print(song)
@@ -77,6 +76,13 @@ def main():
     except KeyboardInterrupt:
         print("Cancelled program")
         sys.exit(0)
+
+
+def print_songs(songs):
+    song_string = ""
+    for song in songs:
+        song_string += str(song) + "\n"
+    return song_string
 
 
 def artist_info(songs, artist):
@@ -99,11 +105,22 @@ def song_info(songs, title):
     return correct_song
 
 
-def maximum(songs):
-    top_song = None
-    artists = dict()
-    top_artist = sorted(artists, key=lambda key: artists[key])[-1]
-    return {top_artist: artists[top_artist]}, top_song
+def maximum(songs, amount=1):
+    return top_artists(songs, amount), top_songs(songs, amount)
+
+
+def top_songs(songs, amount=1):
+    return songs[-amount:]
+
+
+def top_artists(songs, amount=1):
+    artists = artists_dict(songs)
+    # sorted artists
+    sorted_artists = sorted(artists, key=lambda key: artists[key])[-amount:][::-1]
+    end_dict = dict()
+    for artist in sorted_artists:
+        end_dict[artist] = artists[artist]
+    return end_dict
 
 
 def artists_dict(songs):
