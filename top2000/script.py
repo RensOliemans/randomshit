@@ -1,31 +1,37 @@
 import sys
+import pandas as pd
 
 
-def parse_line(line):
-    items = line.split('\t')
-    position, title, artist, year = None, None, None, None
-    try:
-        position = items[0]
-        title = items[1]
-        artist = items[2]
-        year = items[3]
-    except IndexError:
-        # print('Error in line "{}"'.format(line))
-        return
+def parse_excel(filename):
+    COLNAME = 'pos 2017'
+    xls = pd.ExcelFile(filename)
+    sheet0 = xls.parse(0)
+    pos = sheet0[COLNAME]
+    titles = sheet0['titel']
+    artists = sheet0['artiest']
+    position, title, artist= None, None, None
+    songs = list()
+    for index, song in enumerate(pos):
+        try:
+            position = int(song)
+            title = titles[index]
+            artist = artists[index]
 
-    return Song(title, artist, position, year)
+            songs.append(Song(title, artist, position, None))
+            if type(artist) == float:
+                print("Index:{}\tPosition:{}\tSong:{}\tArtist:{}".format(index, position, song, artist))
+        except:
+            # row isn't a song, has no pos variable
+            pass
 
-
-def get_choice(choices):
-    choice = ""
-    while choice not in choices:
-        choice = input("Choose one of {}:".format(", ".join(choices)))
-    return choice
+    return songs
 
 
 def main():
-    filename = 'songs'
-    songs = get_songs(filename)
+    # filename = 'songs'
+    filename = 'TOP-2000-2017.xls'
+    # songs = get_songs(filename)
+    songs = parse_excel(filename)
 
     try:
         while True:
