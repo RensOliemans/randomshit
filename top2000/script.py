@@ -94,7 +94,7 @@ def song_info(songs, title):
     for song in songs:
         if song is None:
             continue
-        if title.lower() == song.title.lower():
+        if title.lower() in song.title.lower():
             correct_song.append(song)
     return correct_song
 
