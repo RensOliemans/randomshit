@@ -33,12 +33,11 @@ def average_times(filename):
     def average_time(person):
         times = list()
         for poop in person:
-            seconds = poop.date.hour * 60 * 60 + poop.date.minute * 60 + poop.date.second
-            times.append(seconds)
-        avg_seconds = sum(times) / len(times)
-        m, s = divmod(avg_seconds, 60)
-        h, m = divmod(m, 60)
-        return h, m, s
+            minutes = poop.date.hour * 60 + poop.date.minute
+            times.append(minutes)
+        avg_minutes = sum(times) / len(times)
+        h, m = divmod(avg_minutes, 60)
+        return datetime.time(hour=h, minute=m)
 
     iris_time = average_time(iris)
     rens_time = average_time(rens)
