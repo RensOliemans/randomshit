@@ -1,10 +1,11 @@
 import datetime
 
 FILENAME = 'chat.txt'
+# Poop icon
 EMOTICON_UNI = '\U0001f4a9'
-# todo: change
-NAME_RENS = '***'
-NAME_IRIS = '***'
+# Change this if the names change
+NAME_RENS = 'Rens Oliemans'
+NAME_IRIS = 'Iris <3'
 
 
 def parse_file(filename):
@@ -21,23 +22,23 @@ def parse_file(filename):
     return iris, rens
 
 
-def count(filename):
-    iris, rens = parse_file(filename)
+def count(iris, rens):
     print("Iris: {} times. Rens: {} times".format(len(iris), len(rens)))
 
 
-def average_times(filename):
-    iris, rens = parse_file(filename)
+def average_times(iris, rens):
     total = iris + rens
 
     def average_time(person):
+        if len(person) == 0:
+            raise ValueError("Pooped zero times, can't calculate average time (are the names correct?)")
         times = list()
         for poop in person:
             minutes = poop.date.hour * 60 + poop.date.minute
             times.append(minutes)
         avg_minutes = sum(times) / len(times)
         h, m = divmod(avg_minutes, 60)
-        return datetime.time(hour=h, minute=m)
+        return datetime.time(hour=int(h), minute=int(m))
 
     iris_time = average_time(iris)
     rens_time = average_time(rens)
@@ -76,6 +77,13 @@ def parse_line(line):
         return Day(date, person)
 
 
+def main():
+    iris, rens = parse_file(FILENAME)
+    count(iris, rens)
+    iris_time, rens_time, total_time = average_times(iris, rens)
+    print("Iris: {}, Rens: {}, Total: {}".format(iris_time, rens_time, total_time))
+
+
 class Day(object):
     def __init__(self, date, person):
         self.date = date
@@ -89,3 +97,7 @@ class Day(object):
 
     def __repr__(self):
         return str(self)
+
+
+if __name__ == "__main__":
+    main()
