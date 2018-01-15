@@ -1,4 +1,6 @@
 import Set
+import constants
+
 from enum import Enum
 from random import shuffle
 
@@ -92,7 +94,7 @@ class Deck(object):
         for col in Colour:
             for form in Form:
                 for fill in Fill:
-                    for amount in range(1, 4):
+                    for amount in range(1, constants.GAME_AMOUNT + 3):
                         card = Card(col, form, amount, fill)
                         cards.append(card)
         shuffle(cards)
@@ -108,21 +110,21 @@ class Deck(object):
         return cards
 
 
+BOARD_SIZE = constants.GAME_AMOUNT * constants.GAME_AMOUNT
+
+
 class Board(object):
 
     def __init__(self):
         self.deck = Deck()
-        self.board = self.deck.take(9)
+        self.board = self.deck.take(BOARD_SIZE)
 
     def remove_cards(self, cards):
-        card1 = cards[0]
-        card2 = cards[1]
-        card3 = cards[2]
-        if Set.is_set(card1, card2, card3):
-            self.board.remove(card1)
-            self.board.remove(card2)
-            self.board.remove(card3)
-        # self.board + self.deck.take(3)
+        if not len(cards) == constants.GAME_AMOUNT:
+            return
+        if Set.is_set(cards):
+            for card in cards:
+                self.board.remove(card)
 
     def extra_cards(self):
-        self.board += self.deck.take(3)
+        self.board += self.deck.take(constants.GAME_AMOUNT)

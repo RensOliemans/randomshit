@@ -14,6 +14,6 @@ class NaiveAI(object):
                 for c3 in board:
                     if c1 == c2 or c1 == c3 or c2 == c3:
                         continue
-                    if Set.is_set(c1, c2, c3):
+                    if Set.is_set((c1, c2, c3)):
                         return (c1, c2, c3)
         return None
