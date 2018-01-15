@@ -30,22 +30,3 @@ def is_set(cards):
 if __name__ == "__main__":
     player1 = players.NaiveAI()
     game(player1)
-
-
-"""
-def is_set(card1, card2, card3):
-    def sames(card1, card2, card3):
-        sames_1 = card1 + card2
-        sames_2 = card1 + card3
-        sames_3 = card2 + card3
-        return (sames_1 == sames_2 and sames_2 == sames_3
-                and sames_1 == sames_3)
-
-    def diffs(card1, card2, card3):
-        diffs_1 = card1 - card2
-        diffs_2 = card1 - card3
-        diffs_3 = card2 - card3
-        return (diffs_1 == diffs_2 and diffs_2 == diffs_3
-                and diffs_1 == diffs_3)
-
-    return sames(card1, card2, card3) and diffs(card1, card2, card3)"""
