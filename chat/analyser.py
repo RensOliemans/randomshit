@@ -6,6 +6,7 @@ EMOTICON_UNI = '\U0001f4a9'
 # Change this if the names change
 NAME_RENS = 'Rens Oliemans'
 NAME_IRIS = 'Iris <3'
+NIGHT_HOUR = 4
 
 
 def parse_file(filename):
@@ -31,10 +32,15 @@ def average_times(iris, rens):
 
     def average_time(person):
         if len(person) == 0:
-            raise ValueError("Pooped zero times, can't calculate average time (are the names correct?)")
+            raise ValueError("Pooped zero times, can't calculate average time "
+                             "(are the names correct?)")
         times = list()
         for poop in person:
-            minutes = poop.date.hour * 60 + poop.date.minute
+            hour = poop.date.hour
+            if hour <= NIGHT_HOUR:
+                # in the night, add to the average time
+                hour = hour + 24
+            minutes = hour * 60 + poop.date.minute
             times.append(minutes)
         avg_minutes = sum(times) / len(times)
         h, m = divmod(avg_minutes, 60)
@@ -79,9 +85,12 @@ def parse_line(line):
 
 def main():
     iris, rens = parse_file(FILENAME)
-    count(iris, rens)
+    print("Counter:\nIris: {}, Rens: {}, Total: {}\n"
+          .format(len(iris), len(rens), len(iris + rens)))
     iris_time, rens_time, total_time = average_times(iris, rens)
-    print("Iris: {}, Rens: {}, Total: {}".format(iris_time, rens_time, total_time))
+    print("Average poop time (before {} will be counted as night, so "
+          "+ 24 hours):\nIris: {}, Rens: {}, Total: {}"
+          .format(NIGHT_HOUR, iris_time, rens_time, total_time))
 
 
 class Day(object):
