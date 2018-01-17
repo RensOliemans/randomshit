@@ -23,36 +23,6 @@ def parse_file(filename):
     return iris, rens
 
 
-def count(iris, rens):
-    print("Iris: {} times. Rens: {} times".format(len(iris), len(rens)))
-
-
-def average_times(iris, rens):
-    total = iris + rens
-
-    def average_time(person):
-        if len(person) == 0:
-            raise ValueError("Pooped zero times, can't calculate average time "
-                             "(are the names correct?)")
-        times = list()
-        for poop in person:
-            hour = poop.date.hour
-            if hour <= NIGHT_HOUR:
-                # in the night, add to the average time
-                hour = hour + 24
-            minutes = hour * 60 + poop.date.minute
-            times.append(minutes)
-        avg_minutes = sum(times) / len(times)
-        h, m = divmod(avg_minutes, 60)
-        return datetime.time(hour=int(h), minute=int(m))
-
-    iris_time = average_time(iris)
-    rens_time = average_time(rens)
-    total_time = average_time(total)
-
-    return iris_time, rens_time, total_time
-
-
 def parse_line(line):
     date = None
     person = None
@@ -83,10 +53,37 @@ def parse_line(line):
         return Day(date, person)
 
 
+def average_times(iris, rens):
+    total = iris + rens
+
+    def average_time(person):
+        if len(person) == 0:
+            raise ValueError("Pooped zero times, can't calculate average time "
+                             "(are the names correct?)")
+        times = list()
+        for poop in person:
+            hour = poop.date.hour
+            if hour <= NIGHT_HOUR:
+                # in the night, add 24 hours so it's counted as night
+                hour = hour + 24
+            minutes = hour * 60 + poop.date.minute
+            times.append(minutes)
+        avg_minutes = sum(times) / len(times)
+        h, m = divmod(avg_minutes, 60)
+        return datetime.time(hour=int(h), minute=int(m))
+
+    iris_time = average_time(iris)
+    rens_time = average_time(rens)
+    total_time = average_time(total)
+
+    return iris_time, rens_time, total_time
+
+
 def main():
     iris, rens = parse_file(FILENAME)
     print("Counter:\nIris: {}, Rens: {}, Total: {}\n"
           .format(len(iris), len(rens), len(iris + rens)))
+
     iris_time, rens_time, total_time = average_times(iris, rens)
     print("Average poop time (before {} will be counted as night, so "
           "+ 24 hours):\nIris: {}, Rens: {}, Total: {}"
