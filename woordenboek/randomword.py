@@ -1,4 +1,3 @@
-import io
 import os
 import sys
 import getopt
@@ -6,14 +5,14 @@ import getopt
 from random import sample
 
 EN = "en_EN.dic"
+NL = "nl_NL.dic"
 DIR = "dicts/"
+
 
 def get_word(filename=EN, amount_of_words=5, length_of_words=10):
     words = list()
     with open(DIR + filename) as f:
         words = [x[:-1] for x in f if len(x) == length_of_words]
-    # f = open(DIR + lang)
-    # f.close()
 
     amount = min(len(words), amount_of_words)
     print("Amount of words with length {}: {}\n".format(
@@ -22,17 +21,19 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=10):
 
 
 def parse_arguments(argv):
+    # DEFAULT VALUES
     length_of_words = 10
     amount_of_words = 5
     filename = EN
+    # END OF DEFAULT VALUES
 
     program_file = os.path.basename(__file__)
-    usage_string = "Usage: python3 {} " \
-                   "-l <length_of_words> " \
-                   "-a <amount_of_words> ".format(program_file)
+    usage_string = ("Usage: python3 {} "
+                    "-l <length_of_words> "
+                    "-a <amount_of_words> ").format(program_file)
 
-    help_string = "<length_of_words> is the amount of characters in a word\n" \
-                  "<amount_of_words> means the amount of words printed\n"
+    help_string = ("<length_of_words> is the amount of characters in a word\n"
+                   "<amount_of_words> means the amount of words printed\n")
 
     try:
         opts, args = getopt.getopt(argv, "hl:a:")
@@ -60,11 +61,14 @@ def parse_arguments(argv):
     return length_of_words, amount_of_words, filename
 
 
-if __name__ == "__main__":
+def main():
     length_of_words, amount_of_words, filename = parse_arguments(sys.argv[1:])
     words = get_word(
             filename=filename,
             length_of_words=length_of_words,
             amount_of_words=amount_of_words)
-    for word in words:
-        print(word)
+    print('\n'.join(words))
+
+
+if __name__ == "__main__":
+    main()
