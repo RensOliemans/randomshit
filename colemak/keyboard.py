@@ -129,6 +129,8 @@ def main():
     filename = "en_EN.dic"
     words = dic_to_words(filename)
 
+    print("Using dictionary {}".format(filename))
+
     qwerty = calculate_avg_moving(words, KEYBOARD_QWERTY)
     print("Qwerty\taverage moving distance:\t{:.2f}"
           .format(qwerty))
