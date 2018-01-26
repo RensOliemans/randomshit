@@ -4,9 +4,8 @@ import getopt
 
 from random import sample
 
-EN = "en_EN.dic"
-NL = "nl_NL.dic"
-DIR = "dicts/"
+EN = "English (British).dic"
+DIR = "/home/rens/Projects/randomshit/Dictionaries/"
 
 
 def get_word(filename=EN, amount_of_words=5, length_of_words=10):
