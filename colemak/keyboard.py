@@ -1,3 +1,5 @@
+import os
+
 KEYBOARD_QWERTY = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';'],
@@ -116,7 +118,7 @@ def distances(words, movements):
 
 def dic_to_words(filename):
     with open(filename) as f:
-        return [x[:-1] for x in f]
+        return [word.split('/')[0] for word in f]
 
 
 def calculate_avg_moving(words, keyboard):
@@ -125,12 +127,7 @@ def calculate_avg_moving(words, keyboard):
     return sum(dists.values()) / len(dists)
 
 
-def main():
-    filename = "en_EN.dic"
-    words = dic_to_words(filename)
-
-    print("Using dictionary {}".format(filename))
-
+def show_movings(words):
     qwerty = calculate_avg_moving(words, KEYBOARD_QWERTY)
     print("Qwerty\taverage moving distance:\t{:.2f}"
           .format(qwerty))
@@ -146,6 +143,18 @@ def main():
     workman = calculate_avg_moving(words, KEYBOARD_WORKMAN)
     print("Workman\taverage moving distance:\t{:.2f}"
           .format(workman))
+
+
+def main():
+    dict_dir_name = 'dicts/'
+    dictionaries = ['Dutch.dic', 'English (British).dic', 'English (American).dic']
+    dictionaries = [dic for dic in os.listdir(dict_dir_name) if dic[-4:] == '.dic']
+
+    for dictionary in dictionaries:
+        dictionary = dict_dir_name + dictionary
+        print("Using dictionary {}".format(dictionary))
+        words = dic_to_words(dictionary)
+        show_movings(words)
 
 
 if __name__ == "__main__":
