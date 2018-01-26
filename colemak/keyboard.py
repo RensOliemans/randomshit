@@ -146,9 +146,9 @@ def show_movings(words):
 
 
 def main():
-    dict_dir_name = 'dicts/'
-    dictionaries = ['Dutch.dic', 'English (British).dic', 'English (American).dic']
-    dictionaries = [dic for dic in os.listdir(dict_dir_name) if dic[-4:] == '.dic']
+    dict_dir_name = '/home/rens/Projects/randomshit/Dictionaries/'
+    dictionaries = [dic for dic in os.listdir(dict_dir_name)
+                    if dic[-4:] == '.dic']
 
     for dictionary in dictionaries:
         dictionary = dict_dir_name + dictionary
