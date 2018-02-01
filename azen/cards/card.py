@@ -1,5 +1,5 @@
 """
-This module contains the ``Card`` class. Each ``Card`` instance represents a 
+This module contains the ``Card`` class. Each ``Card`` instance represents a
 single playing card, of a given value and suit.
 """
 

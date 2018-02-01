@@ -49,16 +49,19 @@ def guess(quick=False, verbose=False, rand=False):
         if quick:
             if number < to_guess_number:
                 counts += 1
-                if verbose: print("The AI guessed {}".format(to_guess_number))
+                if verbose:
+                    print("The AI guessed {}".format(to_guess_number))
                 possible_numbers = list(range(min(possible_numbers), to_guess_number))
             elif number > to_guess_number:
                 counts += 1
-                if verbose: print("The AI guessed {}".format(to_guess_number))
+                if verbose:
+                    print("The AI guessed {}".format(to_guess_number))
                 possible_numbers = list(range(to_guess_number + 1, max(possible_numbers) + 1))
             elif number == to_guess_number:
                 counts += 1
                 correct = True
-                if verbose: print("The AI guessed {}".format(to_guess_number))
+                if verbose:
+                    print("The AI guessed {}".format(to_guess_number))
                 print("{} tries".format(counts))
         else:
             answer = input("The AI guessed {}. Say 'lower', 'higher', or 'yes' ".format(to_guess_number))
