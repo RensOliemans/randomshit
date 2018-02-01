@@ -1,5 +1,4 @@
 import random
-import sys, traceback
 
 
 class Player(object):

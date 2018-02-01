@@ -24,7 +24,9 @@ def game(rounds=1):
                 else:
                     total_sum += points
                 game_over = True
-    print("Average score: " + str(total_sum / rounds) + " (total = " + str(total_sum) + ", " + str(rounds) + " rounds). It took " + str(time.time() - start_time) + " seconds.")
+    print("Average score: {} (total: {}, {} rounds. It took {} seconds."
+          .format(total_sum / rounds, total_sum, rounds,
+                  time.time() - start_time))
     print(finished)
 
 
@@ -33,6 +35,7 @@ def highest_first_pop(board, throw):
         board.pop(board.index(throw))
         print("Removing " + str(throw))
         return board
+    # holy shit what was i thinking here wtf
     for i in range(len(board)):
         for j in range(len(board)):
             for k in range(len(board)):

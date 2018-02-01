@@ -19,7 +19,8 @@ def parse_excel(filename):
 
             songs.append(Song(title, artist, position, None))
             if type(artist) == float:
-                print("Index:{}\tPosition:{}\tSong:{}\tArtist:{}".format(index, position, song, artist))
+                print("Index:{}\tPosition:{}\tSong:{}\tArtist:{}"
+                      .format(index, position, song, artist))
         except:
             # row isn't a song, has no pos variable
             pass
@@ -43,7 +44,8 @@ def main():
                 artist_songs = artist_info(songs, artist)
                 for song in artist_songs:
                     print(song)
-                print("Artist {} has {} entries".format(artist, len(artist_songs)))
+                print("Artist {} has {} entries"
+                      .format(artist, len(artist_songs)))
             elif choice == 'song':
                 title = input("Enter song title:\t").lower()
                 correct_songs = song_info(songs, title)
@@ -116,7 +118,8 @@ def top_songs(songs, amount=1):
 def top_artists(songs, amount=1):
     artists = artists_dict(songs)
     # sorted artists
-    sorted_artists = sorted(artists, key=lambda key: artists[key])[-amount:][::-1]
+    sorted_artists = sorted(artists,
+                            key=lambda key: artists[key])[-amount:][::-1]
     end_dict = dict()
     for artist in sorted_artists:
         end_dict[artist] = artists[artist]
@@ -135,18 +138,6 @@ def artists_dict(songs):
     return artists
 
 
-def get_songs(filename):
-    f = open(filename)
-    songs = list()
-    for line in f:
-        song = parse_line(line)
-        # filter example line
-        if song is None or song.year == 'jaar':
-            continue
-        songs.append(song)
-    return songs
-
-
 class Song():
     def __init__(self, title, artist, position, year):
         self.title = title
@@ -155,8 +146,9 @@ class Song():
         self.year = year
 
     def __str__(self):
-        return "{pos}\t{title:20}\t{artist:20}\t{year}".format(
-                pos=self.position, title=self.title, artist=self.artist, year=self.year)
+        return ("{pos}\t{title:20}\t{artist:20}\t{year}"
+                .format(pos=self.position, title=self.title,
+                        artist=self.artist, year=self.year))
 
     def __repr__(self):
         return str(self)

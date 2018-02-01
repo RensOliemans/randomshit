@@ -5,10 +5,15 @@ import time
 start = time.time()
 print('This program changes the ID3 tags of all .mp3 files '
       'in this directory.\n' +
-      'The files have to have the format "<song name> - <song artist>.mp3"\n')
+      'The files have to have the format "<song name> - <song artist>.mp3"')
 mp3files = [f for f in os.listdir() if f[-4:] == '.mp3']
+# files have any of those featuring tags to indicate that the next name is
+# a featuring author
 features = ['featuring', 'feat.', 'ft.', 'FT.', 'FEAT.', 'feat', 'ft', 'FT',
             'FEAT', 'Feat.', 'Feat']
+
+# a list that keeps track of all of the files that were incorrectly named.
+# this is useful to keep track of, since those files can be changed manually.
 incorrect_files = list()
 for f in mp3files:
     # format of filename: <song_name> - <song_artist>.mp3 (including space)
@@ -26,7 +31,7 @@ for f in mp3files:
     # determine if one of the feature texts is in the song artist part
     has_feature = any([feature in rest for feature in features])
     if has_feature:
-        feature_text = [x for x in features if x in rest][0]  # get feature text
+        feature_text = [x for x in features if x in rest][0]  # get feat. text
         splitted = rest.split(feature_text)
         title = splitted[0]
         featured_artist = splitted[1]

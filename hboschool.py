@@ -41,7 +41,8 @@ def guess(quick=False, verbose=False, rand=False):
             else:
                 to_guess_number = possible_numbers[len(possible_numbers) // 2]
         except IndexError:
-            # impossible, incorrect instructions from user, start the guessing process over
+            # impossible, incorrect instructions from user, start the guessing
+            # process over
             print("Are you sure? I'm starting over")
             possible_numbers = list(range(min_number, max_number + 1))
             to_guess_number = possible_numbers[len(possible_numbers) // 2]

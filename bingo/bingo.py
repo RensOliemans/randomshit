@@ -6,7 +6,8 @@ from random import sample, shuffle
 try:
     from scipy.special import binom
 except ModuleNotFoundError:
-    print("Scipy library not installed, beware if -n and -m are small, and -a is large")
+    print("Scipy library not installed, beware if -n and -m are small, and -a"
+          "is large")
 
 
 def create_cards(numbers, amount, maximum):
@@ -31,14 +32,16 @@ def parse_arguments(argv):
                    "-m <maximum_number> " \
                    "-s <shuffled>".format(program_file)
 
-    help_string = "<numbers_per_card> is the bingo numbers you want on the card, " \
-                  "defaults to {}.\n" \
-                  "<amount_of_cards> is the amount of cards you want to generate, " \
-                  "defaults to {}.\n" \
-                  "<maximum_number> is the maximum bingo number on the cards, " \
-                  "defaults to {}.\n" \
-                  "<shuffled> is a flag if you want to have the cards shuffled or not" \
-                  "".format(numbers_per_card, amount_of_cards, maximum_number)
+    help_string = ("<numbers_per_card> is the bingo numbers you want on the "
+                   "card, defaults to {}.\n"
+                   "<amount_of_cards> is the amount of cards you want to "
+                   "generate, defaults to {}.\n"
+                   "<maximum_number> is the maximum bingo number on the cards,"
+                   " defaults to {}.\n"
+                   "<shuffled> is a flag if you want to have the cards "
+                   "shuffled or not, defaults to {}"
+                   .format(numbers_per_card, amount_of_cards, maximum_number,
+                           print_shuffled))
 
     try:
         opts, args = getopt.getopt(argv, "hsn:a:m:")
@@ -76,23 +79,24 @@ def parse_arguments(argv):
         sys.exit(2)
     try:
         if binom(maximum_number, numbers_per_card) < amount_of_cards:
-            print("Can't create enough permutations with these parameters to ensure "
-                  "that all cards are unique")
+            print("Can't create enough permutations with these parameters to "
+                  "ensure that all cards are unique")
             sys.exit(2)
     except NameError:
-        # scipy module is not installed, so `binom` can't be found. Ignore this,
-        # there is nothing you can do to prevent this (except for implementing a
-        # binom function yourself, but that sucks)
-        # Be wary of there not being enough permutations, then the program will hang
-        # (see `while len(cards) < amount` in `create_cards`, that will never
-        # become True then
+        # scipy module is not installed, so `binom` can't be found. Ignore,
+        # there is nothing you can do to prevent this (except for
+        # implementing a binom function yourself, but that sucks)
+        # Be wary of there not being enough permutations, then the
+        # program will hang (see `while len(cards) < amount` in `create_cards`,
+        # that will never become True then
         pass
 
     return (numbers_per_card, amount_of_cards, maximum_number, print_shuffled)
 
 
 if __name__ == "__main__":
-    numbers_per_card, amount_of_cards, maximum_number, print_shuffled = parse_arguments(sys.argv[1:])
+    numbers_per_card, amount_of_cards, \
+        maximum_number, print_shuffled = parse_arguments(sys.argv[1:])
     cards = create_cards(
             numbers=numbers_per_card,
             amount=amount_of_cards,

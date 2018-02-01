@@ -79,14 +79,7 @@ class AdminUser(User):
         The admincode of the admin user
     """
     def __init__(self, username, admincode):
-        User.__init__(self, username)
-        if checker.is_valid_admincode(admincode):
-            self.admin = True
-        else:
-            raise InvalidAdminCode(
-                "User {0} tries to become admin"
-                .format(repr(self))
-            )
+        pass
 
     def remove_user(self, user_to_remove):
         # assert admincode is valid

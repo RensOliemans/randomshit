@@ -12,13 +12,14 @@ class Board(object):
     by whom, houses placed, etc.
     """
     CHANCE = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5, 39, 40, 40, 40]
-    COMMUNITY = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
+    COMMUNITY = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40,
+                 40]
     GO = 0
     JAIL = 10
     FREE_PARKING = 20
     GO_TO_JAIL = 30
 
-    def __init__(self, players: list):
+    def __init__(self, players):
         self.community = [i for i in self.COMMUNITY]
         self.chance = [i for i in self.CHANCE]
 
@@ -68,11 +69,11 @@ def validate_arguments(position, owned_by, houses, mortgaged):
     if owned_by is None and houses != 0:
         raise NoOwnerAndHousesException(
             "Tile {} has owner {}, yet there are {} houses."
-                .format(position, owned_by, houses))
+            .format(position, owned_by, houses))
     if houses != 0 and mortgaged:
         raise HousesYetMortgagedException(
             "Tile {} has {} houses yet is mortgaged"
-                .format(position, houses)
+            .format(position, houses)
         )
 
 

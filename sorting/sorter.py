@@ -4,6 +4,7 @@ This module is a personal implementation of sorting.
 import random
 import time
 
+
 def sort(items):
     """
     ``items`` is a list of integers that should be sorted.
@@ -12,8 +13,8 @@ def sort(items):
     first_elem = items.pop(0)
     stacks.append([first_elem])
     for other_elem in items:
-        if 
-
+        if True:
+            pass
 
 
 def main(length=10):

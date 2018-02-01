@@ -1,11 +1,10 @@
 import re
-import json
-
 indent_level = 4
 
 
 class Movie(object):
-    def __init__(self, title="", duration="", file_url="", tomatoes="", imdb=None, rating=None, part_of_serie=False):
+    def __init__(self, title="", duration="", file_url="", tomatoes="",
+                 imdb=None, rating=None, part_of_serie=False):
         self.title = title
         self.duration = duration
         self.file_url = file_url
@@ -109,23 +108,25 @@ def go_over_lines(filename="movies.txt"):
             if level == 1:
                 # contains a movie or series
                 is_serie = "series" in line
-                if is_serie:
-                    pass
-                else:
-                    # first store the current movie, since we now have a new movie
+                if not is_serie:
+                    # first store the current movie, since we now have a
+                    # new movie
                     movies.append(current_movie)
                     # then, parse the new movie
                     current_movie = Movie()
-                    current_movie.title, current_movie.duration = parse_first_line(line)
+                    current_movie.title, current_movie.duration = \
+                        parse_first_line(line)
 
             elif level == 2:
                 if is_serie:
                     movies.append(current_movie)
                     current_movie = Movie()
-                    current_movie.title, current_movie.duration = parse_first_line(line)
+                    current_movie.title, current_movie.duration = \
+                        parse_first_line(line)
                 else:
                     # contains the information about a movie
-                    current_movie = parse_movie_information(current_movie, line)
+                    current_movie = parse_movie_information(current_movie,
+                                                            line)
             elif level == 3:
                 # contains the information about a movie
                 current_movie = parse_movie_information(current_movie, line)
