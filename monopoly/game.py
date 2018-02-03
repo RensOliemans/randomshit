@@ -66,15 +66,14 @@ class Board(object):
 
 
 def validate_arguments(position, owned_by, houses, mortgaged):
-    if owned_by is None and houses != 0:
+    if owned_by is None and not houses == 0:
         raise NoOwnerAndHousesException(
             "Tile {} has owner {}, yet there are {} houses."
             .format(position, owned_by, houses))
-    if houses != 0 and mortgaged:
+    if mortgaged and not houses == 0:
         raise HousesYetMortgagedException(
             "Tile {} has {} houses yet is mortgaged"
-            .format(position, houses)
-        )
+            .format(position, houses))
 
 
 # Tiles maps the unique positions to a colour (the numbers) or something
@@ -115,4 +114,4 @@ class Move(object):
     def throw(self):
         dice1 = random.randrange(1, 7)
         dice2 = random.randrange(1, 7)
-        total = dice1 + dice2
+        return total
