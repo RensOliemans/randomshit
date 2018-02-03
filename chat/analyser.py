@@ -79,6 +79,27 @@ def average_times(iris, rens):
     return iris_time, rens_time, total_time
 
 
+def frequencies(iris, rens):
+
+    def frequency(person):
+        if len(person) == 0:
+            raise ValueError("Pooped zero times, can't calculate average time "
+                             "(are the names correct?)")
+        first_poop = person[0].date
+        last_poop = person[-1].date
+        difference = last_poop - first_poop
+
+        seconds_in_day = 24 * 60 * 60
+        seconds = difference.days * seconds_in_day + difference.seconds
+        days = seconds / seconds_in_day
+
+        return days / len(person)
+
+    iris_frequency = frequency(iris)
+    rens_frequency = frequency(rens)
+    return iris_frequency, rens_frequency
+
+
 def main():
     iris, rens = parse_file(FILENAME)
     print("Counter:\nIris: {}, Rens: {}, Total: {}\n"
@@ -88,6 +109,14 @@ def main():
     print("Average poop time (before {} will be counted as night, so "
           "+ 24 hours):\nIris: {}, Rens: {}, Total: {}"
           .format(NIGHT_HOUR, iris_time, rens_time, total_time))
+
+    iris_frequency, rens_frequency = frequencies(iris, rens)
+    print("Average frequency:\n"
+          "Iris: one poop per {:.2f} days, Rens: one poop per {:.2f} days"
+          .format(iris_frequency, rens_frequency))
+    print("Average frequency:\n"
+          "Iris: {:.2f} poops per day, Rens: {:.2f} poops per day"
+          .format(1 / iris_frequency, 1 / rens_frequency))
 
 
 class Day(object):
