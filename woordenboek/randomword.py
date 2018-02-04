@@ -11,12 +11,12 @@ DIR = "/home/rens/Projects/randomshit/Dictionaries/"
 def get_word(filename=EN, amount_of_words=5, length_of_words=10):
     words = list()
     with open(DIR + filename) as f:
-        words = [x[:-1] for x in f if len(x) == length_of_words]
+        words = [x[:-1] for x in f if len(x[:-1]) == length_of_words]
 
     amount = min(len(words), amount_of_words)
     print("Amount of words with length {}: {}\n".format(
           length_of_words, amount))
-    return sample(words, min(len(words), amount_of_words))
+    return sample(words, amount)
 
 
 def parse_arguments(argv):

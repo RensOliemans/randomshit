@@ -89,6 +89,8 @@ def frequencies(iris, rens):
         last_poop = person[-1].date
         difference = last_poop - first_poop
 
+        # datetime.timedelta has days and seconds (the difference between two
+        # dates), convert to days
         seconds_in_day = 24 * 60 * 60
         seconds = difference.days * seconds_in_day + difference.seconds
         days = seconds / seconds_in_day
