@@ -25,7 +25,7 @@
 
 
 ## Tools
-* `!gt<lang>` Google Translate, detect language to <lang>
+* `!gt<lang>` Google Translate, detect language to \<lang\>
 
 Examples:
 * `!gtnl` Dutch
