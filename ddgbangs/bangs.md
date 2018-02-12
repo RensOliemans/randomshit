@@ -26,7 +26,10 @@
 
 ## Tools
 * `!gt<lang>` Google Translate, detect language to <lang>
-  * _example_: !gtnl hello -> Google Trans
+Examples:
+* `!gtnl` Dutch
+* `!gten` English
+* `!gtes` Spanish
 
 #### Dictionaries
 * `!t` Thesaurus synonym search
