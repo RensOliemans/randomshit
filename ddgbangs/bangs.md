@@ -11,17 +11,17 @@
 * `!greddit` Google Reddit search
 * `!map` Google Maps search
 
-#### Bing
-* `!b` Bing search
-* `!bi` Bing images
-* `!bv` Bing videos
-
 
 ## Media
 * `!yt` YouTube
 * `!imdb` IMDB
 * `!rt` Rotten Tomatoes
 * `!mc` Metacritic
+
+## Gaming
+* `!steam` Steam
+* `!steamspy` Steamspy
+* `!gog` GOG
 
 
 ## Tools
@@ -63,3 +63,4 @@ Examples:
 * `!allerhande` Dutch recipes
 * `!bang` DuckDuckGo Bang overview
 * `!isup` downforeveryoneorjustme.com
+* `!azl` Azlyrics
