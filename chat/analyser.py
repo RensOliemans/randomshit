@@ -1,3 +1,4 @@
+# TODO: use parsedatetime to parse the date
 import datetime
 
 FILENAME = 'chat.txt'
@@ -29,6 +30,8 @@ def parse_line(line):
     if EMOTICON_UNI in line:
         # format of line:
         # mm/dd/yy, hh:mm - PERSON: CHAT_TEXT
+
+        # TODO: use parsedatetime to parse the date
 
         # metadata[0] = mm/dd/yy, hh:mm, metadata[1] = PERSON: CHAT_TEXT
         metadata = line.split(' - ')

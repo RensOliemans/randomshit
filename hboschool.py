@@ -119,8 +119,10 @@ def main(argv):
             verbose = True
         elif opt == "-r":
             rand = True
-    if to_play: play()
-    if to_guess: guess(quick=quick, verbose=verbose, rand=rand)
+    if to_play:
+        play()
+    if to_guess:
+        guess(quick=quick, verbose=verbose, rand=rand)
 
 
 if __name__ == "__main__":
