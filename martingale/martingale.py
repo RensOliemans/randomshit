@@ -1,4 +1,4 @@
-import random
+from random import random
 
 
 def start(amount, total_money, goal):
@@ -23,7 +23,7 @@ def start(amount, total_money, goal):
 
 
 def bet(amount):
-    if random.choice([True, False]):
+    if random() < 0.5:
         return (amount * 2, True)
     else:
         return (-amount, False)
