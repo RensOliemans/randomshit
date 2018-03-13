@@ -1,8 +1,6 @@
 import random
-import sys
-import getopt
-import os
 import time
+import begin
 
 
 def is_het_getal(dobbelstenen=1, getal=6):
@@ -12,47 +10,6 @@ def is_het_getal(dobbelstenen=1, getal=6):
     return worp == getal
 
 
-def get_args(argv):
-    program_file = os.path.basename(__file__)
-    usage_string = "Usage: python3 {} -w <worpen> -d <dobbelstenen> " \
-                   "-g <getal> [-t] [-h] [-e]".format(program_file)
-    help_string = usage_string + "\n" + "-t: time the program\n" + \
-                                        "-a: disable all results (faster)\n" + \
-                                        "-h: this help screen"
-
-    # default values
-    worpen = 10000
-    dobbelstenen = 5
-    getal = 12
-    timeit = False
-    all_results = True
-
-    try:
-        opts, args = getopt.getopt(argv, "w:d:g:tha")
-    except getopt.GetoptError as e:
-        print(usage_string)
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt == "-h":
-            print(help_string)
-            sys.exit()
-        elif opt == "-w":
-            worpen = int(arg)
-        elif opt == "-d":
-            dobbelstenen = int(arg)
-        elif opt == "-g":
-            getal = int(arg)
-        elif opt == "-t":
-            timeit = True
-        elif opt == "-a":
-            all_results = False
-
-    print("Instellingen: {} worpen met {} dobbelstenen, het doel is om {} te gooien"
-          .format(worpen, dobbelstenen, getal))
-    return (worpen, dobbelstenen, getal, timeit, all_results)
-
-
 def play(worpen, dobbelstenen, getal, timeit):
     start = time.time()
     result = ""
@@ -60,19 +17,27 @@ def play(worpen, dobbelstenen, getal, timeit):
     for _ in range(worpen):
         if is_het_getal(dobbelstenen=dobbelstenen, getal=getal):
             raak += 1
-    result += "Met {} dobbelstenen: {}.\tKans op {}: {:.2%}. ".format(
+    result += "Met {:<2} dobbelstenen: {:<5}\tKans op {}: {:.2%}.".format(
                    dobbelstenen, raak, getal, (raak / worpen))
     if timeit:
-        result += "Job took {} seconds.".format(time.time() - start)
+        result += "\tJob took {:.2} seconds.".format(time.time() - start)
     return result
 
 
-if __name__ == "__main__":
-    (worpen, dobbelstenen, getal, timeit, all_results) = get_args(argv=sys.argv[1:])
-    if all_results:
-        for x in range(dobbelstenen):
-            result = play(worpen, x + 1, getal, timeit)
+@begin.start(auto_convert=True)
+def main(w: 'worpen' = 10000, d: 'dobbelstenen' = 5, g: 'getal' = 12,
+         t: 'time' = True, a: 'disable all results' = True):
+    """
+    Probeert een getal te gooien met een aantal dobbelstenen, en kijkt
+    hoe vaak dat lukt
+    """
+    print("Instellingen: {} worpen met {} dobbelstenen, het doel is om {}"
+          "te gooien".format(w, d, g))
+
+    if a:
+        for x in range(d):
+            result = play(w, x + 1, g, t)
             print(result)
     else:
-        result = play(worpen, dobbelstenen, getal, timeit)
+        result = play(w, d, g, t)
         print(result)
