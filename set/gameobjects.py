@@ -89,7 +89,17 @@ class Deck(object):
     def __init__(self):
         self.cards = self.create_deck()
 
-    def create_deck(self):
+    def take(self, n=1):
+        cards = list()
+        for _ in range(n):
+            try:
+                cards.append(self.cards.pop())
+            except IndexError:
+                pass
+        return cards
+
+    @staticmethod
+    def create_deck():
         cards = list()
         for col in Colour:
             for form in Form:
@@ -98,15 +108,6 @@ class Deck(object):
                         card = Card(col, form, amount, fill)
                         cards.append(card)
         shuffle(cards)
-        return cards
-
-    def take(self, n=1):
-        cards = list()
-        for _ in range(n):
-            try:
-                cards.append(self.cards.pop())
-            except IndexError:
-                pass
         return cards
 
 

@@ -6,7 +6,7 @@ def game(rounds=1):
     total_sum = 0
     finished = 0
     start_time = time.time()
-    for n in range(rounds):
+    for _ in range(rounds):
         board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         game_over = False
         while not game_over:

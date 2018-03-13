@@ -111,7 +111,8 @@ class Move(object):
 
         self.old_position = board.get_player_position(player)
 
-    def throw(self):
+    @staticmethod
+    def throw():
         dice1 = random.randrange(1, 7)
         dice2 = random.randrange(1, 7)
         total = dice1 + dice2

@@ -13,7 +13,7 @@ def sort(items):
     first_elem = items.pop(0)
     stacks.append([first_elem])
     for other_elem in items:
-        if True:
+        if other_elem:
             pass
 
 

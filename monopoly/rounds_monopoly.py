@@ -33,7 +33,7 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     shuffle(chest)
 
     position = 0
-    for game in range(amount_of_games):
+    for _ in range(amount_of_games):
         roll = 0
         position = 0
         doubles = 0

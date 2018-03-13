@@ -161,7 +161,7 @@ if __name__ == "__main__":
         try:
             rounds = int(sys.argv[1])
             input_rounds = False
-        except:
+        except ValueError:
             input_rounds = True
     if input_rounds:
         rounds = int(input("How many rounds do you want to play? "))

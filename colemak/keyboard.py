@@ -40,28 +40,6 @@ def get_movements(keyboard):
     but this can be argued against.
     """
 
-    """
-    old, don't pay attention to it
-    LEFT = [j for i in [x[:5] for x in keyboard] for j in i]
-    RIGHT = [j for i in [x[5:] for x in keyboard] for j in i]
-
-    # Left fingers
-    L_PINKY = [x[0] for x in keyboard]
-    L_RING = [x[1] for x in keyboard]
-    L_MIDDLE = [x[2] for x in keyboard]
-    L_INDEX_1 = [x[3] for x in keyboard]
-    L_INDEX_2 = [x[4] for x in keyboard]
-    L_INDEX = L_INDEX_1 + L_INDEX_2
-
-    # Right fingers
-    R_PINKY = [x[-1] for x in keyboard]
-    R_RING = [x[-2] for x in keyboard]
-    R_MIDDLE = [x[-3] for x in keyboard]
-    R_INDEX_1 = [x[-4] for x in keyboard]
-    R_INDEX_2 = [x[-5] for x in keyboard]
-    R_INDEX = R_INDEX_1 + R_INDEX_2
-    """
-
     # Movement mapping
     # Middle keys (in Qwerty for example 'G' and 'H') take extra movement
     # top row

@@ -1,4 +1,5 @@
 import sys
+import logging
 import pandas as pd
 
 
@@ -18,12 +19,12 @@ def parse_excel(filename):
             artist = artists[index]
 
             songs.append(Song(title, artist, position, None))
-            if type(artist) == float:
+            if isinstance(artist, float):
                 print("Index:{}\tPosition:{}\tSong:{}\tArtist:{}"
                       .format(index, position, song, artist))
-        except:
+        except ValueError as e:
             # row isn't a song, has no pos variable
-            pass
+            logging.error(e)
 
     return songs
 
