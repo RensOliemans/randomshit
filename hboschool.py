@@ -1,13 +1,11 @@
 import random
-import sys
-import getopt
-import os
-
-min_number = 1
-max_number = 10
+import begin
 
 
-def play():
+""" This file is an atrocity """
+
+
+def play(min_number, max_number):
     counts = 0
     number = random.randrange(min_number, max_number + 1)
     guessed = False
@@ -25,7 +23,7 @@ def play():
             print("Correct! In {} tries!".format(counts))
 
 
-def guess(quick=False, verbose=False, rand=False):
+def guess(min_number, max_number, quick=False, verbose=False, rand=False):
     number = -1
     # make sure number is between min_number and max_number
     while number < min_number or number > max_number:
@@ -78,52 +76,15 @@ def guess(quick=False, verbose=False, rand=False):
             # if another instruction is used, nothing changes, so the AI asks the same number
 
 
-def main(argv):
-    global min_number, max_number
-    program_file = os.path.basename(__file__)
-    usage_string = "Usage: python3 {} -i <min_number> -a <max_number> (-rpgqv)".format(program_file)
-    help_string = usage_string + "\n" + \
-                  "-p = disable the play game (human plays)\n" + \
-                  "-g = disable the guess game (AI plays)\n" + \
-                  "-q = the guess game goes quickly\n" + \
-                  "-r = the AI uses random numbers instead of binsearch\n" + \
-                  "-v = the program prints the AI guesses\n" + \
-                  "-h = show this help menu"
-    try:
-        opts, args = getopt.getopt(argv, "rpgqhvi:a:", ["min=", "max="])
-    except getopt.GetoptError as e:
-        print(usage_string)
-        sys.exit(2)
-
-    # set min and max numbers
-    quick = False
-    to_play = True
-    to_guess = True
-    verbose = False
-    rand = False
-    for opt, arg in opts:
-        if opt == "-h":
-            print(help_string)
-            sys.exit()
-        elif opt in ("-i", "--min"):
-            min_number = int(arg)
-        elif opt in ("-a", "--max"):
-            max_number = int(arg)
-        elif opt == "-q":
-            quick = True
-        elif opt == "-p":
-            to_play = False
-        elif opt == "-g":
-            to_guess = False
-        elif opt == "-v":
-            verbose = True
-        elif opt == "-r":
-            rand = True
-    if to_play:
-        play()
-    if to_guess:
-        guess(quick=quick, verbose=verbose, rand=rand)
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
+@begin.start(auto_convert=True)
+def main(i: 'Min number' = 1, a: 'Max number' = 10,
+         p: 'Disable play game (human plays)' = True,
+         g: 'Disable guess game (AI plays)' = True,
+         q: 'Guess game goes quickly' = False,
+         r: 'AI uses random instead of binary search' = False,
+         v: 'Verbose' = True):
+    """ Guessing game, player and AI can play """
+    if p:
+        play(i, a)
+    if g:
+        guess(i, a, quick=q, verbose=v, rand=r)

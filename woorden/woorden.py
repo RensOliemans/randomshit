@@ -1,6 +1,10 @@
 import time
-import sys
+import begin
+import logging
 from itertools import combinations
+
+DICTS_DIR = '/home/rens/Projects/randomshit/Dictionaries/'
+FILENAME = DICTS_DIR + 'Dutch.dic'
 
 
 def find_word(word, words):
@@ -15,31 +19,25 @@ def find_combis(word, amount, words):
     return list(set(options))
 
 
-def main(filename):
-    with open(filename) as f:
-        words = [x for x in f]
-    word = input('Enter letters: ')
-
-    try:
-        amount = int(input('How many letters? '))
-    except ValueError:
-        print('No integer')
-        sys.exit(1)
-
+@begin.start(auto_convert=True)
+@begin.logging
+def main(w: 'Word', l: 'Amount of letters'=0):
+    """ Finds (Dutch) words with the given amount of letters. If 'l' is
+    not given, it will use all letters in the given word. """
     start = time.time()
-    combis = combinations(word, amount)
+    if l == 0:
+        l = len(w)
+
+    with open(FILENAME) as f:
+        words = list(f)
+
+    combis = combinations(w, l)
     total_options = list()
     for combi in combis:
         options = find_word(combi, words)
         if options:
             total_options.extend(options)
-            print('combinatie: {}. woorden: {}.'
-                  .format(''.join(combi), options))
-    print('{} seconds'.format(time.time() - start))
+            logging.debug('Combinatie: {}. Woorden: {}.'
+                          .format(''.join(combi), options))
+    logging.info('{:.4} seconds'.format(time.time() - start))
     print(total_options)
-
-
-if __name__ == '__main__':
-    dictionary_dic = '/home/rens/Projects/randomshit/Dictionaries/'
-    filename = 'Dutch.dic'
-    main(dictionary_dic + filename)

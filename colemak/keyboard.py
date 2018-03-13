@@ -149,6 +149,8 @@ def main():
     dict_dir_name = '/home/rens/Projects/randomshit/Dictionaries/'
     dictionaries = [dic for dic in os.listdir(dict_dir_name)
                     if dic[-4:] == '.dic']
+    # only dutch
+    dictionaries = ['English (British).dic', 'Dutch.dic']
 
     for dictionary in dictionaries:
         dictionary = dict_dir_name + dictionary

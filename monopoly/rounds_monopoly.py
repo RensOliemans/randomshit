@@ -1,7 +1,5 @@
-import sys
-import getopt
-import os
 import time
+import begin
 
 from random import shuffle, randrange
 
@@ -130,42 +128,9 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
           amount_of_games, rolls_per_game, time.time() - start))
 
 
-def parse_arguments(argv):
-    amount_of_games = 1000
-    rolls_per_game = 30
-    excel = False
-
-    program_file = os.path.basename(__file__)
-    usage_string = "Usage: python3 {} -g <amount_of_games> -r <rolls_per_game>"
-    usage_string = usage_string.format(program_file)
-
-    try:
-        opts, args = getopt.getopt(argv, "ehg:r:")
-    except getopt.GetoptError as e:
-        print(usage_string)
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt == "-h":
-            print(usage_string)
-            sys.exit()
-        elif opt == "-g":
-            try:
-                amount_of_games = int(arg)
-            except ValueError:
-                print("amount_of_games has to be a number")
-                sys.exit(2)
-        elif opt == "-r":
-            try:
-                rolls_per_game = int(arg)
-            except ValueError:
-                print("rolls_per_game has to be a number")
-                sys.exit(2)
-        elif opt == "-e":
-            excel = True
-    return amount_of_games, rolls_per_game, excel
-
-
-if __name__ == "__main__":
-    amount_of_games, rolls_per_game, excel = parse_arguments(sys.argv[1:])
-    run(amount_of_games, rolls_per_game, excel)
+@begin.start(auto_convert=True)
+def main(g: 'Amount of games' = 1000, r: 'Rolls per game' = 30,
+         e: 'Format Excel-friendly' = False):
+    """ Simulates monopoly games and outputs the frequency of the tiles
+    visited, including jail workings and chance/community cards. """
+    run(g, r, e)
