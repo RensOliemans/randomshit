@@ -11,7 +11,8 @@ class CSV(object):
     def __init__(self, csv_line):
         self.entries = self.parse_line(csv_line)
 
-    def parse_line(self, csv_line):
+    @staticmethod
+    def parse_line(csv_line):
         entries = csv_line.split(',')
         parsed_dict = dict()
         parsed_dict['date'] = entries[0]

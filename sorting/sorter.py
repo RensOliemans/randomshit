@@ -27,6 +27,6 @@ def main(length=10):
     print("List: {}. Starting sorting sequence."
           .format(items))
     start = time.time()
-    items = sort(items)
+    sort(items)
     print("Finished sorting. Sorted list: {}, time taken: {}"
           .format(items, (time.time() - start)))
