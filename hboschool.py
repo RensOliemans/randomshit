@@ -1,8 +1,7 @@
+""" This file is an atrocity """
+
 import random
 import begin
-
-
-""" This file is an atrocity """
 
 
 def play(min_number, max_number):
