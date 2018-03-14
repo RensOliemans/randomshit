@@ -1,8 +1,8 @@
 import begin
 import lxml.html
 import logging
-from urllib.request import urlopen
-from urllib.error import HTTPError
+import requests
+from concurrent.futures import ThreadPoolExecutor as Executor
 
 from random import sample
 
@@ -25,11 +25,7 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=10):
 
 def define(word):
     # get html page
-    try:
-        html = urlopen('https://en.oxforddictionaries.com/definition/' + word).read()
-    except HTTPError:
-        logging.error('ERROR: ' + word)
-        return []
+    html = requests.get('https://en.oxforddictionaries.com/definition/' + word).text
     # get definition items
     elements = lxml.html.fromstring(str(html)).find_class('ind')
     texts = [elem.text.strip() for elem in elements
@@ -44,12 +40,13 @@ def main(l: 'Length of words' = 10, a: 'Amount of words' = 5,
     words = get_word(filename=f, length_of_words=l, amount_of_words=a)
     logging.debug(words)
     if d:
-        defs = [define(word) if len(define(word)) > 0 else ''
-                for word in words]
+        with Executor(max_workers=4) as exe:
+            jobs = [exe.submit(define, word) for word in words]
+            defs = [job.result() for job in jobs]
         logging.debug(defs)
+        # take first definition
         defs = [defin[0] if len(defin) > 0 else '' for defin in defs]
         logging.debug(defs)
-        logging.debug('')
         print('\n'.join('\t'.join(elem) for elem in zip(words, defs)))
     else:
         print('\n'.join(words))
