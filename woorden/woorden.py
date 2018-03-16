@@ -40,4 +40,4 @@ def main(w: 'Word', l: 'Amount of letters'=0):
             logging.debug('Combinatie: {}. Woorden: {}.'
                           .format(''.join(combi), options))
     logging.info('{:.4} seconds'.format(time.time() - start))
-    print(total_options)
+    print(sorted(set(total_options)))

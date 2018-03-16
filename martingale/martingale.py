@@ -28,5 +28,6 @@ def start(a: 'Amount' = 1, t: 'Total_money' = 10000, g: 'Goal' = 50000):
             if losses > 12:
                 print("{} losses in a row, betting amount: {:,}"
                       .format(losses, a))
+                print(money)
     print(money)
     return money

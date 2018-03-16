@@ -25,9 +25,10 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=10):
 
 def define(word):
     # get html page
-    html = requests.get('https://en.oxforddictionaries.com/definition/' + word).text
+    html = requests.get('https://en.oxforddictionaries.com/definition/' + word)
     # get definition items
-    elements = lxml.html.fromstring(str(html)).find_class('ind')
+    class_name = 'ind'
+    elements = lxml.html.fromstring(html.text).find_class(class_name)
     texts = [elem.text.strip() for elem in elements
              if elem.text is not None]
     return texts
@@ -45,7 +46,8 @@ def main(l: 'Length of words' = 10, a: 'Amount of words' = 5,
             defs = [job.result() for job in jobs]
         logging.debug(defs)
         # take first definition
-        defs = [defin[0] if len(defin) > 0 else '' for defin in defs]
+        defs = [defin[0] if len(defin) > 0 else ''
+                for defin in defs]
         logging.debug(defs)
         print('\n'.join('\t'.join(elem) for elem in zip(words, defs)))
     else:

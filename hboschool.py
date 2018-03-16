@@ -25,9 +25,9 @@ def play(min_number, max_number):
 def guess(min_number, max_number, quick=False, verbose=False, rand=False):
     number = -1
     # make sure number is between min_number and max_number
-    while number < min_number or number > max_number:
-        number = int(input("What's the number the AI should guess? "))
     possible_numbers = list(range(min_number, max_number + 1))
+    while number not in possible_numbers:
+        number = int(input("What's the number the AI should guess? "))
     correct = False
     counts = 0
     while not correct:
@@ -48,12 +48,14 @@ def guess(min_number, max_number, quick=False, verbose=False, rand=False):
                 counts += 1
                 if verbose:
                     print("The AI guessed {}".format(to_guess_number))
-                possible_numbers = list(range(min(possible_numbers), to_guess_number))
+                possible_numbers = list(range(min(possible_numbers),
+                                        to_guess_number))
             elif number > to_guess_number:
                 counts += 1
                 if verbose:
                     print("The AI guessed {}".format(to_guess_number))
-                possible_numbers = list(range(to_guess_number + 1, max(possible_numbers) + 1))
+                possible_numbers = list(range(to_guess_number + 1,
+                                        max(possible_numbers) + 1))
             elif number == to_guess_number:
                 counts += 1
                 correct = True
@@ -61,18 +63,22 @@ def guess(min_number, max_number, quick=False, verbose=False, rand=False):
                     print("The AI guessed {}".format(to_guess_number))
                 print("{} tries".format(counts))
         else:
-            answer = input("The AI guessed {}. Say 'lower', 'higher', or 'yes' ".format(to_guess_number))
+            answer = input("The AI guessed {}. Say 'lower' 'higher', or 'yes' "
+                           .format(to_guess_number))
             if answer.lower() == "lower":
                 counts += 1
-                possible_numbers = list(range(min(possible_numbers), to_guess_number))
+                possible_numbers = list(range(min(possible_numbers),
+                                        to_guess_number))
             elif answer.lower() == "higher":
                 counts += 1
-                possible_numbers = list(range(to_guess_number + 1, max(possible_numbers) + 1))
+                possible_numbers = list(range(to_guess_number + 1,
+                                        max(possible_numbers) + 1))
             elif answer.lower() == "yes":
                 counts += 1
                 correct = True
                 print("{} tries".format(counts))
-            # if another instruction is used, nothing changes, so the AI asks the same number
+            # if another instruction is used, nothing changes, so the AI asks
+            # the same number
 
 
 @begin.start(auto_convert=True)
