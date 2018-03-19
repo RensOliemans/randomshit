@@ -26,7 +26,7 @@ class Dice(object):
         for i, val in enumerate(weight):
             self.normalised_weight[i] = val / sum_weight
 
-    def roll(self, times=1):
+    def roll(self, times=1) -> list():
         rolls = list()
         for _ in range(times):
             rolls.append(choice(self.faces, p=self.normalised_weight))
