@@ -8,13 +8,9 @@ def heuristic(a, b):
 
 
 def a_star_search(graph, start, goal):
-    # comments with explanation assume worst-case scenario: start and goal are
-    # maximal distance with high cost (cost is actually irrelevant for
-    # time complexity)
     frontier = PriorityQueue()
     # frontier saves all nodes
     frontier.put((0, start))
-    # frontier.put(start, 0)
     # came_from saves all nodes
     came_from = {}
     # cost_so_far saves all nodes
@@ -25,7 +21,6 @@ def a_star_search(graph, start, goal):
     while not frontier.empty():
         # gets executed for every node
         current = frontier.get()[1]
-        # current = frontier.get()
 
         if current == goal:
             break
@@ -36,9 +31,9 @@ def a_star_search(graph, start, goal):
             # gets executed for every neighbor
             if next not in cost_so_far or new_cost < cost_so_far[next]:
                 cost_so_far[next] = new_cost
+                # add in frontier with priority, low heuristic is better
                 priority = new_cost + heuristic(goal, next)
                 frontier.put((priority, next))
-                # frontier.put(next, priority)
                 came_from[next] = current
 
     return came_from, cost_so_far
