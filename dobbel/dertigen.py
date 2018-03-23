@@ -1,6 +1,6 @@
 from dice import Dice
 from scipy.special import comb
-from itertools import combinations_with_replacement
+from itertools import permutations
 
 
 def spel():
@@ -29,7 +29,7 @@ def kans_10_of_lager():
 
 
 def kans_boven_30():
-    all_throws = list(combinations_with_replacement(range(7), 6))
+    all_throws = list(permutations(range(7), 6))
     possible_options = len(all_throws)
     good_options = len([x for x in all_throws if sum(x) > 30])
     return good_options / possible_options
