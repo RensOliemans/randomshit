@@ -9,11 +9,12 @@ def heuristic(a, b):
 
 def a_star_search(graph, start, goal):
     frontier = PriorityQueue()
-    # frontier saves all nodes
+    # frontier contains all nodes
     frontier.put((0, start))
-    # came_from saves all nodes
+
+    # came_from saves the 'previous' node (how to get there, basically)
     came_from = {}
-    # cost_so_far saves all nodes
+    # cost_so_far saves the cost of getting to a node
     cost_so_far = {}
     came_from[start] = None
     cost_so_far[start] = 0
