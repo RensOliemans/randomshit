@@ -64,7 +64,7 @@ def distance(word, movements):
     as input and returns the 'cost' of moving your fingers in order to type
     the word
     """
-    distance = 0
+    dist = 0
     prev_letter = None
     for letter in word:
         letter = letter.upper()
@@ -72,13 +72,13 @@ def distance(word, movements):
             # the letter is another letter than the previous one,
             # so increase distance
             try:
-                distance += movements[letter]
+                dist += movements[letter]
             except KeyError:
                 # key isn't in regular alphabet (number or punctuation prob)
                 # just skip
                 pass
         prev_letter = letter
-    return distance
+    return dist
 
 
 def distances(words, movements):
@@ -88,15 +88,15 @@ def distances(words, movements):
 
     { word: movement_cost }
     """
-    distances = dict()
+    dists = dict()
     for word in words:
-        distances[word] = distance(word, movements)
-    return distances
+        dists[word] = distance(word, movements)
+    return dists
 
 
 def dic_to_words(filename):
-    with open(filename) as f:
-        return [word.split('/')[0] for word in f]
+    with open(filename) as dictionary:
+        return [word.split('/')[0] for word in dictionary]
 
 
 def calculate_avg_moving(words, keyboard):

@@ -2,8 +2,8 @@
 This module represents a dice object. The dice can have any amount of faces
 and can be weighted or not.
 """
-from numpy.random import choice
 from fractions import Fraction
+from numpy.random import choice
 
 
 class Dice(object):

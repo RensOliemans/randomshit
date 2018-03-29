@@ -18,7 +18,7 @@ def play(worpen, dobbelstenen, getal, timeit):
         if is_het_getal(dobbelstenen=dobbelstenen, getal=getal):
             raak += 1
     result += "Met {:<2} dobbelstenen: {:<5}\tKans op {}: {:.2%}.".format(
-                   dobbelstenen, raak, getal, (raak / worpen))
+        dobbelstenen, raak, getal, (raak / worpen))
     if timeit:
         result += "\tJob took {:.2} seconds.".format(time.time() - start)
     return result

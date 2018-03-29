@@ -1,7 +1,8 @@
 import time
-import begin
 import logging
 from itertools import combinations
+
+import begin
 
 DICTS_DIR = '/home/rens/Projects/randomshit/Dictionaries/'
 FILENAME = DICTS_DIR + 'Dutch.dic'
@@ -21,7 +22,7 @@ def find_combis(word, amount, words):
 
 @begin.start(auto_convert=True)
 @begin.logging
-def main(w: 'Word', l: 'Amount of letters'=0):
+def main(w: 'Word', l: 'Amount of letters' = 0):
     """ Finds (Dutch) words with the given amount of letters. If 'l' is
     not given, it will use all letters in the given word. """
     start = time.time()
@@ -37,7 +38,6 @@ def main(w: 'Word', l: 'Amount of letters'=0):
         options = find_word(combi, words)
         if options:
             total_options.extend(options)
-            logging.debug('Combinatie: {}. Woorden: {}.'
-                          .format(''.join(combi), options))
+            logging.debug('Combinatie: %s. Woorden: %s.', ''.join(combi), options)
     logging.info('{:.4} seconds'.format(time.time() - start))
     print(sorted(set(total_options)))

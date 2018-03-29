@@ -1,6 +1,5 @@
-import random
-
-from random import shuffle
+from random import shuffle, randrange
+from collections import namedtuple
 
 from exceptions import NoOwnerAndHousesException, HousesYetMortgagedException
 
@@ -88,15 +87,7 @@ TILES = {
 }
 
 
-class Tile(object):
-    def __init__(self, position, owned_by, houses, mortgaged):
-        validate_arguments(position, owned_by, houses, mortgaged)
-        self.position = position
-        self.colour = 0
-        self.price = 0
-        self.owned_by = owned_by
-        self.houses = houses
-        self.mortgaged = mortgaged
+Tile = namedtuple('Tile', 'position owned_by houses mortgaged colour price')
 
 
 class Move(object):
@@ -113,7 +104,7 @@ class Move(object):
 
     @staticmethod
     def throw():
-        dice1 = random.randrange(1, 7)
-        dice2 = random.randrange(1, 7)
+        dice1 = randrange(1, 7)
+        dice2 = randrange(1, 7)
         total = dice1 + dice2
         return total

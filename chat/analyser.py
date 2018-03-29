@@ -1,4 +1,4 @@
-# TODO: use parsedatetime to parse the date
+""" Analyses Whatsapp chats hehe. """
 import datetime
 
 FILENAME = 'chat.txt'
@@ -11,9 +11,15 @@ NIGHT_HOUR = 4
 
 
 def parse_file(filename):
-    f = open(filename)
+    """
+    Parses an entire file.
+
+    :param filename: name of the file
+    :returns two lists of days, belonging to two people
+    """
+    chat = open(filename)
     iris, rens = list(), list()
-    for line in f:
+    for line in chat:
         day = parse_line(line)
         if day is None:
             continue
@@ -25,13 +31,17 @@ def parse_file(filename):
 
 
 def parse_line(line):
+    """
+    Parses a single line.
+
+    :param line: a single line in a txt file
+    :returns a Day object if it is a valid line, None otherwise
+    """
     date = None
     person = None
     if EMOTICON_UNI in line:
         # format of line:
         # mm/dd/yy, hh:mm - PERSON: CHAT_TEXT
-
-        # TODO: use parsedatetime to parse the date
 
         # metadata[0] = mm/dd/yy, hh:mm, metadata[1] = PERSON: CHAT_TEXT
         metadata = line.split(' - ')
@@ -54,26 +64,31 @@ def parse_line(line):
         date = datetime.datetime(year, month, day, hour, minute)
     if date and person:
         return Day(date, person)
+    return None
 
 
 def average_times(iris, rens):
+    """
+    Determines the average times of the day two people took a shit.
+    """
     total = iris + rens
 
     def average_time(person):
-        if len(person) == 0:
+        """ Determines the average shit time of a single person. """
+        if not person:
             raise ValueError("Pooped zero times, can't calculate average time "
                              "(are the names correct?)")
         times = list()
         for poop in person:
-            hour = poop.date.hour
-            if hour <= NIGHT_HOUR:
+            poop_hour = poop.date.hour
+            if poop_hour <= NIGHT_HOUR:
                 # in the night, add 24 hours so it's counted as night
-                hour = hour + 24
-            minutes = hour * 60 + poop.date.minute
-            times.append(minutes)
+                poop_hour = poop_hour + 24
+            poop_minutes = poop_hour * 60 + poop.date.minute
+            times.append(poop_minutes)
         avg_minutes = sum(times) / len(times)
-        h, m = divmod(avg_minutes, 60)
-        return datetime.time(hour=int(h), minute=int(m))
+        hour, minute = divmod(avg_minutes, 60)
+        return datetime.time(hour=int(hour), minute=int(minute))
 
     iris_time = average_time(iris)
     rens_time = average_time(rens)
@@ -83,9 +98,11 @@ def average_times(iris, rens):
 
 
 def frequencies(iris, rens):
+    """ Determines the frequencies of two people. """
 
     def frequency(person):
-        if len(person) == 0:
+        """ Determines the frequencies of one person. """
+        if not person:
             raise ValueError("Pooped zero times, can't calculate average time "
                              "(are the names correct?)")
         first_poop = person[0].date
@@ -106,6 +123,7 @@ def frequencies(iris, rens):
 
 
 def main():
+    """ Main method. """
     iris, rens = parse_file(FILENAME)
     print("Counter:\nIris: {}, Rens: {}, Total: {}\n"
           .format(len(iris), len(rens), len(iris + rens)))
@@ -125,15 +143,16 @@ def main():
 
 
 class Day(object):
+    """ Represents a single day, belonging to a person. """
     def __init__(self, date, person):
         self.date = date
         self.person = person
 
     def __str__(self):
         return "{} on {} at {}".format(
-                self.person,
-                str(self.date.time()),
-                str(self.date.date()))
+            self.person,
+            str(self.date.time()),
+            str(self.date.date()))
 
     def __repr__(self):
         return str(self)

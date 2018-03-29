@@ -1,7 +1,22 @@
 import time
+from random import shuffle, randrange
+
 import begin
 
-from random import shuffle, randrange
+
+# these all refer to the locations on the board
+JAIL = 10
+GO_TO_JAIL = 30
+CHANCES = [7, 22, 26]
+CHESTS = [2, 17, 34]
+UTILITIES = [12, 28]
+RAILROADS = [5, 15, 25, 35]
+
+# these refer to the location jumping the chance/chest cards send you to
+CHANCE_CARDS = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5,
+                39, 40, 40, 40]
+CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
+               40, 40, 40, 40]
 
 
 def run(amount_of_games=1000, rolls_per_game=30, excel=False):
@@ -9,20 +24,6 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     # there are 40 tiles in a monopoly board, so the indices are 0-39
     tiles = list(range(40))
     tiles_count = dict()
-
-    # these all refer to the locations on the board
-    JAIL = 10
-    GO_TO_JAIL = 30
-    CHANCES = [7, 22, 26]
-    CHESTS = [2, 17, 34]
-    UTILITIES = [12, 28]
-    RAILROADS = [5, 15, 25, 35]
-
-    # these refer to the location jumping the chance/chest cards send you to
-    CHANCE_CARDS = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5,
-                    39, 40, 40, 40]
-    CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
-                   40, 40, 40, 40]
 
     for tile in tiles:
         tiles_count[tile] = 0
@@ -119,13 +120,13 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     for item in tiles_count:
         if excel:
             result += "{};{:.3%}\n".format(
-                      item, (tiles_count[item] / throws))
+                item, (tiles_count[item] / throws))
         else:
             result += "Item: {}, chance: {:.3%}\n".format(
-                       item, (tiles_count[item] / throws))
+                item, (tiles_count[item] / throws))
     print(result)
     print("Running {:,} games (with {} rounds) took {:.3} seconds".format(
-          amount_of_games, rolls_per_game, time.time() - start))
+        amount_of_games, rolls_per_game, time.time() - start))
 
 
 @begin.start(auto_convert=True)

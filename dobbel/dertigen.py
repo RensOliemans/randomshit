@@ -1,12 +1,13 @@
-from dice import Dice
 from itertools import product
+
+from dice import Dice
 
 
 def spel():
     hand = list()
     for _ in range(6):
-        d = Dice()
-        hand.append(d)
+        dice = Dice()
+        hand.append(dice)
     worp = []
     for dobbelsteen in hand:
         worp.append(dobbelsteen.rolls(1)[0])

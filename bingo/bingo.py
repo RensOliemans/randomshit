@@ -1,5 +1,7 @@
-import begin
+""" Creates some random bingo cards. """
 from random import sample, shuffle
+
+import begin
 
 
 def create_cards(numbers, amount, maximum):

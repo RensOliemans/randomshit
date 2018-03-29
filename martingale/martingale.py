@@ -1,12 +1,12 @@
-import begin
 from random import random
+
+import begin
 
 
 def bet(amount):
     if random() < 0.5:
         return (amount * 2, True)
-    else:
-        return (-amount, False)
+    return (-amount, False)
 
 
 @begin.start(auto_convert=True)
