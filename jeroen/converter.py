@@ -1,8 +1,7 @@
+from time import time
 from PIL import Image
 from graph import Graph
-from implementation import reconstruct_path
-from astar import a_star_search
-from time import time
+from astar import a_star_search, reconstruct_path
 
 
 begin = time()

@@ -26,15 +26,26 @@ def a_star_search(graph, start, goal):
         if current == goal:
             break
 
-        for next in graph.neighbors(current):
-            new_cost = cost_so_far[current] + graph.cost(current, next)
-            next = tuple(next)
+        for next_node in graph.neighbors(current):
+            new_cost = cost_so_far[current] + graph.cost(current, next_node)
+            next_node = tuple(next_node)
             # gets executed for every neighbor
-            if next not in cost_so_far or new_cost < cost_so_far[next]:
-                cost_so_far[next] = new_cost
+            if next_node not in cost_so_far or new_cost < cost_so_far[next_node]:
+                cost_so_far[next_node] = new_cost
                 # add in frontier with priority, low heuristic is better
-                priority = new_cost + heuristic(goal, next)
-                frontier.put((priority, next))
-                came_from[next] = current
+                priority = new_cost + heuristic(goal, next_node)
+                frontier.put((priority, next_node))
+                came_from[next_node] = current
 
     return came_from, cost_so_far
+
+
+def reconstruct_path(came_from, start, goal):
+    current = goal
+    path = []
+    while current != start:
+        path.append(current)
+        current = came_from[current]
+    path.append(start)  # optional
+    path.reverse()  # optional
+    return path
