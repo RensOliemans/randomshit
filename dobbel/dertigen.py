@@ -1,22 +1,29 @@
+""" This module plays the game 'dertigen', a dice game. """
 import logging
 from itertools import product
 
 import begin
 from dice import Dice
 
+AMOUNT = 4
+
 
 def spel(minimum=False):
+    """ This method plays the actual game.
+    :param minimum: whether to go for the minimum score possible
+
+    :return: (keep, sum(keep)), with keep = the hand that is kept, and
+             sum(keep) being the score.
+    """
     die = Dice()
     keep = []
-    while len(keep) < 6:
+    while len(keep) < AMOUNT:
         worp = []
-        for _ in range(6 - len(keep)):
+        for _ in range(AMOUNT - len(keep)):
             worp.append(die.roll()[0])
-        keep_round = decide_minimum(worp, keep) if minimum \
+        keep_round = decide_minimum(worp, keep, AMOUNT + 4) if minimum \
             else decide_maximum(worp)
-        logging.debug(worp)
-        logging.debug(keep_round)
-        logging.debug('\n')
+        logging.debug('Throw: %s. to_keep: %s', worp, keep_round)
         keep += keep_round
     return (keep, sum(keep))
 
@@ -55,9 +62,10 @@ def decide_maximum(dice):
     return hand or [max(dice)]
 
 
-def decide_minimum(dice, chosen=None):
+def decide_minimum(dice, chosen=None, goal=10):
+    """ The same as decide_maximum(), but then for a minimal score. """
     chosen = chosen or []
-    if sum(dice) + sum(chosen) <= 10:
+    if sum(dice) + sum(chosen) <= goal:
         return dice
 
     amount = len(dice)
@@ -77,6 +85,7 @@ def decide_minimum(dice, chosen=None):
 
 
 def kans_10_of_lager():
+    """ What's the chance of throwing <= 10 with 6 dice in 1 try? """
     all_throws = list(product(*[range(1, 7) for _ in range(6)]))
     possible_options = len(all_throws)
     good_options = len([x for x in all_throws if sum(x) <= 10])
@@ -84,6 +93,7 @@ def kans_10_of_lager():
 
 
 def kans_boven_30():
+    """ What's the chance of throwing > 30 with 6 dice in 1 try? """
     all_throws = list(product(*[range(1, 7) for _ in range(6)]))
     possible_options = len(all_throws)
     good_options = len([x for x in all_throws if sum(x) > 30])
@@ -92,6 +102,11 @@ def kans_boven_30():
 
 @begin.start(auto_convert=True)
 @begin.logging
-def main(minimum: 'Minimum strategy' = False):
+def main(minimum: 'Minimum strategy' = False, runs=1):
     '''Spel'''
-    print(spel(minimum=minimum))
+    total = 0
+    for _ in range(runs):
+        hand, score = spel(minimum=minimum)
+        logging.info('%s, %s', hand, score)
+        total += score
+    print('Average: {:.2f}'.format(total / runs))
