@@ -32,7 +32,7 @@ def main(w: 'worpen' = 10000, d: 'dobbelstenen' = 5, g: 'getal' = 12,
     hoe vaak dat lukt
     """
     print("Instellingen: {} worpen met {} dobbelstenen, het doel is om {}"
-          "te gooien".format(w, d, g))
+          " te gooien".format(w, d, g))
 
     if a:
         for x in range(d):

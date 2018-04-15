@@ -143,7 +143,5 @@ def main(minimum: "Force minimum strategy" = False,
         logging.info('%s, %s', hand, score)
         logging.debug('\n')
         total += score
-        if score == 36:
-            logging.info('36')
     if runs > 1:
         print('Average: {:.2f}'.format(total / runs))
