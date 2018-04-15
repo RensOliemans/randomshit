@@ -17,7 +17,7 @@ def spel(force_minimum=False, force_maximum=False):
     """
     if force_maximum and force_minimum:
         logging.error("Can't force both minimum and maximum")
-        return
+        raise ValueError("Can't force both minimum and maximum")
     die = Dice()
     keep = []
     worp = []
@@ -32,7 +32,7 @@ def spel(force_minimum=False, force_maximum=False):
 
     while len(keep) < AMOUNT:
         if (minimum and not force_minimum and
-           sum(keep) + sum([1] * (AMOUNT - len(keep) - 1)) + min(worp) > 10):
+                sum(keep) + sum([1] * (AMOUNT - len(keep) - 1)) + min(worp) > 10):
             if not force_maximum:
                 # this is hardcoded TODO
                 logging.debug('Changing strategy to max, hand is %s and throw: %s',
@@ -49,17 +49,15 @@ def spel(force_minimum=False, force_maximum=False):
     return (keep, sum(keep))
 
 
-"""
-def determine_strategy(hand):
-    all_throws = list(product(*[range(1, 7) for _ in range(len(hand))]))
-    high_throws = [x for x in all_throws if sum(x) > 30]
-    low_throws = [x for x in all_throws if sum(x) <= 10]
-    maximum_choice = decide_maximum(hand)
-    minimum_choice = decide_minimum(hand)
-    rest_max = [x for x in hand if x not in maximum_choice]
-    rest_min = [x for x in hand if x not in minimum_choice]
-    return False
-"""
+# def determine_strategy(hand):
+#     all_throws = list(product(*[range(1, 7) for _ in range(len(hand))]))
+#     high_throws = [x for x in all_throws if sum(x) > 30]
+#     low_throws = [x for x in all_throws if sum(x) <= 10]
+#     maximum_choice = decide_maximum(hand)
+#     minimum_choice = decide_minimum(hand)
+#     rest_max = [x for x in hand if x not in maximum_choice]
+#     rest_min = [x for x in hand if x not in minimum_choice]
+#     return False
 
 
 def decide_maximum(dice):
