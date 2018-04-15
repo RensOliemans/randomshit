@@ -5,27 +5,61 @@ from itertools import product
 import begin
 from dice import Dice
 
-AMOUNT = 4
+AMOUNT = 6
 
 
-def spel(minimum=False):
+def spel(force_minimum=False, force_maximum=False):
     """ This method plays the actual game.
     :param minimum: whether to go for the minimum score possible
 
     :return: (keep, sum(keep)), with keep = the hand that is kept, and
              sum(keep) being the score.
     """
+    if force_maximum and force_minimum:
+        logging.error("Can't force both minimum and maximum")
+        return
     die = Dice()
     keep = []
+    worp = []
+    for _ in range(AMOUNT - len(keep)):
+        worp.append(die.roll()[0])
+    minimum = (
+        # this is hardcoded TODO
+        not force_maximum and
+        (force_minimum or
+         (worp.count(1) >= 2 and worp.count(6) < 2) or
+         (worp.count(6) == 0 and worp.count(1) > 0)))
+
     while len(keep) < AMOUNT:
-        worp = []
-        for _ in range(AMOUNT - len(keep)):
-            worp.append(die.roll()[0])
+        if (minimum and not force_minimum and
+           sum(keep) + sum([1] * (AMOUNT - len(keep) - 1)) + min(worp) > 10):
+            if not force_maximum:
+                # this is hardcoded TODO
+                logging.debug('Changing strategy to max, hand is %s and throw: %s',
+                              keep, worp)
+                minimum = False
+
         keep_round = decide_minimum(worp, keep, AMOUNT + 4) if minimum \
             else decide_maximum(worp)
         logging.debug('Throw: %s. to_keep: %s', worp, keep_round)
         keep += keep_round
+        worp = []
+        for _ in range(AMOUNT - len(keep)):
+            worp.append(die.roll()[0])
     return (keep, sum(keep))
+
+
+"""
+def determine_strategy(hand):
+    all_throws = list(product(*[range(1, 7) for _ in range(len(hand))]))
+    high_throws = [x for x in all_throws if sum(x) > 30]
+    low_throws = [x for x in all_throws if sum(x) <= 10]
+    maximum_choice = decide_maximum(hand)
+    minimum_choice = decide_minimum(hand)
+    rest_max = [x for x in hand if x not in maximum_choice]
+    rest_min = [x for x in hand if x not in minimum_choice]
+    return False
+"""
 
 
 def decide_maximum(dice):
@@ -64,7 +98,7 @@ def decide_maximum(dice):
 
 def decide_minimum(dice, chosen=None, goal=10):
     """ The same as decide_maximum(), but then for a minimal score. """
-    chosen = chosen or []
+    chosen = chosen or [1] * (AMOUNT - len(dice))
     if sum(dice) + sum(chosen) <= goal:
         return dice
 
@@ -102,11 +136,16 @@ def kans_boven_30():
 
 @begin.start(auto_convert=True)
 @begin.logging
-def main(minimum: 'Minimum strategy' = False, runs=1):
+def main(minimum: "Force minimum strategy" = False,
+         maximum: "Force maximum strategy" = False, runs=1):
     '''Spel'''
     total = 0
     for _ in range(runs):
-        hand, score = spel(minimum=minimum)
+        hand, score = spel(force_minimum=minimum, force_maximum=maximum)
         logging.info('%s, %s', hand, score)
+        logging.debug('\n')
         total += score
-    print('Average: {:.2f}'.format(total / runs))
+        if score == 36:
+            logging.info('36')
+    if runs > 1:
+        print('Average: {:.2f}'.format(total / runs))
