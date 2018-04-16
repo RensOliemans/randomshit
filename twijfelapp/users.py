@@ -58,7 +58,9 @@ class RegularUser(User):
         return self.username
 
     def add_question(self, question):
-        assert isinstance(question, data.Question)
+        if not isinstance(question, data.Question):
+            raise AssertionError("Given 'question' was actually not a "
+                                 "question")
         if not question.user == self:
             raise OtherUserError(
                 "User that owns the question: {0}. User that "

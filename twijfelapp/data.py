@@ -10,7 +10,8 @@ class Question():
     def __init__(self, title, answers, user):
         self.title = title
         self.answers = answers
-        assert isinstance(user, users.RegularUser)
+        if not isinstance(user, users.RegularUser):
+            raise AssertionError()
         self.user = user
         self.date = time.strftime("%x")
 
@@ -60,8 +61,8 @@ class Question():
         :arg RegularUser answer_user:
             User that answered the question.
         """
-        assert answer in self.answers
-        # assert answer_user exists
+        if answer not in self.answers:
+            raise AssertionError("Answer is not in possible answers")
         self.answered = True
         self.chosen_answer = answer
         self.answer_user = answer_user

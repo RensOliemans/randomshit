@@ -1,9 +1,22 @@
-import sys
-import getopt
-import os
 import time
-
 from random import shuffle, randrange
+
+import begin
+
+
+# these all refer to the locations on the board
+JAIL = 10
+GO_TO_JAIL = 30
+CHANCES = [7, 22, 26]
+CHESTS = [2, 17, 34]
+UTILITIES = [12, 28]
+RAILROADS = [5, 15, 25, 35]
+
+# these refer to the location jumping the chance/chest cards send you to
+CHANCE_CARDS = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5,
+                39, 40, 40, 40]
+CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
+               40, 40, 40, 40]
 
 
 def run(amount_of_games=1000, rolls_per_game=30, excel=False):
@@ -11,20 +24,6 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     # there are 40 tiles in a monopoly board, so the indices are 0-39
     tiles = list(range(40))
     tiles_count = dict()
-
-    # these all refer to the locations on the board
-    JAIL = 10
-    GO_TO_JAIL = 30
-    CHANCES = [7, 22, 26]
-    CHESTS = [2, 17, 34]
-    UTILITIES = [12, 28]
-    RAILROADS = [5, 15, 25, 35]
-
-    # these refer to the location jumping the chance/chest cards send you to
-    CHANCE_CARDS = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5,
-                    39, 40, 40, 40]
-    CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
-                   40, 40, 40, 40]
 
     for tile in tiles:
         tiles_count[tile] = 0
@@ -35,7 +34,7 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     shuffle(chest)
 
     position = 0
-    for game in range(amount_of_games):
+    for _ in range(amount_of_games):
         roll = 0
         position = 0
         doubles = 0
@@ -121,51 +120,18 @@ def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     for item in tiles_count:
         if excel:
             result += "{};{:.3%}\n".format(
-                      item, (tiles_count[item] / throws))
+                item, (tiles_count[item] / throws))
         else:
             result += "Item: {}, chance: {:.3%}\n".format(
-                       item, (tiles_count[item] / throws))
+                item, (tiles_count[item] / throws))
     print(result)
     print("Running {:,} games (with {} rounds) took {:.3} seconds".format(
-          amount_of_games, rolls_per_game, time.time() - start))
+        amount_of_games, rolls_per_game, time.time() - start))
 
 
-def parse_arguments(argv):
-    amount_of_games = 1000
-    rolls_per_game = 30
-    excel = False
-
-    program_file = os.path.basename(__file__)
-    usage_string = "Usage: python3 {} -g <amount_of_games> -r <rolls_per_game>"
-    usage_string = usage_string.format(program_file)
-
-    try:
-        opts, args = getopt.getopt(argv, "ehg:r:")
-    except getopt.GetoptError as e:
-        print(usage_string)
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt == "-h":
-            print(usage_string)
-            sys.exit()
-        elif opt == "-g":
-            try:
-                amount_of_games = int(arg)
-            except ValueError:
-                print("amount_of_games has to be a number")
-                sys.exit(2)
-        elif opt == "-r":
-            try:
-                rolls_per_game = int(arg)
-            except ValueError:
-                print("rolls_per_game has to be a number")
-                sys.exit(2)
-        elif opt == "-e":
-            excel = True
-    return amount_of_games, rolls_per_game, excel
-
-
-if __name__ == "__main__":
-    amount_of_games, rolls_per_game, excel = parse_arguments(sys.argv[1:])
-    run(amount_of_games, rolls_per_game, excel)
+@begin.start(auto_convert=True)
+def main(g: 'Amount of games' = 1000, r: 'Rolls per game' = 30,
+         e: 'Format Excel-friendly' = False):
+    """ Simulates monopoly games and outputs the frequency of the tiles
+    visited, including jail workings and chance/community cards. """
+    run(g, r, e)

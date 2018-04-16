@@ -5,6 +5,7 @@ def is_neon_number(number):
         total += int(digit)
     return total == number
 
+
 def find_neon_numbers(start=1, end=1000):
     numbers = list()
     for i in range(start, end):

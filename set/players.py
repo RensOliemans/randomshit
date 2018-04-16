@@ -7,7 +7,8 @@ class NaiveAI(object):
     def __init__(self):
         self.cards = []
 
-    def move(self, board):
+    @classmethod
+    def move(cls, board):
         board = board.board
         for c1 in board:
             for c2 in board:

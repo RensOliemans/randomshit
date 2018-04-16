@@ -1,6 +1,6 @@
 import os
-import eyed3
 import time
+import eyed3
 
 start = time.time()
 print('This program changes the ID3 tags of all .mp3 files '

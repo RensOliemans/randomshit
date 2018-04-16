@@ -1,5 +1,6 @@
 import math
 
+
 def is_h_r_number(number, pow_level=3):
     ways = list()
     min_number = math.ceil(pow(number, 1/pow_level))
@@ -9,7 +10,7 @@ def is_h_r_number(number, pow_level=3):
                 if pow(i, pow_level) + pow(j, pow_level) == number:
                     ways.append((i, j))
     return ways
-                
+
 
 def find_hr_numbers(start=1, end=1000, pow_level=3, ways=2):
     numbers = dict()

@@ -40,28 +40,6 @@ def get_movements(keyboard):
     but this can be argued against.
     """
 
-    """
-    old, don't pay attention to it
-    LEFT = [j for i in [x[:5] for x in keyboard] for j in i]
-    RIGHT = [j for i in [x[5:] for x in keyboard] for j in i]
-
-    # Left fingers
-    L_PINKY = [x[0] for x in keyboard]
-    L_RING = [x[1] for x in keyboard]
-    L_MIDDLE = [x[2] for x in keyboard]
-    L_INDEX_1 = [x[3] for x in keyboard]
-    L_INDEX_2 = [x[4] for x in keyboard]
-    L_INDEX = L_INDEX_1 + L_INDEX_2
-
-    # Right fingers
-    R_PINKY = [x[-1] for x in keyboard]
-    R_RING = [x[-2] for x in keyboard]
-    R_MIDDLE = [x[-3] for x in keyboard]
-    R_INDEX_1 = [x[-4] for x in keyboard]
-    R_INDEX_2 = [x[-5] for x in keyboard]
-    R_INDEX = R_INDEX_1 + R_INDEX_2
-    """
-
     # Movement mapping
     # Middle keys (in Qwerty for example 'G' and 'H') take extra movement
     # top row
@@ -86,7 +64,7 @@ def distance(word, movements):
     as input and returns the 'cost' of moving your fingers in order to type
     the word
     """
-    distance = 0
+    dist = 0
     prev_letter = None
     for letter in word:
         letter = letter.upper()
@@ -94,13 +72,13 @@ def distance(word, movements):
             # the letter is another letter than the previous one,
             # so increase distance
             try:
-                distance += movements[letter]
+                dist += movements[letter]
             except KeyError:
                 # key isn't in regular alphabet (number or punctuation prob)
                 # just skip
                 pass
         prev_letter = letter
-    return distance
+    return dist
 
 
 def distances(words, movements):
@@ -110,15 +88,15 @@ def distances(words, movements):
 
     { word: movement_cost }
     """
-    distances = dict()
+    dists = dict()
     for word in words:
-        distances[word] = distance(word, movements)
-    return distances
+        dists[word] = distance(word, movements)
+    return dists
 
 
 def dic_to_words(filename):
-    with open(filename) as f:
-        return [word.split('/')[0] for word in f]
+    with open(filename) as dictionary:
+        return [word.split('/')[0] for word in dictionary]
 
 
 def calculate_avg_moving(words, keyboard):
@@ -149,6 +127,8 @@ def main():
     dict_dir_name = '/home/rens/Projects/randomshit/Dictionaries/'
     dictionaries = [dic for dic in os.listdir(dict_dir_name)
                     if dic[-4:] == '.dic']
+    # only a couple
+    dictionaries = ['English (British).dic', 'Dutch.dic']
 
     for dictionary in dictionaries:
         dictionary = dict_dir_name + dictionary

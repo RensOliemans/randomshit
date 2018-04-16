@@ -2,16 +2,16 @@
 This module represents a dice object. The dice can have any amount of faces
 and can be weighted or not.
 """
-from numpy.random import choice
 from fractions import Fraction
+from numpy.random import choice
 
 
 class Dice(object):
 
-    def __init__(self, faces=[1, 2, 3, 4, 5, 6], weight=None):
-        if weight is None:
-            # set weight to be [1,1,1,...] (fair dice)
-            weight = [1 for _ in range(len(faces))]
+    def __init__(self, faces=None, weight=None):
+        faces = faces or [1, 2, 3, 4, 5, 6]
+        # set weight to be [1,1,1,...] (fair dice)
+        weight = weight or [1] * len(faces)
         self.faces = faces
         if len(weight) != len(faces):
             raise ValueError("Length of weight must be the same as the amount"
@@ -26,7 +26,7 @@ class Dice(object):
         for i, val in enumerate(weight):
             self.normalised_weight[i] = val / sum_weight
 
-    def roll(self, times=1):
+    def roll(self, times=1) -> list():
         rolls = list()
         for _ in range(times):
             rolls.append(choice(self.faces, p=self.normalised_weight))
@@ -51,15 +51,6 @@ class Dice(object):
             raise ValueError("Length of weight must be the same as the amount "
                              "of faces!")
 
-    def _determine_integer_weight(self, weight):
-        fractions = [Fraction(x).limit_denominator() for x in weight]
-        highest_denominator = max([x.denominator for x in fractions])
-        # round instead of int - incorrect conversion from float to fraction
-        # and vice versa might lead to something like 56.9999999999 - which
-        # should be 57 instead of 56, which is what would happen if int() would
-        # do the job
-        return [round(x * highest_denominator) for x in weight]
-
     def __str__(self):
         return "Dice, faces: {}.".format(self.faces)
 
@@ -68,3 +59,13 @@ class Dice(object):
 
     def __eq__(self, other):
         return self.faces == other.faces and self.weight == other.weight
+
+    @classmethod
+    def _determine_integer_weight(cls, weight):
+        fractions = [Fraction(x).limit_denominator() for x in weight]
+        highest_denominator = max([x.denominator for x in fractions])
+        # round instead of int - incorrect conversion from float to fraction
+        # and vice versa might lead to something like 56.9999999999 - which
+        # should be 57 instead of 56, which is what would happen if int() would
+        # do the job
+        return [round(x * highest_denominator) for x in weight]

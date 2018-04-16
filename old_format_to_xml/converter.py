@@ -1,5 +1,5 @@
 import re
-indent_level = 4
+INDENT_LEVEL = 4
 
 
 class Movie(object):
@@ -104,7 +104,7 @@ def go_over_lines(filename="movies.txt"):
         is_serie = False
         for line in f:
             amount_of_spaces = len(line) - len(line.lstrip())
-            level = amount_of_spaces // indent_level
+            level = amount_of_spaces // INDENT_LEVEL
             if level == 1:
                 # contains a movie or series
                 is_serie = "series" in line

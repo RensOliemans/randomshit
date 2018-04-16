@@ -13,7 +13,7 @@ def sort(items):
     first_elem = items.pop(0)
     stacks.append([first_elem])
     for other_elem in items:
-        if True:
+        if other_elem:
             pass
 
 
@@ -27,6 +27,6 @@ def main(length=10):
     print("List: {}. Starting sorting sequence."
           .format(items))
     start = time.time()
-    items = sort(items)
+    sort(items)
     print("Finished sorting. Sorted list: {}, time taken: {}"
           .format(items, (time.time() - start)))
