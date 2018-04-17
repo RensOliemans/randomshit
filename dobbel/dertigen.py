@@ -9,7 +9,7 @@ AMOUNT = 6
 ALL_THROWS = {x: list(product(*[range(1, 7) for _ in range(x)])) for x in range(1, 7)}
 
 
-def spel(force_minimum=False, force_maximum=False):
+def spel(force_minimum=False, force_maximum=False, score=False):
     """ This method plays the actual game.
     :param minimum: whether to go for the minimum score possible
 
@@ -30,8 +30,10 @@ def spel(force_minimum=False, force_maximum=False):
         # this is hardcoded TODO
         not force_maximum and
         (force_minimum or
-         (worp.count(1) >= 2 and worp.count(6) < 2) or
-         (worp.count(6) == 0 and worp.count(1) > 0)))
+         (worp.count(1) > worp.count(6) + 1)
+         or sum(worp) <= 10))
+    # (worp.count(1) >= 2 and worp.count(6) < 2) or
+    # (worp.count(6) == 0 and worp.count(1) > 1)))
 
     while len(keep) < AMOUNT:
         if (minimum and not force_minimum and
@@ -50,6 +52,10 @@ def spel(force_minimum=False, force_maximum=False):
         worp = []
         for _ in range(AMOUNT - len(keep)):
             worp.append(die.roll()[0])
+    if score:
+        if sum(keep) <= 10:
+            return 10
+        return sum(keep) - 30
     return (keep, sum(keep))
 
 
@@ -132,8 +138,9 @@ def main(minimum: "Force minimum strategy" = False,
     '''Spel'''
     total = 0
     for _ in range(runs):
-        hand, score = spel(force_minimum=minimum, force_maximum=maximum)
-        logging.info('%s, %s', hand, score)
+        # hand, score = spel(force_minimum=minimum, force_maximum=maximum)
+        score = spel(force_minimum=minimum, force_maximum=maximum, score=True)
+        logging.info('%s', score)
         logging.debug('\n')
         total += score
     if runs > 1:
