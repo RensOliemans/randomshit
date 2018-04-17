@@ -6,6 +6,7 @@ import begin
 from dice import Dice
 
 AMOUNT = 6
+ALL_THROWS = {x: list(product(*[range(1, 7) for _ in range(x)])) for x in range(1, 7)}
 
 
 def spel(force_minimum=False, force_maximum=False):
@@ -23,6 +24,8 @@ def spel(force_minimum=False, force_maximum=False):
     worp = []
     for _ in range(AMOUNT - len(keep)):
         worp.append(die.roll()[0])
+    strategy = determine_strategy(begin=True, worp=worp)
+    minimum = force_minimum or (not force_maximum and strategy)
     minimum = (
         # this is hardcoded TODO
         not force_maximum and
@@ -35,13 +38,14 @@ def spel(force_minimum=False, force_maximum=False):
                 sum(keep) + sum([1] * (AMOUNT - len(keep) - 1)) + min(worp) > 10):
             if not force_maximum:
                 # this is hardcoded TODO
-                logging.debug('Changing strategy to max, hand is %s and throw: %s',
-                              keep, worp)
+                logging.debug('My hand is %s, but the throw is %s, so changing '
+                              'strategy to max', keep, worp)
                 minimum = False
 
         keep_round = decide_minimum(worp, keep, AMOUNT + 4) if minimum \
             else decide_maximum(worp)
-        logging.debug('Throw: %s. to_keep: %s', worp, keep_round)
+        logging.debug("My hand is %s, the throw is %s so I'll keep %s",
+                      keep, worp, keep_round)
         keep += keep_round
         worp = []
         for _ in range(AMOUNT - len(keep)):
@@ -49,15 +53,8 @@ def spel(force_minimum=False, force_maximum=False):
     return (keep, sum(keep))
 
 
-# def determine_strategy(hand):
-#     all_throws = list(product(*[range(1, 7) for _ in range(len(hand))]))
-#     high_throws = [x for x in all_throws if sum(x) > 30]
-#     low_throws = [x for x in all_throws if sum(x) <= 10]
-#     maximum_choice = decide_maximum(hand)
-#     minimum_choice = decide_minimum(hand)
-#     rest_max = [x for x in hand if x not in maximum_choice]
-#     rest_min = [x for x in hand if x not in minimum_choice]
-#     return False
+def determine_strategy(begin, worp=None):
+    return True
 
 
 def decide_maximum(dice):
@@ -73,12 +70,11 @@ def decide_maximum(dice):
     dice = sorted(dice)
     dice.reverse()
     # all possible throws
-    all_throws = list(product(*[range(1, 7) for _ in range(amount)]))
     hand = list()
     for die in dice:
         # higher is the amount of throws where the maximum die is higher
         # than the current die
-        higher = len([x for x in all_throws if max(x) > die])
+        higher = len([x for x in ALL_THROWS[amount] if max(x) > die])
         # so, we have:
         #   all_throws:  all possible throws with the amount of dice left
         #   higher:      the throws possible with a higher maximum die (so
@@ -87,10 +83,9 @@ def decide_maximum(dice):
         #                the throws which don't have a higher die in it
         # so, append the die to the hand if there are less throws left with
         # a 'better' option than the rest of the throws
-        if higher < len(all_throws) - higher:
+        if higher < len(ALL_THROWS[amount]) - higher:
             hand.append(die)
             amount -= 1
-            all_throws = list(product(*[range(1, 7) for _ in range(amount)]))
     return hand or [max(dice)]
 
 
@@ -102,17 +97,15 @@ def decide_minimum(dice, chosen=None, goal=10):
 
     amount = len(dice)
     dice = sorted(dice)
-    dice.reverse()
-    all_throws = list(product(*[range(1, 7) for _ in range(amount)]))
+    # dice.reverse()
     hand = list()
     for die in dice:
         # lower is the amount of throws where the minimum die is lower
         # than the current die
-        lower = len([x for x in all_throws if min(x) < die])
-        if lower < len(all_throws) - lower:
+        lower = len([x for x in ALL_THROWS[amount] if min(x) < die])
+        if lower < len(ALL_THROWS[amount]) - lower:
             hand.append(die)
             amount -= 1
-            all_throws = list(product(*[range(1, 7) for _ in range(amount)]))
     return hand or [min(dice)]
 
 
