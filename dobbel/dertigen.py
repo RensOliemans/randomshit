@@ -132,7 +132,7 @@ def kans_boven_30():
     return good_options / possible_options
 
 
-def round(minimum, maximum, score=True):
+def game(minimum, maximum, score=True):
     score = spel(force_minimum=minimum, force_maximum=maximum, score=True)
     logging.info('%s', score)
     logging.debug('\n')
@@ -146,11 +146,11 @@ def main(minimum: "Force minimum strategy" = False,
     '''Spel'''
     total = 0
     if logging.getLogger().getEffectiveLevel() > 20:
-        for i in tqdm(range(runs)):
-            total += round(minimum, maximum, score=True)
+        for _ in tqdm(range(runs)):
+            total += game(minimum, maximum, score=True)
     else:
         for i in range(runs):
-            total += round(minimum, maximum, score=True)
+            total += game(minimum, maximum, score=True)
 
     if runs > 1:
         print('Average: {:.2f}'.format(total / runs))
