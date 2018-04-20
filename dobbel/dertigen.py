@@ -3,6 +3,7 @@ import logging
 from itertools import product
 
 import begin
+from tqdm import tqdm
 from dice import Dice
 
 AMOUNT = 6
@@ -131,17 +132,25 @@ def kans_boven_30():
     return good_options / possible_options
 
 
+def round(minimum, maximum, score=True):
+    score = spel(force_minimum=minimum, force_maximum=maximum, score=True)
+    logging.info('%s', score)
+    logging.debug('\n')
+    return score
+
+
 @begin.start(auto_convert=True)
 @begin.logging
 def main(minimum: "Force minimum strategy" = False,
          maximum: "Force maximum strategy" = False, runs=1):
     '''Spel'''
     total = 0
-    for _ in range(runs):
-        # hand, score = spel(force_minimum=minimum, force_maximum=maximum)
-        score = spel(force_minimum=minimum, force_maximum=maximum, score=True)
-        logging.info('%s', score)
-        logging.debug('\n')
-        total += score
+    if logging.getLogger().getEffectiveLevel() > 20:
+        for i in tqdm(range(runs)):
+            total += round(minimum, maximum, score=True)
+    else:
+        for i in range(runs):
+            total += round(minimum, maximum, score=True)
+
     if runs > 1:
         print('Average: {:.2f}'.format(total / runs))
