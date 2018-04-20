@@ -149,7 +149,7 @@ def main(minimum: "Force minimum strategy" = False,
         for _ in tqdm(range(runs)):
             total += game(minimum, maximum, score=True)
     else:
-        for i in range(runs):
+        for _ in range(runs):
             total += game(minimum, maximum, score=True)
 
     if runs > 1:
