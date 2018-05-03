@@ -6,7 +6,7 @@ from collections import namedtuple
 
 import bs4
 
-PRINTABLE = set(string.printable)
+FLOATABLE = set(string.digits).union({'.'})
 
 
 Beer = namedtuple('Beer', 'name price amount')
@@ -22,46 +22,35 @@ def get_items(filename):
 def get_names(items):
     """ Gets the beer names of bs4 elements. """
     product_names = items[0].find_all_next(attrs={'class': 'product-item-name'})
-    names = list()
-    for product in product_names:
-        names.append(product.text.replace('\n', ''))
-    return names
+    return [product.text.replace('\n', '') for product in product_names]
 
 
 def get_prices(items):
     """ Gets the prices of bs4 elements. """
-    product_prices = items[0].find_all_next(attrs={'class': 'cart-price'})
-    prices = list()
-    counter = 0
-    for product in product_prices:
-        counter += 1
-        if counter % 2 == 0:
-            continue
-        text = ''.join(filter(lambda x: x in PRINTABLE, product.text))
-        text = float(text.replace('\n', '').replace(',', '.'))
-        prices.append(text)
+    products_with_prices = items[0].find_all_next(attrs={'class': 'cart-price'})
+    # the odd prices are intermediate prices in the html page, we don't need them
+    products_with_prices = [product for product in products_with_prices
+                            if products_with_prices.index(product) % 2 == 0]
+    # convert to floats: only have digits and '.' (replace the ','s though)
+    prices = [float(''.join(filter(lambda x: x in FLOATABLE,
+                                   product.text.replace(',', '.'))))
+              for product in products_with_prices]
     return prices
 
 
-def get_amount(items):
+def get_amounts(items):
     """ Gets the amounts of bs4 elements. """
     product_amount = items[0].find_all_next(attrs={'class': 'control qty'})
-    amounts = list()
-    for product in product_amount:
-        amounts.append(int(product.input.attrs['value']))
-    return amounts
+    return [int(product.input.attrs['value']) for product in product_amount]
 
 
 def main():
     """ Main method. """
-    items = get_items('Winkelwagen | Drankgigant.nl.html')
-    names, prices, values = get_names(items), get_prices(items), get_amount(items)
-    beer_items = list(zip(names, prices, values))
-    beers = list()
-    for beer_item in beer_items:
-        beer = Beer(name=beer_item[0], price=beer_item[1], amount=beer_item[2])
-        beers.append(beer)
-    print(*beers, sep='\n')
+    all_items = get_items('Winkelwagen | Drankgigant.nl.html')
+    names, prices, amounts = get_names(all_items), get_prices(all_items), get_amounts(all_items)
+    print(*[Beer(name=name, price=price, amount=amount)
+            for name, price, amount in list(zip(names, prices, amounts))],
+          sep='\n')
 
 
 if __name__ == "__main__":
