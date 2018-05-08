@@ -88,9 +88,7 @@ def distances(words, movements):
 
     { word: movement_cost }
     """
-    dists = dict()
-    for word in words:
-        dists[word] = distance(word, movements)
+    dists = {word: distance(word, movements) for word in words}
     return dists
 
 
