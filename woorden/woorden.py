@@ -26,8 +26,7 @@ def main(w: 'Word', l: 'Amount of letters' = 0):
     """ Finds (Dutch) words with the given amount of letters. If 'l' is
     not given, it will use all letters in the given word. """
     start = time.time()
-    if l == 0:
-        l = len(w)
+    l = l or len(w)
 
     with open(FILENAME) as f:
         words = list(f)
