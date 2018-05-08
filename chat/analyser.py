@@ -134,9 +134,11 @@ def main():
           .format(NIGHT_HOUR, iris_time, rens_time, total_time))
 
     iris_frequency, rens_frequency = frequencies(iris, rens)
+    # regular frequency
     print("Average frequency:\n"
           "Iris: one poop per {:.2f} days, Rens: one poop per {:.2f} days"
           .format(iris_frequency, rens_frequency))
+    # inverse frequency
     print("Average frequency:\n"
           "Iris: {:.2f} poops per day, Rens: {:.2f} poops per day"
           .format(1 / iris_frequency, 1 / rens_frequency))
