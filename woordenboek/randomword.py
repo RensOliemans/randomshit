@@ -21,9 +21,8 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=10):
     :length_of_words: how long the words should be
     :returns: a list of words from the dictionary.
     """
-    words = list()
     with open(DIR + filename) as dictionary:
-        # strip last character: is '\n'
+        # strip last character; is '\n'
         words = [x[:-1] for x in dictionary if len(x[:-1]) == length_of_words]
 
     amount = min(len(words), amount_of_words)
