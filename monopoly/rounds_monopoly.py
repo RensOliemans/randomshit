@@ -22,11 +22,7 @@ CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
 def run(amount_of_games=1000, rolls_per_game=30, excel=False):
     start = time.time()
     # there are 40 tiles in a monopoly board, so the indices are 0-39
-    tiles = list(range(40))
-    tiles_count = dict()
-
-    for tile in tiles:
-        tiles_count[tile] = 0
+    tiles_count = {x: 0 for x in range(40)}
 
     chance = list(CHANCE_CARDS)
     shuffle(chance)
