@@ -22,16 +22,16 @@ def find_combis(word, amount, words):
 
 @begin.start(auto_convert=True)
 @begin.logging
-def main(w: 'Word', l: 'Amount of letters' = 0):
+def main(w: 'Word', a: 'Amount of letters' = 0):
     """ Finds (Dutch) words with the given amount of letters. If 'l' is
     not given, it will use all letters in the given word. """
     start = time.time()
-    l = l or len(w)
+    a = a or len(w)
 
     with open(FILENAME) as f:
         words = list(f)
 
-    combis = combinations(w, l)
+    combis = combinations(w, a)
     total_options = list()
     for combi in combis:
         options = find_word(combi, words)
