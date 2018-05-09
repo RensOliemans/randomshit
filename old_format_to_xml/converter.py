@@ -17,7 +17,14 @@ class Movie(object):
         return "{} - {}".format(self.title, self.duration)
 
     def __repr__(self):
-        return str(self)
+        return ("Movie. Title: {}, Duration: {}, file_url (stripped): {}, "
+                "Tomato: {}. IMDB: {}. Rating: {}."
+                .format(self.title, self.duration, self.file_url[10:25],
+                        self.tomatoes, self.imdb, self.rating))
+
+    def __eq__(self, other):
+        return (self.title == other.title and self.duration == other.duration and
+                self.file_url == other.file_url)
 
 
 class Tomatoes(object):
@@ -79,6 +86,8 @@ def parse_imdb_line(line):
 
 
 def parse_movie_information(current_movie, line):
+    ''' This method takes a movie and a line, and if it can, it adds new
+    information from the line to the movie. It returns the movie again. '''
     is_file_line = "file://" in line
     is_tomato_line = "rottentomatoes.com" in line
     is_imdb_line = "imdb.com" in line
@@ -97,38 +106,68 @@ def parse_movie_information(current_movie, line):
     return current_movie
 
 
-def go_over_lines(filename="movies.txt"):
+def build(lines):
+    ''' This method groups certain indentation levels together'.
+
+    Example: input: lines = ['  a', '    b', '    c', '  d', '    e']
+    build(lines) will return [['  a', '    b', '    c'], ['  d', '    e']]
+    '''
+    groups = list()
+    initial_indentation = len(lines[0]) - len(lines[0].lstrip())
+    # TODO: how to name a? It's an iterator which iterates over the lines.
+    a = iter(lines)
+    item = next(a)
+
+    # first group contains the first line
+    group = [item]
+    try:
+        while True:
+            item = next(a)
+            indentation = len(item) - len(item.lstrip())
+            if indentation == initial_indentation:
+                # we reached the same indentation as the beginning, so this is
+                # a new group.
+                groups.append(group)
+                group = [item]
+            else:
+                group.append(item)
+    except StopIteration:
+        # we reached the end of the lines, so add the 'current' group to the total
+        # groups
+        groups.append(group)
+    return groups
+
+
+def parse_single(lines):
+    title, duration = parse_first_line(lines[0])
+    movie = Movie(title, duration)
+    for i in range(1, len(lines)):
+        movie = parse_movie_information(movie, lines[i])
+    return movie
+
+
+def parse_multiple(lines):
     movies = list()
-    with open(filename) as f:
-        current_movie = Movie()
-        is_serie = False
-        for line in f:
-            amount_of_spaces = len(line) - len(line.lstrip())
-            level = amount_of_spaces // INDENT_LEVEL
-            if level == 1:
-                # contains a movie or series
-                is_serie = "series" in line
-                if not is_serie:
-                    # first store the current movie, since we now have a
-                    # new movie
-                    movies.append(current_movie)
-                    # then, parse the new movie
-                    current_movie = Movie()
-                    current_movie.title, current_movie.duration = \
-                        parse_first_line(line)
+    groups = build(lines)
+    for group in groups:
+        if '(series)' in group[0]:
+            # nested multiple movies, recursively call parse_multiple
+            movies.extend(parse_multiple(group[1:]))
+            continue
+        movies.append(parse_single(group))
+    return movies
 
-            elif level == 2:
-                if is_serie:
-                    movies.append(current_movie)
-                    current_movie = Movie()
-                    current_movie.title, current_movie.duration = \
-                        parse_first_line(line)
-                else:
-                    # contains the information about a movie
-                    current_movie = parse_movie_information(current_movie,
-                                                            line)
-            elif level == 3:
-                # contains the information about a movie
-                current_movie = parse_movie_information(current_movie, line)
 
-    return movies[1:]
+def parse_total(lines):
+    groups = build(lines)
+    movies = groups[0][1:]
+    series = groups[1][1:]
+    movies = parse_multiple(movies)
+    series = parse_multiple(series)
+    return [movies, series]
+
+
+if __name__ == '__main__':
+    f = open('movies.txt')
+    lines = list(f)
+    print(parse_total(lines)[0])
