@@ -139,23 +139,23 @@ def build(lines):
     return groups
 
 
-def parse_single(lines):
+def parse_single(lines, series=False):
     title, duration = parse_first_line(lines[0])
-    movie = Movie(title, duration)
+    movie = Movie(title, duration, part_of_serie=series)
     for i in range(1, len(lines)):
         movie = parse_movie_information(movie, lines[i])
     return movie
 
 
-def parse_multiple(lines):
+def parse_multiple(lines, series=False):
     movies = list()
     groups = build(lines)
     for group in groups:
         if '(series)' in group[0]:
             # nested multiple movies, recursively call parse_multiple
-            movies.extend(parse_multiple(group[1:]))
+            movies.extend(parse_multiple(group[1:], series=True))
             continue
-        movies.append(parse_single(group))
+        movies.append(parse_single(group, series=series))
     return movies
 
 
@@ -169,11 +169,18 @@ def parse_total(lines):
 
 
 def convert_to_xml(movies):
-    root = etree.Element("root")
+    page = etree.Element("Movies")
+    doc = etree.ElementTree(page)
     for movie in movies:
-        title = 'm' + movie.title.replace(' ', '_')
-        root.append(etree.Element(title))
-    print(etree.tostring(root, pretty_print=True))
+        title = movie.title.replace(' ', '_')
+        if title[0] in [str(x) for x in range(11)]:
+            title = 'm' + title
+        etree.SubElement(page, title,
+                         duration=str(movie.duration),
+                         tomatoes=str(movie.tomatoes),
+                         imdb=str(movie.imdb))
+    out_file = open('output.xml', 'wb')
+    doc.write(out_file, xml_declaration=True, encoding='utf8', pretty_print=True)
 
 
 if __name__ == '__main__':
