@@ -98,7 +98,7 @@ films:
         8.0         http://www.imdb.com/title/tt0780536/
         self:
     Jurassic (series)                   (7h55m)
-        seen'''Jurassic Park'''         2h6m
+        '''Jurassic Park'''         2h6m
             file://///130.89.166.148/Movies/1080p/Jurassic.Park.1993.RERIP.1080p.BluRay.X264-AMIABLE/
             8.3, 93%    http://www.rottentomatoes.com/m/jurassic_park/
             8.1         http://www.imdb.com/title/tt0107290/
