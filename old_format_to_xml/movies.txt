@@ -35,8 +35,8 @@ films:
             7.3         http://www.imdb.com/title/tt1302011/
             self:
     Bourne (series)                     (7h55m)         
-        file://130.89.166.102/Share/Video/Bourne/
         Identity:                   1h57m               
+	    file://130.89.166.102/Share/Video/Bourne/
             7.0, 83%    http://www.rottentomatoes.com/m/bourne_identity/
             7.9         http://www.imdb.com/title/tt0258463/
             self:   8.0
@@ -58,8 +58,8 @@ films:
         7.6         http://www.imdb.com/title/tt0887912/
         self:
     Naked Gun (series)                  (4h20m)
-        file://130.89.168.175/shares/Films/Naked%20Gun/
         Naked Gun 1:                    1h25m
+	    file://130.89.168.175/shares/Films/Naked%20Gun/
             7.3, 86%    http://www.rottentomatoes.com/m/naked_gun_from_the_files_of_police_squad/
             7.6         http://www.imdb.com/title/tt0095705/
             self:
@@ -129,7 +129,7 @@ films:
         7.7         http://www.imdb.com/title/tt1306980/
         self: 1.2   
     Star Wars (series)                  (15h32m)
-        Star Wars IV                    2h5m	-	54:25
+        Star Wars IV                    2h5m
             file://///130.89.166.148/Movies/1080p/Star.Wars.Episode.IV.A.New.Hope.1977.1080p.BluRay.X264-AMIABLE/
             8.5, 94%    http://www.rottentomatoes.com/m/star_wars/
             8.7         http://www.imdb.com/title/tt0076759/?ref_=fn_al_tt_1

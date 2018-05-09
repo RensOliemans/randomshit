@@ -1,4 +1,5 @@
 import re
+from lxml import etree
 INDENT_LEVEL = 4
 
 
@@ -164,10 +165,19 @@ def parse_total(lines):
     series = groups[1][1:]
     movies = parse_multiple(movies)
     series = parse_multiple(series)
-    return [movies, series]
+    return movies, series
+
+
+def convert_to_xml(movies):
+    root = etree.Element("root")
+    for movie in movies:
+        title = 'm' + movie.title.replace(' ', '_')
+        root.append(etree.Element(title))
+    print(etree.tostring(root, pretty_print=True))
 
 
 if __name__ == '__main__':
-    f = open('movies.txt')
-    lines = list(f)
-    print(parse_total(lines)[0])
+    movies, series = parse_total(list(open('movies.txt')))
+    # print("Movies")
+    # print(*movies, sep='\n')
+    convert_to_xml(movies)
