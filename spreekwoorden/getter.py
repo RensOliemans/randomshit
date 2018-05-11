@@ -16,5 +16,5 @@ for page in pages:
         meaning = proverb.find(attrs={'class': 'proverb-item__body'}).text.strip()
         proverbs[title] = meaning
 
-with open('spreekwoorden.txt', 'w') as f:
+with open('dump.json', 'w') as f:
     json.dump(proverbs, f)
