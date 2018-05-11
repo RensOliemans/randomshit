@@ -5,7 +5,8 @@ from random import sample
 import begin
 
 
-filename = os.getcwd() + '/dump.json'
+current_dir = os.path.dirname(os.path.realpath(__file__))
+filename = current_dir + '/dump.json'
 proverbs = dict()
 with open(filename) as f:
     proverbs = json.load(f)
