@@ -1,10 +1,11 @@
 import json
+import os
 from random import sample
 
 import begin
 
 
-filename = 'dump.json'
+filename = os.getcwd() + '/dump.json'
 proverbs = dict()
 with open(filename) as f:
     proverbs = json.load(f)
