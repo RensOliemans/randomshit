@@ -1,6 +1,8 @@
-from urllib import request
-from bs4 import BeautifulSoup
 import json
+import logging
+from urllib import request
+
+from bs4 import BeautifulSoup
 
 
 URL = 'https://spreekwoorden.nl/spreekwoorden-a-z'
@@ -30,7 +32,7 @@ def get_proverbs(url, pages):
 
 def main():
     max_pages = determine_max_pages(URL)
-    print(max_pages)
+    logging.info('Getting info from %s pages', max_pages)
     pages = ['?page={}'.format(x) for x in range(1, max_pages + 1)]
 
     proverbs = get_proverbs(URL, pages)
