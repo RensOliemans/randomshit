@@ -1,0 +1,58 @@
+ch Name Literal Translation Explanation
+48 Bastille Bastille Historical French Prison
+63 Blokhutten Log Cabins 
+32 BMC BMC 
+62 Boerderij Bosch Farm Bosch 
+53 Box Box 
+66 BTC BTC 
+29 Buitenhorst Outer Horst 
+4 Carillon Carillon 
+15 Carré Carré Well known Dutch theatre
+9 Citadel Citadel Fortified core defense area in a town
+41 Cubicus Cubicus 
+44 Drienerburght Stronghold Driener 
+40 Erve Holzik Compound Holzik 
+42 Faculty Club Faculty Club 
+17 The Gallery the Gallery 
+5 Garage Garage 
+13 Hal B Hall B 
+46 High Tech Factory High Tech Factory 
+8 Hogedruklab High Pressure Lab 
+45 Hogekamp High Camp 
+21 Horstring Ring of Horst 
+20 Horsttoren Tower of Horst 
+75 ICT ICT30 Keet Shed
+23 Kleinhorst Little Horst
+61 Linde Linden Tree
+65 Logica Logic
+27 Meander Meander
+59 Mondriaan Mondriaan
+16 Nanolab Nano Lab
+24 Noordhoorst Horst North
+0 O&O plein O&O square
+26 Oosthorst Horst East
+56 Openluchttheather Outdoor Theatre
+6 Paviljoen Pavillion
+10 Ravelijn Ravelin
+43 Schuur Barn
+7 Seinhuis Signal Box
+51 Sky Sky
+58 Sleutel Key
+2 Spiegel Mirror
+49 Sportcentrum Sport Center
+63 Stall Stall
+18 Technohal Techno Hall
+14 Teehuis Tee House
+64 Tennispark Tennis Grounds
+17 the Gallery the Gallery
+69 Therm Therm
+39 Trial-terrein Trial Grounds
+3 Vleugel Wing
+60 Vlinder Butterfly
+47 Vrijhof Leisure Courtyard
+12 Waaier Handheld Folding
+22 Westhorst Horst West
+31 Windpark Wind Farm
+11 Zilverling Silver Coin
+28 Zuidhorst Horst South
+57 Zwembad Pool

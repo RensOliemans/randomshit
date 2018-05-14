@@ -1,0 +1,71 @@
+nieuw 	oud
+nummer 	afkorting 	naam 	naam 	nummer
+1 	CH 	Charlie 	Portiersloge 	1
+2 	SP 	Spiegel 	BB-gebouw 	2
+3 	VL 	Vleugel 	Bestuursvleugel 	2A
+5 	GA 	Garage 	Garagecomplex/Utechno 	4
+6 	PA 	Paviljoen 	Paviljoen 	3
+7 	SE 	Seinhuis 	PTT-gebouwtje 	4
+8 	HD 	hogedruklab 	Hogedruklaboratorium 	5
+9 	CI 	Citadel 	KCT-gebouw 	7
+10 	RA 	Ravelijn 	TO-gebouw 	8
+11 	ZI 	Zilverling 	INF-gebouw 	9
+12 	WA 	Waaier 	Collegezalencomplex 	9A
+13 	HB 	Hal B 	Hal B 	13
+14 	TH 	Teehuis 	Teehuis 	14
+15 	CR 	[[Carr�]] 	[[Carr�]] 	15
+16 	NL 	NanoLab 	NanoLab 	16
+17 	LA 	Langezijds 	CT-gebouw 	6
+18 	AR 	Art�z 	AKI 	38
+89 	AA 	Gebouw A 	Langezijds A 	17
+20 	HT 	Horsttoren 	WB-gebouw Toren 	10
+21 	HR 	Horstring 	WB-gebouw Ring 	10
+22 	WH 	Westhorst 	WB-gebouw hal IV 	10
+23 	KH 	Kleinhorst 	WB-gebouw hal I 	10
+24 	NH 	Noordhorst 	WB-gebouw hal II 	10
+26 	OH 	Oosthorst 	WB-gebouw hal III 	10
+27 	ME 	Meander 	Meander 	27
+28 	ZH 	Zuidhorst 	WB-gebouw hal V 	10
+29 	BH 	Buitenhorst 	Buitenhorst 	29
+30 	AF 	afvalstoffendepot 	CAD 	34
+31 	WP 	windpark 	WOT 	31
+32 	BI 	biomagnetisch centrum 	Biomagnetisch Centrum 	30
+39 	CT 	Chalet 	Chalet 	39
+40 	ER 	Erve Holzik 	Erve Holzik 	32
+40 	ES 	Erve Holzik Schuur 	Erve Holzik Schuur 	32
+41 	CU 	Cubicus 	TWRC-gebouw 	11
+42 	FC 	Faculty Club 	Boerderij 	12
+43 	SR 	Schuur 	Schuur 	12A
+44 	DR 	Drienerburght 	Drienerburght 	15
+45 	HO 	Hogekamp 	el/TN-gebouw 	13
+46 	CL 	cleanrooms 	MESA+ 	13A
+47 	VR 	Vrijhof 	Vrijhof 	14
+48 	BA 	Bastille 	Bastille 	16
+49 	SC 	Sportcentrum 	Sportcentrum 	17
+51 	SK 	Sky 	Sky 	51
+52 	BT 	Boortoren 	Boortoren 	52
+53 	BX 	Box 	Box 	53
+54 	AB 	Atletiekberging 	Atletiekberging 	54
+56 	OUT 	Openluchttheater UT 	Amfitheater 	21
+57 	ZW 	Zwembad 	Openluchtzwembad 	20
+58 	SL 	Sleutel 	de Sleutel 	22
+59 	MO 	Mondriaan 	Gastenwoningen 	33
+60 	VI 	Vlinder 	de vlinder 	23
+61 	SA 	Santar 	Medisch Centrum 	19
+62 	BB 	Boerderij Bosch 	Boerderij Bosch 	41
+62 	ST 	Stall 	Stall 	62
+63 	BL 	blokhutten 	Blokhutten 	40
+64 	TP 	tennispark 	Tennispark 	27
+65 	LO 	Logica 	Logica 	26
+66 	BTC 	BTC 	BTC, Twinning Centre 	36
+67 	CA 	Capitool 15 	Capitool 15 	43
+68 	KP 	KPMG Gebouw 	TSM 	35A
+69 	IN 	Institutenweg 	Institutenweg 	42
+70 	BO 	Botenloods 	Botenloods 	70
+71 	PK 	Pakkerij 	Pakkerij 	71
+72 	CO 	Corridor 	Corridor 	72
+73 	ST 	Stafflat Torenflat 	Stafflat Torenflat 	73
+75 	ITC 	ITC gebouw 	ITC gebouw 	75
+76 	IIH 	ITC Hotel 	ITC Hotel 	76
+77 	SW 	Stadsweide 	Stadsweide 	77
+78 	PL 	Plein van Arke 	Plein van Arke 	78 
