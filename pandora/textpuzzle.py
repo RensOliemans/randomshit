@@ -3,7 +3,6 @@ import requests
 import json
 text = "Once upon a time there was a doctor. Her name was Margaret and the last name resembled german death. That day was a sunday and she didnt have to go to work so she decided to continue writing her first, yet to be published book. Its title was something about escaping and it began with such words: It was a bitter December night, but the Paris-lyon express was speeding gaily along in search of the flowers and the sunshine. After some time passed she decided to go out. She was surprised to meet an old family friend of hers. They talked for a while and exchanged some ideas. Frederick had discovered something but was unsure how to name it and Margaret helped him. He normally was a very stable man and did not break down but it was visible that he really liked the name. After this encounter Margaret decided to call it a day."
 
-elements = dict()
 with open('isotopes') as f:
     elements = json.load(f)
 
@@ -21,7 +20,6 @@ def evalue(el):
         try:
             return elements[e.name]
         except KeyError:
-            # kwam niet voor op de wiki pagina, 
             tt = requests.get("https://en.wikipedia.org/wiki/Isotopes_of_%s" % e.name).text
             return tt.count("<b>Stable</b>")
     else:
@@ -62,3 +60,7 @@ def svalue(sentence):
         res += v*sign
         sign *= -1
     return res
+
+
+if __name__ == '__main__':
+    print(svalue(text))

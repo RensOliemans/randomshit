@@ -15,7 +15,7 @@ def get_isotopes():
         elements[element] = stable_isotopes
 
     # override some, long half lifes?
-    # elements['tungsten'] = 5  doesn't work
+    # elements['tungsten'] = 5  # doesn't work
     elements['tellurium'] = 5
 
 
