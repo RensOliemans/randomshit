@@ -3,17 +3,17 @@ nummer 	afkorting 	naam 	naam 	nummer
 1 	CH 	Charlie 	Portiersloge 	1
 2 	SP 	Spiegel 	BB-gebouw 	2
 3 	VL 	Vleugel 	Bestuursvleugel 	2A
-5 	GA 	Garage 	Garagecomplex/Utechno 	4
+5 	GA 	Garage 		Garagecomplex/Utechno 	4
 6 	PA 	Paviljoen 	Paviljoen 	3
 7 	SE 	Seinhuis 	PTT-gebouwtje 	4
 8 	HD 	hogedruklab 	Hogedruklaboratorium 	5
 9 	CI 	Citadel 	KCT-gebouw 	7
 10 	RA 	Ravelijn 	TO-gebouw 	8
 11 	ZI 	Zilverling 	INF-gebouw 	9
-12 	WA 	Waaier 	Collegezalencomplex 	9A
-13 	HB 	Hal B 	Hal B 	13
+12 	WA 	Waaier 		Collegezalencomplex 	9A
+13 	HB 	Hal B 	        Hal B 	        13
 14 	TH 	Teehuis 	Teehuis 	14
-15 	CR 	[[Carr�]] 	[[Carr�]] 	15
+15 	CR 	Carré 	 	Carré 	 	15
 16 	NL 	NanoLab 	NanoLab 	16
 17 	LA 	Langezijds 	CT-gebouw 	6
 18 	AR 	Art�z 	AKI 	38
