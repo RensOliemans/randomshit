@@ -1,5 +1,11 @@
-from collections import namedtuple
+import argparse
+
 from gebouw import Gebouw, Kunst
+
+parser = argparse.ArgumentParser(description='Pak alle gebouwen (en kunstwerken) op de UT.')
+parser.add_argument('-l', '--letters', type=str,
+                    help='welke letters heeft het gebouw?')
+args = parser.parse_args()
 
 
 def parse_new():
@@ -20,3 +26,7 @@ def parse_new():
         kunstwerken.append(Kunst(naam=items[0]))
 
     return gebouwen, kunstwerken
+
+
+gebouwen, kunstwerken = parse_new()
+print([x for x in gebouwen if all([l in x.naam.lower() for l in args.letters.lower()])])

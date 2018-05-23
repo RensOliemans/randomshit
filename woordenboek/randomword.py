@@ -52,7 +52,7 @@ def define(word):
 @begin.logging
 def main(length: 'Length of words' = 10,
          amount: 'Amount of words' = 5,
-         filename: 'Filename' = "{}".format(EN),
+         filename: 'Filename' = "{}".format(NL),
          to_define: 'Define' = False):
     """ Prints a couple of random words from a dictionary. """
     words = get_word(filename=filename,
