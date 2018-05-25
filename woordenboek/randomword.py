@@ -31,20 +31,30 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=10):
     return sample(words, amount)
 
 
-def define(word):
+def define(word, language):
     """
     Defines a word
 
     :param word: the word to be defined
     :returns: a list of definitions
     """
-    # get html page
-    html = requests.get('https://en.oxforddictionaries.com/definition/' + word)
-    # get definition items
-    class_name = 'ind'
-    elements = lxml.html.fromstring(html.text).find_class(class_name)
-    texts = [elem.text.strip() for elem in elements
-             if elem.text is not None]
+    if language == EN:
+        url = 'https://en.oxforddictionaries.com/definition/' + word
+        # get html page
+        html = requests.get(url)
+        # class_name = 'ind'
+        class_name = 'ind'
+        # get definition items
+        elements = lxml.html.fromstring(html.text).find_class(class_name)
+        texts = [elem.text.strip() for elem in elements
+                 if elem.text is not None]
+    elif language == NL:
+        url = 'https://woorden.org/woord/' + word
+    else:
+        return
+    # elements = lxml.html.fromstring(html.text).find_class(class_name)
+    # texts = [elem.text.strip() for elem in elements
+    #          if elem.text is not None]
     return texts
 
 
@@ -60,7 +70,7 @@ def main(length: 'Length of words' = 10,
     logging.debug(words)
     if to_define:
         with Executor(max_workers=4) as exe:
-            jobs = [exe.submit(define, word) for word in words]
+            jobs = [exe.submit(define, word, filename) for word in words]
             defs = [job.result() for job in jobs]
         logging.debug(defs)
         # take first definition

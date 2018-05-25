@@ -5,8 +5,8 @@ FILENAME = 'chat.txt'
 # Poop icon
 EMOTICON_UNI = '\U0001f4a9'
 # Change this if the names change
-NAME_RENS = 'Rens Oliemans'
-NAME_IRIS = 'Iris <3'
+NAME_RENS = 'Rens'
+NAME_IRIS = 'Iris'
 NIGHT_HOUR = 4
 
 
@@ -50,13 +50,12 @@ def parse_line(line):
         # metadata[0] = hh/dd/yy, metdata[1] = hh:mm
         metadata = metadata[0].split(', ')
         # date[0] = mm, date[1] = dd, date[2] = yy
-        date = metadata[0].split('/')
+        date = metadata[0].split('-')
         # time[0] = hh, time[1] = mm
         time = metadata[1].split(':')
 
-        # stupid american date format (mm/dd/yy)
-        day = int(date[1])
-        month = int(date[0])
+        day = int(date[0])
+        month = int(date[1])
         year = int(date[2]) + 2000  # yy instead of yyyy, so add 2000
 
         hour = int(time[0])
@@ -115,25 +114,26 @@ def frequencies(iris, rens):
         seconds = difference.days * seconds_in_day + difference.seconds
         days = seconds / seconds_in_day
 
-        return days / len(person)
+        return days, days / len(person)
 
-    iris_frequency = frequency(iris)
-    rens_frequency = frequency(rens)
-    return iris_frequency, rens_frequency
+    iris_days, iris_frequency = frequency(iris)
+    rens_days, rens_frequency = frequency(rens)
+    average_days = (iris_days + rens_days) / 2
+    return average_days, iris_frequency, rens_frequency
 
 
 def main():
     """ Main method. """
     iris, rens = parse_file(FILENAME)
-    print("Counter:\nIris: {}, Rens: {}, Total: {}\n"
-          .format(len(iris), len(rens), len(iris + rens)))
+    days, iris_frequency, rens_frequency = frequencies(iris, rens)
+    print("Counter:\nIris: {}, Rens: {}, Total: {}, over {:.2f} days.\n"
+          .format(len(iris), len(rens), len(iris + rens), days))
 
     iris_time, rens_time, total_time = average_times(iris, rens)
     print("Average poop time (before {} will be counted as night, so "
           "+ 24 hours):\nIris: {}, Rens: {}, Total: {}"
           .format(NIGHT_HOUR, iris_time, rens_time, total_time))
 
-    iris_frequency, rens_frequency = frequencies(iris, rens)
     # regular frequency
     print("Average frequency:\n"
           "Iris: one poop per {:.2f} days, Rens: one poop per {:.2f} days"
