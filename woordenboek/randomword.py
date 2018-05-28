@@ -49,7 +49,15 @@ def define(word, language):
         texts = [elem.text.strip() for elem in elements
                  if elem.text is not None]
     elif language == NL:
-        url = 'https://woorden.org/woord/' + word
+        url = 'http://woorden.org/woord/' + word
+        html = requests.get(url)
+        class_name = 'slider-wrap'
+        elements = lxml.html.fromstring(html.text).find_class(class_name)
+        element = elements[1]  # [0] is search box
+        try:
+            texts = [element[3].text_content()]
+        except:
+            texts = list()
     else:
         return
     # elements = lxml.html.fromstring(html.text).find_class(class_name)

@@ -5,6 +5,7 @@ from gebouw import Gebouw, Kunst
 parser = argparse.ArgumentParser(description='Pak alle gebouwen (en kunstwerken) op de UT.')
 parser.add_argument('-l', '--letters', type=str,
                     help='welke letters heeft het gebouw?')
+parser.add_argument('-k', '--kunst', dest=
 args = parser.parse_args()
 
 
