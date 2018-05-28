@@ -55,7 +55,7 @@ def define(word, language):
         elements = lxml.html.fromstring(html.text).find_class(class_name)
         element = elements[1]  # [0] is search box
         try:
-            texts = [element[3].text_content()]
+            texts = [element[0][3].text_content()]
         except:
             texts = list()
     else:

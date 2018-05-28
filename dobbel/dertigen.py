@@ -66,9 +66,9 @@ def determine_strategy(begin, worp=None):
     for kept in keep:
         throw.remove(kept)
 
-    print(keep)
+    logging.debug(keep)
     keep = decide_minimum(worp)
-    print(keep)
+    logging.debug(keep)
     return True
 
 
