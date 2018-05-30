@@ -173,7 +173,7 @@ def convert_to_xml(movies):
     doc = etree.ElementTree(page)
     for movie in movies:
         title = movie.title.replace(' ', '_')
-        if title[0] in [str(x) for x in range(11)]:
+        if title[0].isdigit():
             title = 'm' + title
         etree.SubElement(page, title,
                          duration=str(movie.duration),
