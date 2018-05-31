@@ -1,4 +1,5 @@
 import re
+# import datetime
 
 import bs4
 import parsedatetime as pdt
@@ -7,8 +8,11 @@ from collections import namedtuple
 
 cal = pdt.Calendar()
 
-FILENAME = 'test.html'
+FILENAME = 'total.html'
 MINIMAL_DIFFERENCE = 10 * 60  # 5 minutes
+PUZZLE_DIFFERENCE = 30
+AMOUNT_OF_DAYS = 4
+MEETING_TIME = cal.parseDT('20:00')
 
 Puzzle = namedtuple('Puzzle', 'number team date')
 
@@ -17,9 +21,35 @@ def main():
     html = open(FILENAME).read()
     soup = bs4.BeautifulSoup(html, 'html.parser')
     items = [x for x in soup.children if x not in ['\n', '', ' ']]
+    day_breaks = analyse_days(items)
+    print(day_breaks)
+    for day in day_breaks:
+        pass
+        # print(items[day])
     puzzles = parse_items(items)
     possible_puzzles = analyse(list(puzzles))
-    print(list(possible_puzzles))
+    print(*list(possible_puzzles), sep='\n')
+
+
+def tester():
+    html = open(FILENAME).read()
+    soup = bs4.BeautifulSoup(html, 'html.parser')
+    items = [x for x in soup.children if x not in ['\n', '', ' ']]
+    return items
+
+
+def analyse_days(items):
+    days = list()
+    previous = None
+    for item in items:
+        date = item.find(attrs={'class': 'im_message_date_text'})
+        if date:
+            date = date.attrs['data-content']
+            day = cal.parseDT(date)[0]
+            if previous is not None and previous.hour < 20 and day.hour == 20:
+                days.append(items.index(item))
+            previous = day
+    return days
 
 
 def analyse(puzzles):
@@ -28,7 +58,10 @@ def analyse(puzzles):
             continue
 
         for other_puzzle in puzzles:
-            if puzzle == other_puzzle or puzzle.team != other_puzzle.team or other_puzzle.number == 'bonus':
+            if (puzzle == other_puzzle
+               or puzzle.team != other_puzzle.team
+               or other_puzzle.number == 'bonus'
+               or abs(puzzles.index(puzzle) - puzzles.index(other_puzzle)) > PUZZLE_DIFFERENCE):
                 continue
             if abs(puzzle.date - other_puzzle.date).seconds < MINIMAL_DIFFERENCE:
                 yield other_puzzle
@@ -50,7 +83,7 @@ def parse_items(items):
                 puzzle = parse_item(text, date)
                 if puzzle:
                     yield puzzle
-        else:
+        elif contents:
             text = contents[0]
             date = item.find(attrs={'class': 'im_message_date_text'}).attrs['data-content']
             puzzle = parse_item(text, date)
