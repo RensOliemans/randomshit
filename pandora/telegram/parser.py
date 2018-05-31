@@ -102,9 +102,16 @@ def parse_item(text, date):
         # TODO: change regex, depending on what team names are allowed
         # In Pandora 2018, the following characters were used:
         # letters, numbers, spaces, apostrophe, dash, forward slash, asterisk,
-        # period
+        # period.
+        # Formats:
+        # <team> solved puzzle x[ and got a time bonus of y]?
+        # <team> solved a bonuspuzzle
         m = re.match(r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
         if m is None:
+            # In the first 2 Pandora days, the message format was different.
+            # Formats:
+            # [Puzzle solved] <team> solved puzzle number x[ and got a time bonus of y]?
+            # [Puzzle solved] <team> solved a bonuspuzzle
             m = re.match(r"\[Puzzle solved\] (?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
     except TypeError as e:
         # incorrect type - not a 'regular' message by the bot
