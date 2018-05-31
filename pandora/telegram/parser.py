@@ -8,11 +8,9 @@ from collections import namedtuple
 
 cal = pdt.Calendar()
 
-FILENAME = 'total.html'
-MINIMAL_DIFFERENCE = 10 * 60  # 5 minutes
-PUZZLE_DIFFERENCE = 30
-AMOUNT_OF_DAYS = 4
-MEETING_TIME = cal.parseDT('20:00')
+FILENAME = 'berichten.html'
+MINIMAL_DIFFERENCE = 3 * 60  # 3 minutes
+MEETING_TIME = cal.parseDT('20:00')[0]
 
 Puzzle = namedtuple('Puzzle', 'number team date')
 
@@ -22,13 +20,21 @@ def main():
     soup = bs4.BeautifulSoup(html, 'html.parser')
     items = [x for x in soup.children if x not in ['\n', '', ' ']]
     day_breaks = analyse_days(items)
-    print(day_breaks)
-    for day in day_breaks:
-        pass
-        # print(items[day])
-    puzzles = parse_items(items)
-    possible_puzzles = analyse(list(puzzles))
-    print(*list(possible_puzzles), sep='\n')
+    day_breaks.insert(0, 0)
+    day_breaks.append(-1)
+    days = list()
+    for i, x in enumerate(day_breaks):
+        if i == len(day_breaks) - 1:
+            break
+        y = day_breaks[i+1]
+        days.append(items[x:y])
+    print('Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
+          'within {} seconds of these puzzles).'.format(MINIMAL_DIFFERENCE))
+    for day, elements in enumerate(days):
+        print('Day %s' % day)
+        puzzles = parse_items(elements)
+        possible_puzzles = analyse(list(puzzles))
+        print(*list(possible_puzzles), sep='\n')
 
 
 def tester():
@@ -46,7 +52,8 @@ def analyse_days(items):
         if date:
             date = date.attrs['data-content']
             day = cal.parseDT(date)[0]
-            if previous is not None and previous.hour < 20 and day.hour == 20:
+            if (previous is not None and previous.hour < MEETING_TIME.hour
+               and day.hour == MEETING_TIME.hour):
                 days.append(items.index(item))
             previous = day
     return days
@@ -60,8 +67,7 @@ def analyse(puzzles):
         for other_puzzle in puzzles:
             if (puzzle == other_puzzle
                or puzzle.team != other_puzzle.team
-               or other_puzzle.number == 'bonus'
-               or abs(puzzles.index(puzzle) - puzzles.index(other_puzzle)) > PUZZLE_DIFFERENCE):
+               or other_puzzle.number == 'bonus'):
                 continue
             if abs(puzzle.date - other_puzzle.date).seconds < MINIMAL_DIFFERENCE:
                 yield other_puzzle
@@ -98,6 +104,8 @@ def parse_item(text, date):
         # letters, numbers, spaces, apostrophe, dash, forward slash, asterisk,
         # period
         m = re.match(r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+        if m is None:
+            m = re.match(r"\[Puzzle solved\] (?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
     except TypeError as e:
         # incorrect type - not a 'regular' message by the bot
         return
