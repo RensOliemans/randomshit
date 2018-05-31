@@ -53,7 +53,7 @@ def analyse_days(items):
             date = date.attrs['data-content']
             day = cal.parseDT(date)[0]
             if (previous is not None and previous.hour < MEETING_TIME.hour
-               and day.hour == MEETING_TIME.hour):
+               and day.hour >= MEETING_TIME.hour):
                 days.append(items.index(item))
             previous = day
     return days
