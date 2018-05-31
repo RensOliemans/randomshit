@@ -38,6 +38,7 @@ def main():
 
 
 def tester():
+    ''' used for testing '''
     html = open(FILENAME).read()
     soup = bs4.BeautifulSoup(html, 'html.parser')
     items = [x for x in soup.children if x not in ['\n', '', ' ']]
@@ -45,6 +46,8 @@ def tester():
 
 
 def analyse_days(items):
+    ''' takes a list of (all) items, determines at what indices the new days
+    begin. '''
     days = list()
     previous = None
     for item in items:
@@ -60,6 +63,8 @@ def analyse_days(items):
 
 
 def analyse(puzzles):
+    ''' takes a list of puzzles and determines what puzzles are close enough
+    to a bonuspuzzle. '''
     for puzzle in puzzles:
         if puzzle.number != 'bonus':
             continue
@@ -74,6 +79,7 @@ def analyse(puzzles):
 
 
 def parse_items(items):
+    ''' gets a list of items and converts them to puzzles. '''
     for item in items:
         message = item.find(attrs={'class': 'im_message_text'})
         if message is None:
@@ -98,6 +104,10 @@ def parse_items(items):
 
 
 def parse_item(text, date):
+    '''
+    takes the contents of a telegram messages and its timestamp, and returns
+    a puzzle namedtuple. returns None if it wasn't corret (f.e. kill message).
+    '''
     try:
         # TODO: change regex, depending on what team names are allowed
         # In Pandora 2018, the following characters were used:
