@@ -20,10 +20,13 @@ def main():
     soup = bs4.BeautifulSoup(html, 'html.parser')
     items = [x for x in soup.children if x not in ['\n', '', ' ']]
     day_breaks = analyse_days(items)
+
+    # add 0 and -1, for slicing
     day_breaks.insert(0, 0)
     day_breaks.append(-1)
     days = list()
     for i, x in enumerate(day_breaks):
+        # seperate the list of items into separate days
         if i == len(day_breaks) - 1:
             break
         y = day_breaks[i+1]
@@ -57,6 +60,7 @@ def analyse_days(items):
             day = cal.parseDT(date)[0]
             if (previous is not None and previous.hour < MEETING_TIME.hour
                and day.hour >= MEETING_TIME.hour):
+                # new day; first message after meeting time
                 days.append(items.index(item))
             previous = day
     return days
@@ -83,6 +87,7 @@ def parse_items(items):
     for item in items:
         message = item.find(attrs={'class': 'im_message_text'})
         if message is None:
+            # most likely some weird message
             continue
         contents = message.contents
         if len(contents) > 1:
@@ -109,8 +114,8 @@ def parse_item(text, date):
     a puzzle namedtuple. returns None if it wasn't corret (f.e. kill message).
     '''
     try:
-        # TODO: change regex, depending on what team names are allowed
-        # In Pandora 2018, the following characters were used:
+        # TODO: change regex, depending on what team names are allowed.
+        # In Pandora 2018, the following characters were used in the team names:
         # letters, numbers, spaces, apostrophe, dash, forward slash, asterisk,
         # period.
         # Formats:
