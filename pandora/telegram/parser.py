@@ -1,18 +1,18 @@
 import re
-# import datetime
+from collections import namedtuple
 
 import bs4
 import parsedatetime as pdt
 
-from collections import namedtuple
 
 cal = pdt.Calendar()
+Puzzle = namedtuple('Puzzle', 'number team date')
 
 FILENAME = 'berichten.html'
 MINIMAL_DIFFERENCE = 3 * 60  # 3 minutes
-MEETING_TIME = cal.parseDT('20:00')[0]
 
-Puzzle = namedtuple('Puzzle', 'number team date')
+# is used to determine when a day ended and when the next day starts
+MEETING_TIME = cal.parseDT('20:00')[0]
 
 
 def main():
@@ -20,17 +20,8 @@ def main():
     soup = bs4.BeautifulSoup(html, 'html.parser')
     items = [x for x in soup.children if x not in ['\n', '', ' ']]
     day_breaks = analyse_days(items)
+    days = convert_to_days(items, day_breaks)
 
-    # add 0 and -1, for slicing
-    day_breaks.insert(0, 0)
-    day_breaks.append(-1)
-    days = list()
-    for i, x in enumerate(day_breaks):
-        # seperate the list of items into separate days
-        if i == len(day_breaks) - 1:
-            break
-        y = day_breaks[i+1]
-        days.append(items[x:y])
     print('Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
           'within {} seconds of these puzzles).'.format(MINIMAL_DIFFERENCE))
     for day, elements in enumerate(days):
@@ -38,6 +29,19 @@ def main():
         puzzles = parse_items(elements)
         possible_puzzles = analyse(list(puzzles))
         print(*list(possible_puzzles), sep='\n')
+
+
+def convert_to_days(items, indices):
+    ''' slices all items into seperate days. the points where the new days begin
+    are given by indices. '''
+    # for slicing
+    indices.insert(0, 0)
+    indices.append(-1)
+    for i, x in enumerate(indices):
+        if i == len(indices) - 1:
+            break
+        y = indices[i+1]
+        yield items[x:y]
 
 
 def tester():
