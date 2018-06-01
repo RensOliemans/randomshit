@@ -53,20 +53,21 @@ def parse_new():
 
     return gebouwen, kunstwerken
 
-gebouwen, kunstwerken = parse_new()
-total = gebouwen + kunstwerken
-check = total if args.kunst else gebouwen
 
+if __name__ == '__main__':
+    gebouwen, kunstwerken = parse_new()
+    total = gebouwen + kunstwerken
+    check = total if args.kunst else gebouwen
 
-if args.begin:
-    check = [x for x in check if x.name.lower()[:len(args.begin)] == args.begin.lower()]
-if args.midden:
-    indices = {int(x[0]): x[1] for x in args.midden.split(' ')}
-    check = [x for x in check if all(x.name.lower()[min(len(x) - 1, p)] == indices[p] for p in indices.keys())]
-if args.eind:
-    check = [x for x in check if x.name.lower()[-len(letters):] == letters.lower()]
-if args.letters:
-    check = [x for x in check if all([l in x.name.lower() for l in args.letters.lower()])]
-if args.aantal:
-    check = [x for x in check if len(x.name) == args.aantal]
-print(check)
+    if args.begin:
+        check = [x for x in check if x.name.lower()[:len(args.begin)] == args.begin.lower()]
+    if args.midden:
+        indices = {int(x[0]): x[1] for x in args.midden.split(' ')}
+        check = [x for x in check if all(x.name.lower()[min(len(x) - 1, p)] == indices[p] for p in indices.keys())]
+    if args.eind:
+        check = [x for x in check if x.name.lower()[-len(args.eind):] == args.eind.lower()]
+    if args.letters:
+        check = [x for x in check if all([l in x.name.lower() for l in args.letters.lower()])]
+    if args.aantal:
+        check = [x for x in check if len(x.name) == args.aantal]
+    print(check)
