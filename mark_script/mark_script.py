@@ -20,8 +20,7 @@ for f in mp3files:
     text = f.split(' - ')
     if not len(text) == 2:
         # incorrect format, skip this file
-        print("Tag of file '{}' won't be changed, the format is incorrect"
-              .format(f))
+        print(f"Tag of file '{f}' won't be changed, the format is incorrect")
         incorrect_files.append(f)
         continue
 
@@ -48,12 +47,12 @@ for f in mp3files:
     except eyed3.Error:
         # unknown why, this happens when eye3d throws an error (audiofile.tag
         # is None, not sure what makes this happen)
-        print("Error in file {}".format(f))
+        print(f"Error in file {f}")
         incorrect_files.append(f)
 
 if incorrect_files:
-    print("There were {} incorrectly named files:\n{}"
-          .format(len(incorrect_files), incorrect_files))
+    print(f"There were {len(incorrect_files)} incorrectly named files:\n"
+          f"{incorrect_files}")
 
-print("Changed tags of {} files. It took {:.3} seconds."
-      .format(len(mp3files) - incorrect_files, time.time() - start))
+print(f"Changed tags of {len(mp3files) - len(incorrect_files)} files. "
+      f"It took {time.time() - start:.3} seconds.")

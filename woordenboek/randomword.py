@@ -26,8 +26,7 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=10):
         words = [x[:-1] for x in dictionary if len(x[:-1]) == length_of_words]
 
     amount = min(len(words), amount_of_words)
-    print("Amount of words with length {}: {}\n".format(
-        length_of_words, amount))
+    print(f"Amount of words with length {length_of_words}: {amount}\n")
     return sample(words, amount)
 
 
@@ -70,7 +69,7 @@ def define(word, language):
 @begin.logging
 def main(length: 'Length of words' = 10,
          amount: 'Amount of words' = 5,
-         filename: 'Filename' = "{}".format(NL),
+         filename: 'Filename' = f"{NL}",
          to_define: 'Define' = False):
     """ Prints a couple of random words from a dictionary. """
     words = get_word(filename=filename,

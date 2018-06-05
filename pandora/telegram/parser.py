@@ -22,8 +22,8 @@ def main():
     day_breaks = analyse_days(items)
     days = convert_to_days(items, day_breaks)
 
-    print('Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
-          'within {} seconds of these puzzles).'.format(MINIMAL_DIFFERENCE))
+    print(f'Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
+          'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
     for day, elements in enumerate(days):
         print('Day %s' % day)
         puzzles = parse_items(elements)

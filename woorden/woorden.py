@@ -38,5 +38,5 @@ def main(w: 'Word', a: 'Amount of letters' = 0):
         if options:
             total_options.extend(options)
             logging.debug('Combinatie: %s. Woorden: %s.', ''.join(combi), options)
-    logging.info('{:.4} seconds'.format(time.time() - start))
+    logging.info(f'{time.time() - start:.4} seconds')
     print(sorted(set(total_options)))

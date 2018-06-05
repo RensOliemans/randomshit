@@ -15,13 +15,12 @@ class Movie(object):
         self.part_of_serie = part_of_serie
 
     def __str__(self):
-        return "{} - {}".format(self.title, self.duration)
+        return f"{self.title} - {self.duration}"
 
     def __repr__(self):
-        return ("Movie. Title: {}, Duration: {}, file_url (stripped): {}, "
-                "Tomato: {}. IMDB: {}. Rating: {}."
-                .format(self.title, self.duration, self.file_url[10:25],
-                        self.tomatoes, self.imdb, self.rating))
+        return (f"Movie. Title: {self.title}, Duration: {self.duration}, "
+                f"file_url (stripped): {self.file_url[10:25]}, Tomato: {self.tomatoes}."
+                f" IMDB: {self.imdb}. Rating: {self.rating}")
 
     def __eq__(self, other):
         return (self.title == other.title and self.duration == other.duration and
@@ -35,10 +34,10 @@ class Tomatoes(object):
         self.url = url
 
     def __str__(self):
-        return "{} - {}, at {}".format(self.rating, self.percentage, self.url)
+        return f"{self.rating} - {self.percentage}, at {self.url}"
 
     def __repr_(self):
-        return "{} - {}, at {}".format(self.rating, self.percentage, self.url)
+        return str(self)
 
 
 class IMDB(object):
@@ -47,10 +46,10 @@ class IMDB(object):
         self.url = url
 
     def __str__(self):
-        return "{}, at {}".format(self.rating, self.url)
+        return f"{self.rating}, at {self.url}"
 
     def __repr_(self):
-        return "{}, at {}".format(self.rating, self.url)
+        return str(self)
 
 
 def parse_first_line(line):

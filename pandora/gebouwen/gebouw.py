@@ -18,7 +18,7 @@ class Gebouw:
         return self.name
 
     def __repr__(self):
-        return "{} - {} ({})".format(self.number, self.name, self.abbreviation)
+        return f"{self.number} - {self.name} ({self.abbreviation})"
 
     def __contains__(self, x):
         return x in self.name.lower()

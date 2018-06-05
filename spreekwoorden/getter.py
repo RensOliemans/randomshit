@@ -33,7 +33,7 @@ def get_proverbs(url, pages):
 def main():
     max_pages = determine_max_pages(URL)
     logging.info('Getting info from %s pages', max_pages)
-    pages = ['?page={}'.format(x) for x in range(1, max_pages + 1)]
+    pages = [f'?page={x}' for x in range(1, max_pages + 1)]
 
     proverbs = get_proverbs(URL, pages)
 

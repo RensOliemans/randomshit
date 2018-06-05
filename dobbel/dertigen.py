@@ -161,4 +161,4 @@ def main(minimum: "Force minimum strategy" = False,
             total += game(minimum, maximum, score=True)
 
     if runs > 1:
-        print('Average: {:.2f}'.format(total / runs))
+        print(f'Average: {total / runs:.2f}')

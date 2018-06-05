@@ -105,20 +105,16 @@ def calculate_avg_moving(words, keyboard):
 
 def show_movings(words):
     qwerty = calculate_avg_moving(words, KEYBOARD_QWERTY)
-    print("Qwerty\taverage moving distance:\t{:.2f}"
-          .format(qwerty))
+    print(f"Qwerty\taverage moving distance:\t{qwerty:.2f}")
 
     dvorak = calculate_avg_moving(words, KEYBOARD_DVORAK)
-    print("Dvorak\taverage moving distance:\t{:.2f}"
-          .format(dvorak))
+    print(f"Dvorak\taverage moving distance:\t{dvorak:.2f}")
 
     colemak = calculate_avg_moving(words, KEYBOARD_COLEMAK)
-    print("Colemak\taverage moving distance:\t{:.2f}"
-          .format(colemak))
+    print(f"Colemak\taverage moving distance:\t{colemak:.2f}")
 
     workman = calculate_avg_moving(words, KEYBOARD_WORKMAN)
-    print("Workman\taverage moving distance:\t{:.2f}"
-          .format(workman))
+    print(f"Workman\taverage moving distance:\t{workman:.2f}")
 
 
 def main():
@@ -130,7 +126,7 @@ def main():
 
     for dictionary in dictionaries:
         dictionary = dict_dir_name + dictionary
-        print("Using dictionary {}".format(dictionary))
+        print(f"Using dictionary {dictionary}")
         words = dic_to_words(dictionary)
         show_movings(words)
 

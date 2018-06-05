@@ -6,7 +6,7 @@ import begin
 
 def bet(amount):
     # change the chance to improve/decrease the odds
-    chance = 0.32
+    chance = 0.5
     if random() < chance:
         return (amount * 2, True)
     return (-amount, False)
@@ -45,7 +45,7 @@ def multiple_tries(a: 'Amount' = 1, t: 'Total_money' = 10000,
         logging.info("\nStarting round number {}.".format(x + 1))
         scores[x + 1] = start(a, t, g)
 
-    logging.info("\nEnd result:")
-    logging.info(scores.values())
+    logging.debug("\nEnd result:")
+    logging.debug(scores.values())
     print("Initial amount: €{:,}. Final amount: €{:,}. Winnings: €{:,}"
           .format(t * r, sum(scores.values()), sum(scores.values()) - t * r))

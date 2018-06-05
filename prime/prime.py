@@ -23,4 +23,4 @@ def is_prime(n):
 def main(n: 'Number'):
     start = time.time()
     print(is_prime(n))
-    logging.info('Time taken: {:.5}'.format(time.time() - start))
+    logging.info(f'Time taken: {time.time() - start:.5}')
