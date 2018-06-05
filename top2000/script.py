@@ -1,6 +1,22 @@
-import sys
 import logging
+from argparse import ArgumentParser
+from enum import Enum
+
 import pandas as pd
+
+logger = logging.Logger(__name__)
+
+
+class Option(Enum):
+    artist = 'artist'
+    song = 'song'
+    avg = 'avg'
+    max = 'max'
+    list = 'list'
+    pos = 'pos'
+
+    def __str__(self):
+        return self.value
 
 
 def parse_excel(filename):
@@ -18,13 +34,10 @@ def parse_excel(filename):
             title = titles[index]
             artist = artists[index]
 
-            songs.append(Song(title, artist, position, None))
-            if isinstance(artist, float):
-                print("Index:{}\tPosition:{}\tSong:{}\tArtist:{}"
-                      .format(index, position, song, artist))
+            songs.append(Song(title, artist, position))
         except ValueError as e:
             # row isn't a song, has no pos variable
-            logging.error(e)
+            logger.debug(e)
 
     return songs
 
@@ -34,97 +47,53 @@ def main():
     filename = 'TOP-2000-2017.xls'
     # songs = get_songs(filename)
     songs = parse_excel(filename)
+    choice = str(opts.option)
 
-    try:
-        while True:
-            choice_set = ['artist', 'song', 'avg', 'max', 'list', 'pos']
-            print("\nChoices: {}".format(choice_set))
-            choice = input("Please choose\t")
-            if choice == 'artist':
-                artist = input("Enter artist's name:\t").lower()
-                artist_songs = artist_info(songs, artist)
-                for song in artist_songs:
-                    print(song)
-                print("Artist {} has {} entries"
-                      .format(artist, len(artist_songs)))
-            elif choice == 'song':
-                title = input("Enter song title:\t").lower()
-                correct_songs = song_info(songs, title)
-                if not correct_songs:
-                    print("Song not found")
-                for song in correct_songs:
-                    print(song)
-            elif choice == "avg":
-                artist = input("Enter artist's name:\t").lower()
-                artist_songs = artist_info(songs, artist)
-                avg = 0
-                for song in artist_songs:
-                    avg += int(song.position)
-                if avg:
-                    print("Average position: {:.2f}. Songs in list: {}"
-                          .format(avg/len(artist_songs), len(artist_songs)))
-                else:
-                    print("Artist not found")
-            elif choice == "max":
-                amount = int(input("Amount:\t"))
-                top_artists, top_songs = maximum(songs, amount)
-                print(top_artists)
-                print(print_songs(top_songs))
-            elif choice == "list":
-                for song in songs:
-                    print(song)
-            elif choice == "pos":
-                pos = int(input("Position:\t"))
-                print(songs[::-1][pos - 1])
-    except KeyboardInterrupt:
-        print("Cancelled program")
-        sys.exit(0)
-
-
-def print_songs(songs):
-    song_string = ""
-    for song in songs:
-        song_string += str(song) + "\n"
-    return song_string
+    if choice == 'artist':
+        artist = input("Enter artist's name:\t").lower()
+        artist_songs = artist_info(songs, artist)
+        print(*artist_songs, sep='\n')
+        print(f"Artist {artist} has {len(artist_songs)} entries")
+    elif choice == 'song':
+        title = input("Enter song title:\t").lower()
+        correct_songs = song_info(songs, title)
+        print(*(correct_songs) if correct_songs else 'Song not found',
+              sep='\n' if correct_songs else '')
+    elif choice == "avg":
+        artist = input("Enter artist's name:\t").lower()
+        artist_songs = artist_info(songs, artist)
+        total = sum([song.position for song in songs if song in artist_songs])
+        print(f"Average position: {total/len(artist_songs):.2f}. Songs in list"
+              f": {len(artist_songs)}" if total else "Artist not found")
+    elif choice == "max":
+        amount = int(input("Amount:\t"))
+        artists, top_songs = top_artists(songs, amount), songs[-amount:]
+        print(*artists, sep=', ')
+        print(*top_songs, sep='\n')
+    elif choice == "list":
+        print(*songs, sep='\n')
+    elif choice == "pos":
+        pos = max(min(int(input("Position:\t")), 2000), 0)
+        print(songs[::-1][pos - 1])
 
 
 def artist_info(songs, artist):
-    artist_songs = list()
-    for song in songs:
-        if song is None:
-            continue
-        if artist == song.artist.lower():
-            artist_songs.append(song)
-    return artist_songs
+    return [song for song in songs
+            if song is not None and
+            artist == song.artist.lower()]
 
 
 def song_info(songs, title):
-    correct_song = list()
-    for song in songs:
-        if song is None:
-            continue
-        if title.lower() in song.title.lower():
-            correct_song.append(song)
-    return correct_song
-
-
-def maximum(songs, amount=1):
-    return top_artists(songs, amount), top_songs(songs, amount)
-
-
-def top_songs(songs, amount=1):
-    return songs[-amount:]
+    return [song for song in songs
+            if song is not None and
+            title.lower() in song.title.lower()]
 
 
 def top_artists(songs, amount=1):
     artists = artists_dict(songs)
-    # sorted artists
-    sorted_artists = sorted(artists,
-                            key=lambda key: artists[key])[-amount:][::-1]
-    end_dict = dict()
-    for artist in sorted_artists:
-        end_dict[artist] = artists[artist]
-    return end_dict
+    # sorted by value
+    return sorted(artists,
+                  key=lambda key: artists[key])[-amount:][::-1]
 
 
 def artists_dict(songs):
@@ -140,20 +109,24 @@ def artists_dict(songs):
 
 
 class Song():
-    def __init__(self, title, artist, position, year):
+    def __init__(self, title, artist, position):
         self.title = title
         self.artist = artist
         self.position = position
-        self.year = year
 
     def __str__(self):
-        return ("{pos}\t{title:20}\t{artist:20}\t{year}"
-                .format(pos=self.position, title=self.title,
-                        artist=self.artist, year=self.year))
+        return f"{self.position}\t{self.title:20}\t{self.artist:20}"
 
     def __repr__(self):
         return str(self)
 
 
 if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument('option', type=Option, choices=list(Option))
+    parser.add_argument('-l', '--loglevel', dest='loglevel', type=str, help='Log level',
+                        choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
+                        default='WARNING')
+    opts = parser.parse_args()
+    logger.setLevel(opts.loglevel)
     main()
