@@ -1,18 +1,18 @@
 import re
 from collections import namedtuple
+from datetime import datetime
 
 import bs4
-import parsedatetime as pdt
 
 
-cal = pdt.Calendar()
 Puzzle = namedtuple('Puzzle', 'number team date')
 
 FILENAME = 'berichten.html'
 MINIMAL_DIFFERENCE = 3 * 60  # 3 minutes
 
 # is used to determine when a day ended and when the next day starts
-MEETING_TIME = cal.parseDT('20:00')[0]
+MEETING_TIME = datetime.strptime('20:00', '%H:%M')
+TIME_FORMAT = '%I:%M:%S %p'
 
 
 def main():
@@ -61,7 +61,8 @@ def analyse_days(items):
         date = item.find(attrs={'class': 'im_message_date_text'})
         if date:
             date = date.attrs['data-content']
-            day = cal.parseDT(date)[0]
+            day = datetime.strptime(date, '%I:%M:%S %p')
+            # day = cal.parseDT(date)[0]
             if (previous is not None and previous.hour < MEETING_TIME.hour
                and day.hour >= MEETING_TIME.hour):
                 # new day; first message after meeting time
@@ -141,7 +142,7 @@ def parse_item(text, date):
     team = m.group('team')
     number = 'bonus' if m.group('bonus') else int(m.group('number'))
 
-    puzzle = Puzzle(number, team, cal.parseDT(date)[0])
+    puzzle = Puzzle(number, team, datetime.strptime(date, '%I:%M:%S %p'))
     return puzzle
 
 
