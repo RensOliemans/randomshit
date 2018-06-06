@@ -1,8 +1,8 @@
 import time
-from concurrent.futures import ThreadPoolExecutor as Executor
 from random import shuffle, randrange
 
 import begin
+from tqdm import tqdm
 
 games = 0
 
@@ -139,13 +139,10 @@ def main(g: 'Amount of games' = 1000, r: 'Rolls per game' = 30,
     """ Simulates monopoly games and outputs the frequency of the tiles
     visited, including jail workings and chance/community cards. """
     start = time.time()
-    with Executor(max_workers=1) as exe:
-        future = [exe.submit(run, r, e) for _ in range(g)]
     dicts = list()
-    for fut in future:
-        dicts.append(fut.result())
+    for _ in tqdm(range(g)):
+        dicts.append(run(r, e))
     end_dict = {k: sum(d[k] for d in dicts) for k in dicts[0]}
-    print(games)
     print(pretty_format(end_dict, e))
     print("Running {:,} games (with {} rounds) took {:.3} seconds".format(
           g, r, time.time() - start))
