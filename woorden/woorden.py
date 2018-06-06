@@ -14,10 +14,7 @@ def find_word(word, words):
 
 def find_combis(word, amount, words):
     combis = combinations(word, amount)
-    options = list()
-    for combi in combis:
-        options.extend(find_word(combi, words))
-    return list(set(options))
+    return set([find_word(combi, words) for combi in combis])
 
 
 @begin.start(auto_convert=True)

@@ -22,6 +22,5 @@ def main(n: 'Numbers per card' = 25, a: 'Amount of cards' = 40,
     print('The cards are:')
     for card in cards:
         card = list(card)
-        if s:
-            shuffle(card)
+        shuffle(card) if s else None
         print(card)

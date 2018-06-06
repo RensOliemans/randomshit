@@ -1,13 +1,18 @@
 """ Analyses Whatsapp chats hehe. """
 import datetime
 
+import parsedatetime
+
 FILENAME = 'chat.txt'
 # Poop icon
 EMOTICON_UNI = '\U0001f4a9'
 # Change this if the names change
 NAME_RENS = 'Rens'
 NAME_IRIS = 'Iris'
+# Time at which the poop becomes counted as next day
 NIGHT_HOUR = 4
+
+cal = parsedatetime.Calendar()
 
 
 def parse_file(filename):
@@ -43,32 +48,21 @@ def parse_line(line):
         # format of line:
         # mm/dd/yy, hh:mm - PERSON: CHAT_TEXT
 
-        # metadata[0] = mm/dd/yy, hh:mm, metadata[1] = PERSON: CHAT_TEXT
         metadata = line.split(' - ')
-        # person[0] = PERSON, person[1] = CHAT_TEXT
+        # metadata[0] = mm/dd/yy, hh:mm, metadata[1] = PERSON: CHAT_TEXT
         person = metadata[1].split(':')[0]
-        # metadata[0] = hh/dd/yy, metdata[1] = hh:mm
-        metadata = metadata[0].split(', ')
-        # date[0] = mm, date[1] = dd, date[2] = yy
-        date = metadata[0].split('-')
-        # time[0] = hh, time[1] = mm
-        time = metadata[1].split(':')
+        # person[0] = PERSON, person[1] = CHAT_TEXT
 
-        day = int(date[0])
-        month = int(date[1])
-        year = int(date[2]) + 2000  # yy instead of yyyy, so add 2000
-
-        hour = int(time[0])
-        minute = int(time[1])
-        date = datetime.datetime(year, month, day, hour, minute)
-    if date and person:
+        # Example of input: 15-05-18, 16:16
+        date = datetime.datetime.strptime(metadata[0], '%d-%m-%y, %H:%M')
         return Day(date, person)
-    return None
 
 
 def average_times(iris, rens):
     """
     Determines the average times of the day two people took a shit.
+    :param iris: list of Day objects belonging to Iris
+    :param rens: list of Day objects belonging to Rens
     """
     total = iris + rens
 
@@ -80,9 +74,8 @@ def average_times(iris, rens):
         times = list()
         for poop in person:
             poop_hour = poop.date.hour
-            if poop_hour <= NIGHT_HOUR:
-                # in the night, add 24 hours so it's counted as night
-                poop_hour = poop_hour + 24
+            # add 24 hours if it's between 00:00 and NIGHT_HOUR it's counted as night
+            poop_hour = poop_hour + 24 if poop_hour <= NIGHT_HOUR else poop_hour
             poop_minutes = poop_hour * 60 + poop.date.minute
             times.append(poop_minutes)
         avg_minutes = sum(times) / len(times)

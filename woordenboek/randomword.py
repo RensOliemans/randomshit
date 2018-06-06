@@ -11,6 +11,7 @@ import bs4
 EN = 'English (British).dic'
 NL = 'Dutch.dic'
 DIR = '/home/rens/Projects/randomshit/Dictionaries/'
+DICTS = {'EN': EN, 'NL': NL}
 
 
 def get_word(filename=EN, amount_of_words=5, length_of_words=0):
@@ -38,9 +39,11 @@ def define(word, language):
     Defines a word
 
     :param word: the word to be defined
+    :param language: the language of the words to define
     :returns: a list of definitions
     """
-    if language == EN:
+    texts = None
+    if language == 'EN':
         url = f'https://en.oxforddictionaries.com/definition/{word}'
         html = requests.get(url).text
         soup = bs4.BeautifulSoup(html, 'html.parser')
@@ -48,7 +51,7 @@ def define(word, language):
         class_name = 'ind'
         # get definition items
         texts = [element.text for element in soup.findAll(attrs={'class': class_name})]
-    elif language == NL:
+    elif language == 'NL':
         url = f'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/{word}'
         html = requests.get(url).text
         soup = bs4.BeautifulSoup(html, 'html.parser')
@@ -65,10 +68,10 @@ def define(word, language):
 @begin.logging
 def main(length: 'Length of words. Leave 0 for any length' = 0,
          amount: 'Amount of words' = 5,
-         filename: 'Filename' = f"{NL}",
+         filename: 'Filename' = "NL",
          to_define: 'Define' = False):
     """ Prints a couple of random words from a dictionary. """
-    words = get_word(filename=filename,
+    words = get_word(filename=DICTS[filename],
                      length_of_words=length, amount_of_words=amount)
     logging.debug(words)
     if to_define:
