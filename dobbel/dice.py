@@ -52,10 +52,10 @@ class Dice(object):
                              "of faces!")
 
     def __str__(self):
-        return "Dice, faces: {}.".format(self.faces)
+        return f"Dice, faces: {self.faces}."
 
     def __repr__(self):
-        return "Dice, faces: {}, weight: {}".format(self.faces, self.weight)
+        return f"Dice, faces: {self.faces}, weight: {self.weight}"
 
     def __eq__(self, other):
         return self.faces == other.faces and self.weight == other.weight

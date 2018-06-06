@@ -61,11 +61,7 @@ def spel(force_minimum=False, force_maximum=False, score=False):
 
 
 def determine_strategy(begin, worp=None):
-    throw = list(worp)
     keep = decide_maximum(worp)
-    for kept in keep:
-        throw.remove(kept)
-
     logging.debug(keep)
     keep = decide_minimum(worp)
     logging.debug(keep)
