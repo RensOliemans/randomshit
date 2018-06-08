@@ -35,6 +35,10 @@ args = parser.parse_args()
 
 
 def parse_new():
+    # File has multiple lines, every line belonging to one building, and the
+    # individual information parts are put into segments split by '\t'
+    # for every line in the text file, split the line into segments separated
+    # by '\t', and these are the numbers, names and abbreviations
     gebouwen = [Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in
                 zip([[item for item in line.split('\t')]
                     for line in open('buildings.txt').read().split('\n')[1:-1]])]

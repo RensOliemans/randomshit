@@ -50,14 +50,6 @@ def convert_to_days(items, indices):
         yield items[x:y]
 
 
-def tester():
-    ''' used for testing '''
-    html = open(FILENAME).read()
-    soup = bs4.BeautifulSoup(html, 'html.parser')
-    items = [x for x in soup.children if x not in ['\n', '', ' ']]
-    return items
-
-
 def analyse_days(items):
     ''' takes a list of (all) items, determines at what indices the new days
     begin. '''
@@ -66,8 +58,10 @@ def analyse_days(items):
         date = item.find(attrs={'class': 'im_message_date_text'})
         if date:
             date = date.attrs['data-content']
-            day = datetime.strptime(date, '%I:%M:%S %p')
-            # day = cal.parseDT(date)[0]
+            day = datetime.strptime(date, TIME_FORMAT)
+            # A new day begins when the previous message was before the start
+            # of the meeting, and the next message is after the start of the
+            # meeting
             if (previous is not None and previous.hour < MEETING_TIME.hour
                and day.hour >= MEETING_TIME.hour):
                 # new day; first message after meeting time
@@ -123,7 +117,8 @@ def parse_item(text, date):
     a puzzle namedtuple. returns None if it wasn't corret (f.e. kill message).
     '''
     try:
-        # TODO: change regex, depending on what team names are allowed.
+        # TODO: change regex, depending on what kind of messages are being sent
+        # by the bot.
         # In Pandora 2018, the following characters were used in the team names:
         # letters, numbers, spaces, apostrophe, dash, forward slash, asterisk,
         # period.
@@ -147,7 +142,7 @@ def parse_item(text, date):
             m = re.match(solved + regex, text)
     except TypeError:
         # incorrect type - not a 'regular' message by the bot
-        # (for example): The leaderboards. These aren't a string object, but
+        # Example: The leaderboards. These aren't a string object, but
         # something weird (like <pre><code> `leaderboard` </code></pre>) and
         # re doesn't parse it
         return
@@ -160,7 +155,7 @@ def parse_item(text, date):
     team = m.group('team')
     number = 'bonus' if m.group('bonus') else int(m.group('number'))
 
-    puzzle = Puzzle(number, team, datetime.strptime(date, '%I:%M:%S %p'))
+    puzzle = Puzzle(number, team, datetime.strptime(date, TIME_FORMAT))
     return puzzle
 
 
