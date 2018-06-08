@@ -19,11 +19,11 @@ def main():
     html = open(FILENAME).read()
     soup = bs4.BeautifulSoup(html, 'html.parser')
     items = [x for x in soup.children if x not in ['\n', '', ' ']]
-    day_breaks = analyse_days(items)
+    day_breaks = list(analyse_days(items))
     days = convert_to_days(items, day_breaks)
 
     print(f'Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
-          'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
+          f'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
     for day, elements in enumerate(days):
         print('Day %s' % day)
         puzzles = parse_items(elements)
@@ -55,7 +55,6 @@ def tester():
 def analyse_days(items):
     ''' takes a list of (all) items, determines at what indices the new days
     begin. '''
-    days = list()
     previous = None
     for item in items:
         date = item.find(attrs={'class': 'im_message_date_text'})
@@ -66,9 +65,8 @@ def analyse_days(items):
             if (previous is not None and previous.hour < MEETING_TIME.hour
                and day.hour >= MEETING_TIME.hour):
                 # new day; first message after meeting time
-                days.append(items.index(item))
+                yield items.index(item)
             previous = day
-    return days
 
 
 def analyse(puzzles):
