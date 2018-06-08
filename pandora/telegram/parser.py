@@ -28,7 +28,13 @@ def main():
         print('Day %s' % day)
         puzzles = list(parse_items(elements))
         possible_puzzles = list(analyse(puzzles))
-        print(*possible_puzzles, sep='\n')
+        pretty_print(possible_puzzles)
+
+
+def pretty_print(puzzles):
+    for puzzle in puzzles:
+        date = puzzle.date
+        print(f"Number {puzzle.number}.\tTeam {puzzle.team[:12]:.<12}\tTime: {date.hour}:{date.minute}:{date.second}")
 
 
 def convert_to_days(items, indices):
@@ -124,18 +130,32 @@ def parse_item(text, date):
         # Formats:
         # <team> solved puzzle x[ and got a time bonus of y]?
         # <team> solved a bonuspuzzle
-        m = re.match(r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+        team = "(?P<team>(\w|\ |\'|\-|\/|\*|\.)+)"
+        bonus = "(?P<bonus>a bonuspuzzle)"
+        puzzle = "puzzle (?P<number>\d)"
+        regex = fr"{team} solved ({bonus}|{puzzle})"
+        m = re.match(regex, text)
         if m is None:
             # In the first 2 Pandora days, the message format was different.
+            # The string
+            #   [Puzzle solved]
+            # was prepended to the string
             # Formats:
-            # [Puzzle solved] <team> solved puzzle number x[ and got a time bonus of y]?
+            # [Puzzle solved] <team> solved puzzle x[ and got a time bonus of y]?
             # [Puzzle solved] <team> solved a bonuspuzzle
-            m = re.match(r"\[Puzzle solved\] (?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
-    except TypeError as e:
+            solved = "\[Puzzle solved\] "
+            m = re.match(solved + regex, text)
+    except TypeError:
         # incorrect type - not a 'regular' message by the bot
+        # (for example): The leaderboards. These aren't a string object, but
+        # something weird (like <pre><code> `leaderboard` </code></pre>) and
+        # re doesn't parse it
         return
     if m is None:
-        # no match found, likely a kill instead of a puzzle
+        # no match found, this is either:
+        #  kill message
+        #  team eliminated
+        #  status messages by bot
         return
     team = m.group('team')
     number = 'bonus' if m.group('bonus') else int(m.group('number'))
