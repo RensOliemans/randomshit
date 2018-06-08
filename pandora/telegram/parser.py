@@ -26,9 +26,9 @@ def main():
           f'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
     for day, elements in enumerate(days):
         print('Day %s' % day)
-        puzzles = parse_items(elements)
-        possible_puzzles = analyse(list(puzzles))
-        print(*list(possible_puzzles), sep='\n')
+        puzzles = list(parse_items(elements))
+        possible_puzzles = list(analyse(puzzles))
+        print(*possible_puzzles, sep='\n')
 
 
 def convert_to_days(items, indices):
