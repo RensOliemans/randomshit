@@ -35,17 +35,13 @@ args = parser.parse_args()
 
 
 def parse_new():
-    with open('buildings.txt') as f:
-        lines = f.read()
-    gebouw_lines = zip([[item for item in line.split('\t')]
-                        for line in lines.split('\n')[1:-1]])
-    gebouwen = [Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in gebouw_lines]
+    gebouwen = [Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in
+                zip([[item for item in line.split('\t')]
+                    for line in open('buildings.txt').read().split('\n')[1:-1]])]
 
-    with open('kunst.txt') as f:
-        lines = f.read()
-    kunst_lines = zip([[item for item in line.split('\t')]
-                       for line in lines.split('\n')[1:-1]])
-    kunstwerken = [Kunst(x[0][0]) for x in kunst_lines]
+    kunstwerken = [Kunst(x[0][0]) for x in
+                   zip([[item for item in line.split('\t')]
+                       for line in open('kunst.txt').read().split('\n')[1:-1]])]
 
     return gebouwen, kunstwerken
 
