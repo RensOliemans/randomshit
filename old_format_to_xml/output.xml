@@ -2,52 +2,52 @@
 <Movies>
   <Whiplash duration="1h49m" imdb="8.5, at http://www.imdb.com/title/tt2582802/" tomatoes="8.6 - 94%, at http://www.rottentomatoes.com/m/whiplash_2014/"/>
   <Bridge_of_Spies duration="2h15m" imdb="7.6, at http://www.imdb.com/title/tt3682448/" tomatoes="7.8 - 91%, at http://www.rottentomatoes.com/m/bridge_of_spies/"/>
-  <The_Godfather_1 duration="2h55m" imdb=", at 9.2" tomatoes="9.2 - 99%, at http://www.rottentomatoes.com/m/godfather/"/>
-  <The_Godfather_2 duration="3h20m" imdb=", at 9.0" tomatoes="9.5 - 97%, at http://www.rottentomatoes.com/m/godfather_part_ii/?search=the%20godfather%202"/>
-  <The_Godfather_3 duration="2h50m" imdb=", at 7.6" tomatoes="6.4 - 67%, at http://www.rottentomatoes.com/m/godfather_part_iii/"/>
-  <Kung_Fu_Panda_1 duration="1h28m" imdb=", at 7.6" tomatoes="7.2 - 87%, at http://www.rottentomatoes.com/m/kung_fu_panda"/>
-  <Kung_Fu_Panda_2 duration="1h28m" imdb=", at 7.3" tomatoes="6.9 - 81%, at http://www.rottentomatoes.com/m/kung_fu_panda_the_kaboom_of_doom/"/>
-  <Identity duration="1h57m" imdb=", at 7.9" tomatoes="7.0 - 83%, at http://www.rottentomatoes.com/m/bourne_identity/"/>
-  <Supremacy duration="1h48m" imdb=", at 7.8" tomatoes="7.2 - 81%, at http://www.rottentomatoes.com/m/bourne_supremacy/"/>
-  <Ultimatum duration="1h55m" imdb=", at 8.1" tomatoes="8.0 - 93%, at http://www.rottentomatoes.com/m/bourne_ultimatum/"/>
-  <Legacy duration="2h15m" imdb=", at 6.7" tomatoes="5.8 - 55%, at http://www.rottentomatoes.com/m/the_bourne_legacy/"/>
+  <The_Godfather_1 duration="2h55m" imdb="9.2, at http://www.imdb.com/title/tt0068646/" tomatoes="9.2 - 99%, at http://www.rottentomatoes.com/m/godfather/"/>
+  <The_Godfather_2 duration="3h20m" imdb="9.0, at http://www.imdb.com/title/tt0071562/" tomatoes="9.5 - 97%, at http://www.rottentomatoes.com/m/godfather_part_ii/?search=the%20godfather%202"/>
+  <The_Godfather_3 duration="2h50m" imdb="7.6, at http://www.imdb.com/title/tt0099674/" tomatoes="6.4 - 67%, at http://www.rottentomatoes.com/m/godfather_part_iii/"/>
+  <Kung_Fu_Panda_1 duration="1h28m" imdb="7.6, at http://www.imdb.com/title/tt0441773/" tomatoes="7.2 - 87%, at http://www.rottentomatoes.com/m/kung_fu_panda"/>
+  <Kung_Fu_Panda_2 duration="1h28m" imdb="7.3, at http://www.imdb.com/title/tt1302011/" tomatoes="6.9 - 81%, at http://www.rottentomatoes.com/m/kung_fu_panda_the_kaboom_of_doom/"/>
+  <Identity duration="1h57m" imdb="7.9, at http://www.imdb.com/title/tt0258463/" tomatoes="7.0 - 83%, at http://www.rottentomatoes.com/m/bourne_identity/"/>
+  <Supremacy duration="1h48m" imdb="7.8, at http://www.imdb.com/title/tt0372183/" tomatoes="7.2 - 81%, at http://www.rottentomatoes.com/m/bourne_supremacy/"/>
+  <Ultimatum duration="1h55m" imdb="8.1, at http://www.imdb.com/title/tt0440963/" tomatoes="8.0 - 93%, at http://www.rottentomatoes.com/m/bourne_ultimatum/"/>
+  <Legacy duration="2h15m" imdb="6.7, at http://www.imdb.com/title/tt1194173/" tomatoes="5.8 - 55%, at http://www.rottentomatoes.com/m/the_bourne_legacy/"/>
   <Hurt_Locker duration="2h11m" imdb="7.6, at http://www.imdb.com/title/tt0887912/" tomatoes="8.5 - 98%, at http://www.rottentomatoes.com/m/hurt_locker/"/>
-  <Naked_Gun_1 duration="1h25m" imdb=", at 7.6" tomatoes="7.3 - 86%, at http://www.rottentomatoes.com/m/naked_gun_from_the_files_of_police_squad/"/>
-  <Naked_Gun_2_1_2 duration="1h25m" imdb=", at 6.8" tomatoes="5.8 - 58%, at http://www.rottentomatoes.com/m/naked_gun_2_12_the_the_smell_of_fear/"/>
-  <Naked_Gun_33_1_3 duration="1h30m" imdb=", at 6.4" tomatoes="5.6 - 53%, at http://www.rottentomatoes.com/m/the_naked_gun_33_13_the_final_insult_1994/"/>
+  <Naked_Gun_1 duration="1h25m" imdb="7.6, at http://www.imdb.com/title/tt0095705/" tomatoes="7.3 - 86%, at http://www.rottentomatoes.com/m/naked_gun_from_the_files_of_police_squad/"/>
+  <Naked_Gun_2_1_2 duration="1h25m" imdb="6.8, at http://www.imdb.com/title/tt0102510/" tomatoes="5.8 - 58%, at http://www.rottentomatoes.com/m/naked_gun_2_12_the_the_smell_of_fear/"/>
+  <Naked_Gun_33_1_3 duration="1h30m" imdb="6.4, at http://www.imdb.com/title/tt0110622/" tomatoes="5.6 - 53%, at http://www.rottentomatoes.com/m/the_naked_gun_33_13_the_final_insult_1994/"/>
   <The_Grand_Budapest_Hotel duration="1h39m" imdb="8.1, at http://www.imdb.com/title/tt2278388/" tomatoes="8.5 - 92%, at http://www.rottentomatoes.com/m/the_grand_budapest_hotel/"/>
   <Schindlers_List duration="3h16m" imdb="8.9, at http://www.imdb.com/title/tt0108052/" tomatoes="9.0 - 96%, at http://www.rottentomatoes.com/m/schindlers_list/"/>
-  <Star_Trek_1 duration="2h7m" imdb=", at 8.0" tomatoes="8.2 - 95%, at http://www.rottentomatoes.com/m/star_trek_11/"/>
-  <Star_Trek_2 duration="2h11m" imdb=", at 7.8" tomatoes="7.6 - 87%, at http://www.rottentomatoes.com/m/star_trek_into_darkness/"/>
+  <Star_Trek_1 duration="2h7m" imdb="8.0, at http://www.imdb.com/title/tt0796366/" tomatoes="8.2 - 95%, at http://www.rottentomatoes.com/m/star_trek_11/"/>
+  <Star_Trek_2 duration="2h11m" imdb="7.8, at http://www.imdb.com/title/tt1408101/" tomatoes="7.6 - 87%, at http://www.rottentomatoes.com/m/star_trek_into_darkness/"/>
   <In_Bruges duration="1h47m" imdb="8.0, at http://www.imdb.com/title/tt0780536/" tomatoes="7.3 - 84%, at http://www.rottentomatoes.com/m/in_bruges"/>
-  <Jurassic_Park duration="2h6m" imdb=", at 8.1" tomatoes="8.3 - 93%, at http://www.rottentomatoes.com/m/jurassic_park/"/>
-  <The_Lost_World_Jurassic_Park duration="2h14m" imdb=", at 5.9" tomatoes="5.6 - 51%, at http://www.rottentomatoes.com/m/lost_world_jurassic_park/"/>
-  <Jurassic_Park_III duration="1h32m" imdb=", at 6.5" tomatoes="5.2 - 50%, at http://www.rottentomatoes.com/m/jurassic_park_iii/"/>
-  <Jurassic_World duration="2h3m" imdb=", at 7.1" tomatoes="6.7 - 71%, at http://www.rottentomatoes.com/m/jurassic_world/"/>
+  <Jurassic_Park duration="2h6m" imdb="8.1, at http://www.imdb.com/title/tt0107290/" tomatoes="8.3 - 93%, at http://www.rottentomatoes.com/m/jurassic_park/"/>
+  <The_Lost_World_Jurassic_Park duration="2h14m" imdb="5.9, at http://www.imdb.com/title/tt0163025/" tomatoes="5.6 - 51%, at http://www.rottentomatoes.com/m/lost_world_jurassic_park/"/>
+  <Jurassic_Park_III duration="1h32m" imdb="6.5, at http://www.imdb.com/title/tt0119567/" tomatoes="5.2 - 50%, at http://www.rottentomatoes.com/m/jurassic_park_iii/"/>
+  <Jurassic_World duration="2h3m" imdb="7.1, at http://www.imdb.com/title/tt0369610/" tomatoes="6.7 - 71%, at http://www.rottentomatoes.com/m/jurassic_world/"/>
   <A_Separation duration="2h3m" imdb="8.4, at http://www.imdb.com/title/tt1832382/" tomatoes="8.9 - 99%, at http://www.rottentomatoes.com/m/a_separation_2011/"/>
   <m50_50 duration="1h40m" imdb="7.7, at http://www.imdb.com/title/tt1306980/" tomatoes="7.7 - 94%, at http://www.rottentomatoes.com/m/5050_2011/"/>
-  <Star_Wars_IV duration="2h5m" imdb=", at 8.7" tomatoes="8.5 - 94%, at http://www.rottentomatoes.com/m/star_wars/"/>
-  <Star_Wars_V duration="2h4m" imdb=", at 8.8" tomatoes="8.9 - 94%, at http://www.rottentomatoes.com/m/empire_strikes_back/"/>
-  <Star_Wars_VI duration="2h13m" imdb=", at 8.4" tomatoes="7.1 - 79%, at http://www.rottentomatoes.com/m/return_of_the_jedi/"/>
-  <Star_Wars_I duration="2h11m" imdb=", at 6.5" tomatoes="6 - 56%, at http://www.rottentomatoes.com/m/star_wars_episode_i_the_phantom_menace/"/>
-  <Star_Wars_II duration="2h23m" imdb=", at 6.7" tomatoes="6.7 - 65%, at http://www.rottentomatoes.com/m/star_wars_episode_ii_attack_of_the_clones_3d/"/>
-  <Star_Wars_III duration="2h20m" imdb=", at 7.7" tomatoes="7.3 - 79%, at http://www.rottentomatoes.com/m/star_wars_episode_iii_revenge_of_the_sith_3d/"/>
-  <Star_Wars_VII duration="2h16m" imdb=", at 8.1" tomatoes="8.2 - 93%, at http://www.rottentomatoes.com/m/star_wars_episode_vii_the_force_awakens/"/>
-  <Harry_Potter_1 duration="2h32m" imdb=", at 7.5" tomatoes="7.1 - 80%, at http://www.rottentomatoes.com/m/harry_potter_and_the_sorcerers_stone/"/>
-  <Harry_Potter_2 duration="2h41m" imdb=", at 7.4" tomatoes="7.2 - 82%, at http://www.rottentomatoes.com/m/harry_potter_and_the_chamber_of_secrets/"/>
-  <Harry_Potter_3 duration="2h22m" imdb=", at 7.8" tomatoes="7.9 - 91%, at http://www.rottentomatoes.com/m/harry_potter_and_the_prisoner_of_azkaban/"/>
-  <Harry_Potter_4 duration="2h37m" imdb=", at 7.6" tomatoes="7.5 - 88%, at http://www.rottentomatoes.com/m/harry_potter_and_the_goblet_of_fire/"/>
-  <Harry_Potter_5 duration="2h18m" imdb=", at 7.5" tomatoes="6.9 - 79%, at http://www.rottentomatoes.com/m/harry_potter_and_the_order_of_the_phoenix/"/>
-  <Harry_Potter_6 duration="2h34m" imdb=", at 7.5" tomatoes="7.2 - 83%, at http://www.rottentomatoes.com/m/harry_potter_and_the_half_blood_prince/"/>
-  <Harry_Potter_7 duration="2h26m" imdb=", at 7.7" tomatoes="7.1 - 78%, at http://www.rottentomatoes.com/m/harry_potter_and_the_deathly_hallows_part_1/"/>
-  <Harry_Potter_7_1_2 duration="2h11m" imdb=", at 8.1" tomatoes="8.3 - 96%, at http://www.rottentomatoes.com/m/harry_potter_and_the_deathly_hallows_part_2_2011/"/>
-  <LoTR_1 duration="2h45m" imdb=", at 8.8" tomatoes="8.2 - 91%, at http://www.rottentomatoes.com/m/the_lord_of_the_rings_the_fellowship_of_the_ring/"/>
-  <LoTR_2 duration="3h" imdb=", at 8.7" tomatoes="8.5 - 96%, at http://www.rottentomatoes.com/m/the_lord_of_the_rings_the_two_towers/"/>
-  <LoTR_3 duration="3h21m" imdb=", at 8.9" tomatoes="8.7 - 95%, at http://www.rottentomatoes.com/m/the_lord_of_the_rings_the_return_of_the_king/"/>
-  <The_Hobbit_1 duration="2h50m" imdb=", at 7.9" tomatoes="6.6 - 64%, at http://www.rottentomatoes.com/m/the_hobbit_an_unexpected_journey/"/>
-  <The_Hobbit_2 duration="2h41m" imdb=", at 7.9" tomatoes="6.8 - 74%, at http://www.rottentomatoes.com/m/the_hobbit_the_desolation_of_smaug/"/>
-  <The_Hobbit_3 duration="2h43m" imdb=", at 7.5" tomatoes="6.3 - 60%, at http://www.rottentomatoes.com/m/the_hobbit_the_battle_of_the_five_armies/"/>
-  <Thor_1 duration="1h55m" imdb=", at 7.0" tomatoes="6.7 - 77%, at http://www.rottentomatoes.com/m/thor/"/>
-  <Thor_2 duration="1h52m" imdb=", at 7.1" tomatoes="6.2 - 66%, at http://www.rottentomatoes.com/m/thor_the_dark_world/"/>
+  <Star_Wars_IV duration="2h5m" imdb="8.7, at http://www.imdb.com/title/tt0076759/?ref_=fn_al_tt_1" tomatoes="8.5 - 94%, at http://www.rottentomatoes.com/m/star_wars/"/>
+  <Star_Wars_V duration="2h4m" imdb="8.8, at http://www.imdb.com/title/tt0080684/?ref_=fn_tt_tt_14" tomatoes="8.9 - 94%, at http://www.rottentomatoes.com/m/empire_strikes_back/"/>
+  <Star_Wars_VI duration="2h13m" imdb="8.4, at http://www.imdb.com/title/tt0086190/?ref_=fn_al_tt_10" tomatoes="7.1 - 79%, at http://www.rottentomatoes.com/m/return_of_the_jedi/"/>
+  <Star_Wars_I duration="2h11m" imdb="6.5, at http://www.imdb.com/title/tt0120915/?ref_=fn_al_tt_7" tomatoes="6 - 56%, at http://www.rottentomatoes.com/m/star_wars_episode_i_the_phantom_menace/"/>
+  <Star_Wars_II duration="2h23m" imdb="6.7, at http://www.imdb.com/title/tt0121765/?ref_=fn_tt_tt_12" tomatoes="6.7 - 65%, at http://www.rottentomatoes.com/m/star_wars_episode_ii_attack_of_the_clones_3d/"/>
+  <Star_Wars_III duration="2h20m" imdb="7.7, at http://www.imdb.com/title/tt0121766/?ref_=fn_al_tt_9" tomatoes="7.3 - 79%, at http://www.rottentomatoes.com/m/star_wars_episode_iii_revenge_of_the_sith_3d/"/>
+  <Star_Wars_VII duration="2h16m" imdb="8.1, at http://www.imdb.com/title/tt2488496/?ref_=fn_al_tt_4" tomatoes="8.2 - 93%, at http://www.rottentomatoes.com/m/star_wars_episode_vii_the_force_awakens/"/>
+  <Harry_Potter_1 duration="2h32m" imdb="7.5, at http://www.imdb.com/title/tt0241527/" tomatoes="7.1 - 80%, at http://www.rottentomatoes.com/m/harry_potter_and_the_sorcerers_stone/"/>
+  <Harry_Potter_2 duration="2h41m" imdb="7.4, at http://www.imdb.com/title/tt0295297/" tomatoes="7.2 - 82%, at http://www.rottentomatoes.com/m/harry_potter_and_the_chamber_of_secrets/"/>
+  <Harry_Potter_3 duration="2h22m" imdb="7.8, at http://www.imdb.com/title/tt0304141/" tomatoes="7.9 - 91%, at http://www.rottentomatoes.com/m/harry_potter_and_the_prisoner_of_azkaban/"/>
+  <Harry_Potter_4 duration="2h37m" imdb="7.6, at http://www.imdb.com/title/tt0330373/" tomatoes="7.5 - 88%, at http://www.rottentomatoes.com/m/harry_potter_and_the_goblet_of_fire/"/>
+  <Harry_Potter_5 duration="2h18m" imdb="7.5, at http://www.imdb.com/title/tt0373889/" tomatoes="6.9 - 79%, at http://www.rottentomatoes.com/m/harry_potter_and_the_order_of_the_phoenix/"/>
+  <Harry_Potter_6 duration="2h34m" imdb="7.5, at http://www.imdb.com/title/tt0417741/" tomatoes="7.2 - 83%, at http://www.rottentomatoes.com/m/harry_potter_and_the_half_blood_prince/"/>
+  <Harry_Potter_7 duration="2h26m" imdb="7.7, at http://www.imdb.com/title/tt0926084/" tomatoes="7.1 - 78%, at http://www.rottentomatoes.com/m/harry_potter_and_the_deathly_hallows_part_1/"/>
+  <Harry_Potter_7_1_2 duration="2h11m" imdb="8.1, at http://www.imdb.com/title/tt1201607/" tomatoes="8.3 - 96%, at http://www.rottentomatoes.com/m/harry_potter_and_the_deathly_hallows_part_2_2011/"/>
+  <LoTR_1 duration="2h45m" imdb="8.8, at http://www.imdb.com/title/tt0120737/" tomatoes="8.2 - 91%, at http://www.rottentomatoes.com/m/the_lord_of_the_rings_the_fellowship_of_the_ring/"/>
+  <LoTR_2 duration="3h" imdb="8.7, at http://www.imdb.com/title/tt0167261/" tomatoes="8.5 - 96%, at http://www.rottentomatoes.com/m/the_lord_of_the_rings_the_two_towers/"/>
+  <LoTR_3 duration="3h21m" imdb="8.9, at http://www.imdb.com/title/tt0167260/?ref_=nv_sr_2" tomatoes="8.7 - 95%, at http://www.rottentomatoes.com/m/the_lord_of_the_rings_the_return_of_the_king/"/>
+  <The_Hobbit_1 duration="2h50m" imdb="7.9, at http://www.imdb.com/title/tt0903624/" tomatoes="6.6 - 64%, at http://www.rottentomatoes.com/m/the_hobbit_an_unexpected_journey/"/>
+  <The_Hobbit_2 duration="2h41m" imdb="7.9, at http://www.imdb.com/title/tt1170358/" tomatoes="6.8 - 74%, at http://www.rottentomatoes.com/m/the_hobbit_the_desolation_of_smaug/"/>
+  <The_Hobbit_3 duration="2h43m" imdb="7.5, at http://www.imdb.com/title/tt2310332/" tomatoes="6.3 - 60%, at http://www.rottentomatoes.com/m/the_hobbit_the_battle_of_the_five_armies/"/>
+  <Thor_1 duration="1h55m" imdb="7.0, at http://www.imdb.com/title/tt0800369/" tomatoes="6.7 - 77%, at http://www.rottentomatoes.com/m/thor/"/>
+  <Thor_2 duration="1h52m" imdb="7.1, at http://www.imdb.com/title/tt1981115/" tomatoes="6.2 - 66%, at http://www.rottentomatoes.com/m/thor_the_dark_world/"/>
   <Big_Fish duration="2h5m" imdb="8.0, at http://www.imdb.com/title/tt0319061/" tomatoes="7.2 - 77%, at http://www.rottentomatoes.com/m/1127787-big_fish/"/>
 </Movies>

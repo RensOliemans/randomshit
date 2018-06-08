@@ -67,21 +67,16 @@ def parse_first_line(line):
 def parse_tomato_line(line):
     # file is like this: "x, y    z"
     # x = rating, y = percentage, z = url
-    first = line.split(", ")
-    second = first[1].split("    ")
-
-    rating = first[0].strip()
-    percentage = second[0].strip()
-    url = second[1].strip()
+    regex = r"\s*(?P<rating>\d(.\d)?)\,\s(?P<percentage>\d*\%)\s*(?P<url>\S*)"
+    m = re.match(regex, line)
+    rating, percentage, url = m.group('rating'), m.group('percentage'), m.group('url')
     return Tomatoes(rating, percentage, url)
 
 
 def parse_imdb_line(line):
     # file is like this: "x         z"
-    # x = rating, z = url
-    splitted = line.split("         ")
-    rating = splitted[0].strip()
-    url = splitted[1].strip()
+    m = re.match(r"\s*(?P<rating>\d(.\d)?)\s*(?P<url>\S*)", line)
+    rating, url = m.group('rating'), m.group('url')
     return IMDB(rating, url)
 
 
@@ -99,7 +94,8 @@ def parse_movie_information(current_movie, line):
         current_movie.imdb = parse_imdb_line(line)
     else:
         try:
-            current_movie.rating = float(line.split("self: ")[1])
+            regex = r"self: (?P<number>\d(.\d)?)"
+            current_movie.rating = float(re.findall(regex, line)[0])
         except (IndexError, ValueError):
             # movie has no rating
             current_movie.rating = None
