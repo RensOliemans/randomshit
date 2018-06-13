@@ -46,15 +46,16 @@ def parse_line(line):
     person = None
     if EMOTICON_UNI in line:
         # format of line:
-        # mm/dd/yy, hh:mm - PERSON: CHAT_TEXT
+        # mm-dd-yy, hh:mm - PERSON: CHAT_TEXT
 
         metadata = line.split(' - ')
-        # metadata[0] = mm/dd/yy, hh:mm, metadata[1] = PERSON: CHAT_TEXT
+        # metadata[0] = mm/dd/yy, hh:mm       metadata[1] = PERSON: CHAT_TEXT
         person = metadata[1].split(':')[0]
-        # person[0] = PERSON, person[1] = CHAT_TEXT
+        # person[0]   = PERSON                person[1]   = CHAT_TEXT
 
         # Example of input: 15-05-18, 16:16
-        date = datetime.datetime.strptime(metadata[0], '%d-%m-%y, %H:%M')
+        date_format = '%d-%m-%y, %H:%M'
+        date = datetime.datetime.strptime(metadata[0], date_format)
         return Day(date, person)
 
 
