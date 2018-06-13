@@ -145,10 +145,7 @@ class Day(object):
         self.person = person
 
     def __str__(self):
-        return "{} on {} at {}".format(
-            self.person,
-            str(self.date.time()),
-            str(self.date.date()))
+        return f"{self.person} on {str(self.date.time())}, at {str(self.date.date())}"
 
     def __repr__(self):
         return str(self)
