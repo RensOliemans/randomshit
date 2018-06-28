@@ -51,6 +51,8 @@ def main():
         total_score += score
     print(f"Average correct guesses: {total_correct / num:.2f}\n"
           f"Average score: {round(total_score / num)}")
+    print(f"Chance of correct: {(total_correct / num) / 44}\n"
+          f"Average score per match: {round(total_score / num) / 44}")
 
 
 def main2():
@@ -60,9 +62,10 @@ def main2():
         team1, team2 = row['team1'], row['team2']
         prob1, prob2, = row['prob1'], row['prob2']
         score1, score2 = row['score1'], row['score2']
-        if math.isnan(score1):
-            continue
         pred1, pred2 = generator.main(prob1, prob2)
+        if math.isnan(score1):
+            print(f"{team1} - {team2}:\t{pred1} - {pred2}")
+            continue
         pred_score = points((score1, score2), (pred1, pred2))
         if pred_score == 200:
             correct += 1
@@ -72,4 +75,4 @@ def main2():
 
 
 if __name__ == '__main__':
-    main()
+    main2()
