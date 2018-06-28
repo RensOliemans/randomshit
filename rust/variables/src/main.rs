@@ -1,12 +1,25 @@
-#[derive(Debug)]
-enum IpAddrKind {
-    V4(u8, u8, u8, u8),
-    V6(String),
-}
+use std::io;
+
 
 fn main() {
-    let four = IpAddrKind::V4(127, 0, 0, 1);
-    let six = IpAddrKind::V6;
+    let mut s = String::new();
 
-    println!("{:?}", four);
+    io::stdin().read_line(&mut s)
+        .expect("Failed to read line");
+
+    let word = first_word(&s);
+    let first = &s[0..word];
+    println!("{}", first);
+}
+
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
 }
