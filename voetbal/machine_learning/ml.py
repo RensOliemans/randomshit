@@ -13,7 +13,8 @@ PROB_FILE = 'wc_matches.csv'  # file with the matches which have to be played, w
 
 Game = namedtuple('Game', 'team1 team2 prob1 prob2 score1 score2')
 
-csv = pd.read_csv(DATA_DIR + DATA_FILE)
+data_csv = pd.read_csv(DATA_DIR + DATA_FILE)
+target_csv = pd.read_csv(DATA_DIR + PROB_FILE)
 
 
 def get_dataset(games, diff):
@@ -73,13 +74,13 @@ def get_probs(csv_file):
 
 
 if __name__ == '__main__':
-    (data, target) = build_dataset(csv, diff=True)
+    (data, target) = build_dataset(data_csv, diff=True)
     diff_clf = learn(data, target)  # clf used to predict the goal difference
 
-    (data, target) = build_dataset(csv, diff=False)
+    (data, target) = build_dataset(data_csv, diff=False)
     base_clf = learn(data, target)  # clf used to predict the 'base' goal level
 
-    for teams, probs in get_probs(pd.read_csv(DATA_DIR + PROB_FILE)):
+    for teams, probs in get_probs(target_csv):
         print(f"{teams[0]} - {teams[1]}")
         print(probs)
         difference, base = int(diff_clf.predict([probs])[0]), int(base_clf.predict([probs])[0])
