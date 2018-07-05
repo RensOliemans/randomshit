@@ -1,0 +1,3784 @@
+ 2/1: import lxml.html
+ 2/2: import bs4
+ 2/3: from bs4 import BeautifulSoup
+ 2/4: html = open('test.html').read()
+ 2/5: soup = BeautifulSoup(html, 'html.parser')
+ 2/6: soup
+ 2/7: soup.childern
+ 2/8: soup.children
+ 2/9: soup.children[5:]
+2/10: soup.children.next
+2/11: soup.children
+2/12: kids = soup.children
+2/13: kids
+2/14: kids.next
+2/15:
+for a in kids:
+    print(a)
+2/16:
+for a in kids:
+    print(a)
+2/17: kids = soup.children
+2/18:
+for a in kids:
+    print(a)
+    print("\n\n\n\n")
+2/19: ls
+2/20: items = list()
+2/21:
+for a in kids:
+    items.append(a)
+2/22: items[0]
+2/23: items
+2/24: kids = soup.children
+2/25:
+for a in kids:
+    items.append(a)
+2/26: items[0]
+2/27: items[1]
+2/28: items[2]
+2/29: items[3]
+2/30: items[4]
+2/31: items = [x for x in items if x not in ['\n', '', ' ']]
+2/32: items
+2/33: items[0]
+2/34: items[1]
+2/35: len(items)
+ 3/1: import datetime
+ 3/2: date = datetime.date()
+ 3/3: date = datetime.date(2018)
+ 3/4: date = datetime.date(2018, 4)
+ 3/5: date = datetime.date(2018, 4, 6)
+ 3/6: date2 = datetime.date(2017, 5, 7)
+ 3/7: date - date2
+ 3/8: date2 = datetime.date(2018, 4, 4)
+ 3/9: date - date2
+3/10: date2 = datetime.date(2018, 4, 8)
+3/11: date - date2
+3/12: date - date2 > 0
+3/13: datetime.timedelta(-2)
+3/14: int(datetime.timedelta(-2))
+3/15: datetime.timedelta()
+3/16: datetime.timedelta(-2) > datetime.timedelta()
+2/36: items[45]
+2/37: item = items[45]
+2/38: item
+2/39: item.children
+2/40: kids = list(item.children)
+2/41: kids
+2/42: kids[0]
+2/43: list(kids[0].children)
+2/44: list(kids[0].children)[0]
+2/45: list(kids[0].children)[1]
+2/46: list(list(kids[0].children)[1].children)
+2/47: list(list(kids[0].children)[1].children)[0]
+2/48: list(list(kids[0].children)[1].children)[1]
+2/49: list(list(kids[0].children)[1].children)[2]
+2/50: list(list(kids[0].children)[1].children)[3]
+2/51: list(list(kids[0].children)[1].children)[4]
+2/52: item
+2/53: kids
+2/54: item
+2/55: item
+2/56: item
+2/57: item.find_all(attrs={'class': im_message_text})
+2/58: item.find_all(attrs={'class': 'im_message_text'})
+2/59: item.find_all(attrs={'class': 'im_message_text'})[0]
+2/60: item.find_all(attrs={'class': 'im_message_text'})[0].text
+2/61: item.find(attrs={'class': 'im_message_text'})
+ 4/1: from bs4 import BeautifulSoup
+ 4/2: html = open('test.html').read()
+ 4/3: soup = BeautifulSoup(html, 'html.parser')
+ 4/4: items = [x for x in soup.children if x not in ['
+ 4/5: items = [x for x in soup.children if x not in ['\n', '', ' ']]
+ 4/6: items[1]
+ 4/7: item = items[45]
+ 4/8: item
+ 4/9: item
+4/10: item.find(attrs={'class': 'im_message_date_text
+4/11: item.find(attrs={'class': 'im_message_date_text'})
+4/12: item.find(attrs={'class': 'im_message_date_text'}).text
+4/13: item.find(attrs={'class': 'im_message_date_text'}).data-content
+4/14: item.find(attrs={'class': 'im_message_date_text'}).data
+4/15: item.find(attrs={'class': 'im_message_date_text'})
+4/16: item.find(attrs={'class': 'im_message_date_text'}).children
+4/17: (item.find(attrs={'class': 'im_message_date_text'}).children)
+4/18: list(item.find(attrs={'class': 'im_message_date_text'}).children)
+4/19: item.find(attrs={'class': 'im_message_date_text'}).children
+4/20: item.find(attrs={'class': 'im_message_date_text'})
+4/21: item.find(attrs={'class': 'im_message_date_text'}).span
+4/22: item.find(attrs={'class': 'im_message_date_text'}).se
+4/23: item.find(attrs={'class': 'im_message_date_text'}).ietnorf
+4/24: item.find(attrs={'class': 'im_message_date_text'}).text
+4/25: item.find(attrs={'class': 'im_message_date_text'}).data
+4/26: data = item.find(attrs={'class': 'im_message_date_text'})
+4/27: dat
+4/28: data
+4/29: data.extract
+4/30: data.extract()
+4/31: data.attrs
+4/32: data.attrs['data-content']
+4/33: import datetime
+4/34: datetime.date(data.attrs['data-content'])
+4/35: import parsedatetime
+ 5/1: time = '9:17:47 PM'
+ 5/2: import parsedatetime
+ 5/3: cal = parsedatetime.Calendar()
+ 5/4: cal.parseDT(time)
+ 6/1: from bs4 import BeautifulSoup
+ 6/2: import re
+ 6/3: html = open('test.html').read()
+ 6/4: soup = BeautifulSoup(html, 'html.parser')
+ 6/5: items = [x for x in soup.children if x not in ['\n', '', ' ']]
+ 6/6: item = items[42]
+ 6/7: item
+ 6/8: text = item.find(attrs={'class': 'im_message_text'}).text
+ 6/9: text
+6/10: re.match(r"(?P<team>\w+) solved ((?P<bonus>a bonuspuzzle)|(?P<number>\d))")
+6/11: re.match(r"(?P<team>\w+) solved ((?P<bonus>a bonuspuzzle)|(?P<number>\d))", text)
+6/12: re.match(r"(?P<team>\w+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/13: m = re.match(r"(?P<team>\w+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/14: m.group('team')
+6/15: m.group('bonus')
+6/16: puzzle = m.group('bonus') or m.group('number
+6/17: puzzle = m.group('bonus') or m.group('number')
+6/18: puzzle
+6/19: items[41]
+6/20: items[42]
+6/21: items[43]
+6/22: items[43]
+6/23: items[44]
+6/24: items[45]
+6/25: items[46]
+6/26: items[48]
+6/27: items[47]
+6/28: items[47]
+6/29: m = re.match(r"(?P<team>\w+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/30: text
+6/31: text = item.find(attrs={'class': 'im_message_text'}).text
+6/32: item = items[47]
+6/33: item
+6/34: text = item.find(attrs={'class': 'im_message_text'}).text
+6/35: text
+6/36: m = re.match(r"(?P<team>\w+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/37: m
+6/38: m.group('team')
+6/39: m = re.match(r"(?P<team>(\w| )+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/40: m
+6/41: m.group('team')
+6/42: item
+6/43: items[46]
+6/44: m =
+6/45: m = re.match(r"(?P<team>(\w| )+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/46: m
+6/47: items[48]
+6/48: items[49]
+6/49: items[50]
+6/50: items[51]
+6/51: items[52]
+6/52: items[53]
+6/53: items[54]
+6/54: items[55]
+6/55: items[56]
+6/56: items[254]
+6/57: items[255]
+6/58: items[256]
+6/59: items[257]
+6/60: items[258]
+6/61: items[259]
+6/62: items[250]
+6/63: items[261]
+6/64: items[262]
+6/65: items[263]
+6/66: items[261]
+6/67: items[261]
+6/68: item = items[261]
+6/69: text = item.find(attrs={'class': 'im_message_text'}).text
+6/70: text
+6/71: m = re.match(r"(?P<team>(\w| )+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/72: m
+6/73: items[263]
+6/74: items[261]
+6/75: items[262]
+6/76: item = items[262]
+6/77: item
+6/78: text = item.find(attrs={'class': 'im_message_text'}).text
+6/79: text
+6/80: m = re.match(r"(?P<team>(\w| )+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/81: m
+6/82: len(items)
+6/83: item[295]
+6/84: items[295]
+6/85: items[294]
+6/86: items[293]
+6/87: items[292]
+6/88: items[292]
+6/89: item = items[292]
+6/90: item
+6/91: text = item.find(attrs={'class': 'im_message_text'}).text
+6/92: m = re.match(r"(?P<team>(\w| )+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/93: m
+6/94: m.group('bonus')
+6/95: item = items[293]
+6/96: ietm
+6/97: item
+6/98: text = item.find(attrs={'class': 'im_message_text'}).text
+6/99: m = re.match(r"(?P<team>(\w| )+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+6/100: m
+6/101: m.group('number')
+6/102: items
+6/103: items[150]
+6/104: items[-1]
+6/105: items[-32]
+6/106: items[-22]
+6/107: items[-23]
+6/108: item = items[-23]
+6/109: item
+6/110: text = item.find(attrs={'class': 'im_message_text'}).text
+6/111: text
+6/112: item
+6/113: text = item.find(attrs={'class': 'im_message_text'})
+6/114: text
+6/115: text.contents
+6/116: item = items[-24]
+6/117: item
+6/118: text =
+6/119: text = item.find(attrs={'class': 'im_message_text'})
+6/120: text
+6/121: text.contents
+6/122: item = items[-23]
+6/123: text = item.find(attrs={'class': 'im_message_text'})
+6/124: text.contents
+6/125: text.contents[1]
+6/126: text.contents[1]
+6/127: type(text.contents[1])
+6/128: type(text.contents[0])
+6/129: text
+6/130: contents
+6/131: contents = text.contents
+6/132: contents
+6/133: contents = [x for x in contents if type(x) != bs4.element.Tag]
+6/134: import bs4
+6/135: contents = [x for x in contents if type(x) != bs4.element.Tag]
+6/136: contents
+ 7/1: import bs4
+ 7/2: html = open('test.html').read()
+ 7/3: soup = BeautifulSoup(html, 'html.parser')
+ 7/4: soup = bs4.BeautifulSoup(html, 'html.parser')
+ 7/5: items = [x for x in soup.children if x not in ['\n', '', ' ']]
+ 7/6: item = items[-23]
+ 7/7: item
+ 7/8: item.find(attrs={'class': 'im_message_date_text'}).data
+ 7/9: item.find(attrs={'class': 'im_message_date_text'})
+7/10: item.find(attrs={'class': 'im_message_date_text'}).contentd
+7/11: item.find(attrs={'class': 'im_message_date_text'}).content
+7/12: item.find(attrs={'class': 'im_message_date_text'}).contents
+7/13: item.find(attrs={'class': 'im_message_date_text'}).attsrs
+7/14: item.find(attrs={'class': 'im_message_date_text'}).attrs
+ 8/1: import re
+ 8/2: re.escape('abc-/actief/')
+ 8/3: re.escape("Ra'dio-/Actief/")
+ 8/4: re.escape("Ra'dio-/Acti.ef/")
+ 9/1: from collections import namedtuple
+ 9/2: Puzzle = namedtuple('Puzzle', 'number team date')
+ 9/3: a = Puzzle(4, 'bkl', 18)
+ 9/4: a
+ 9/5: b = Puzzle(4, 'bun', 18)
+ 9/6: b
+ 9/7: a
+ 9/8: a == b
+ 9/9: b = Puzzle(4, 'bkl', 18)
+9/10: a == b
+10/1: import parsedatetime as pdt
+10/2: cal = pdt.Calendar()
+10/3: cal.parseDT('16:34:15')
+10/4: cal.parseDT('16:34:15')[0] - cal.parseDT('16:29:10')
+10/5: cal.parseDT('16:34:15')[0] - cal.parseDT('16:29:10')[0]
+10/6: cal.parseDT('16:34:15')[0] - cal.parseDT('16:29:10')[0].seconds
+10/7: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:29:10')[0]).seconds
+10/8: (cal.parseDT('16:24:15')[0] - cal.parseDT('16:29:10')[0]).seconds
+10/9: cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]
+10/10: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0])
+10/11: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]).seconds
+10/12: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]).days
+10/13: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]).days.seconds
+10/14: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]).seconds
+10/15: (cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0])
+10/16: abd((cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]))
+10/17: abs((cal.parseDT('16:34:15')[0] - cal.parseDT('16:39:20')[0]))
+11/1: a = list(range(1, 30))
+11/2: max(a, 5)
+11/3: max(a)
+11/4: [a[i] for i, x in enumerate(a) if x == max(a)]
+11/5: a = [5, 6, 7, 42, 43, 44, 45, 60, 61, 62, 63, 81, 82, 83]
+11/6: a
+11/7: b = [a[i] - a[i+1] for i, x in enumerate(a) if i < len(a)]
+11/8: b
+11/9: a
+11/10: a
+11/11: b = [a[i] - a[i+1] if i < len(a) for i, x in enumerate(a)]
+11/12: b = [a[i] - a[i+1] if i < len(a) else 0 for i, x in enumerate(a)]
+11/13: b = [a[i] - a[i+1] if i < len(a)-1 else 0 for i, x in enumerate(a)]
+11/14: b
+11/15: a
+11/16: b
+12/1: import bs4
+12/2: html = open('test.html').read()
+12/3: soup = bs4.BeautifulSoup(html, 'html.parser')
+12/4: items = [x for x in soup.children if x not in ['\n', '', ' ']]
+12/5: len(items)
+12/6: item = items[45]
+12/7: item
+12/8: item.find(attrs={'class': 'im_message_body_date'})
+12/9: item.find(attrs={'class': 'im_message_date_text'})
+12/10: items
+12/11: item.find(attrs={'class': 'im_message_date_text'})
+12/12: times = [item.find(attrs={'class': 'im_message_date_text'}) for item in items]
+12/13: times[5:]
+12/14: times = [item.find(attrs={'class': 'im_message_date_text'}) for item in items if item is not None]
+12/15: times
+12/16: times[18]
+12/17: times[19]
+12/18: times[17]
+12/19: items[17]
+12/20: times = [item.find(attrs={'class': 'im_message_date_text'}) for item in items if item.find(attrs={'class': 'im_message_date_text'}) is not None]
+12/21: times[17]
+12/22: times[16]
+12/23: times[18]
+12/24: contents = [time.contents for time in times]
+12/25: contents
+12/26: contents = [time.attrs['data-content'] for time in times]
+12/27: contents
+12/28: import parsedatetime
+12/29: cal = parsedatetime.Calendar()
+12/30: dt_contents = [cal.parseDT(content) for content in contents]
+12/31: dt_contents
+12/32: dt_contents = [cal.parseDT(content)[0] for content in contents]
+12/33: dt_contents
+12/34: b = [a[i] - a[i+1] if i < len(a)-1 else 0 for i, x in enumerate(a)]
+12/35: dt_contents = [cal.parseDT(content)[0] for content in contents]
+12/36: diffs = [dt_contents[i] - dt_contents[i+1] if i < len(dt_contents) - 1 else 0 for i, x in enumerate(dt_contents)]
+12/37: diffs
+12/38: diffs = [(dt_contents[i] - dt_contents[i+1]).seconds if i < len(dt_contents) - 1 else 0 for i, x in enumerate(dt_contents)]
+12/39: diffs
+12/40: diffs = [abs((dt_contents[i] - dt_contents[i+1])).seconds if i < len(dt_contents) - 1 else 0 for i, x in enumerate(dt_contents)]
+12/41: diffs
+13/1: import bs4
+13/2: import parsedatetime
+13/3: cal = parsedatetime.Calendar()
+13/4: html = open('total.html')
+13/5: html = open('total.html').read()
+13/6: soup = bs4.BeautifulSoup(html, 'html.parser')
+13/7: items = [x for x in soup.children if x not in ['\n', '', ' ']]
+13/8: import parser
+13/9: parser.analyse_days(items)
+13/10: items[147]
+13/11: items[146]
+13/12: items[148]
+13/13: items[147]
+13/14: items[145]
+13/15: items[146]
+13/16: items[147]
+13/17: items[148]
+13/18: items[147]
+13/19: items[146]
+13/20: items[145]
+13/21: items[144]
+13/22: items[143]
+13/23: items[142]
+13/24: items[141]
+13/25: diffs = parser.analyse_days(items)
+13/26: diffs
+13/27: items[1051]
+13/28: items[1]
+13/29: times = [item.find(attrs={'class': 'im_message_date_text'}) for item in items if item.find(attrs={'class': 'im_message_date_text'}) is not None]
+13/30: times[1]
+13/31: contents = [time.attrs['data-content'] for time in times]
+13/32: dt_contents = [cal.parseDT(content)[0] for content in contents]
+13/33: diffs = [abs((dt_contents[i] - dt_contents[i+1])).seconds if i < len(dt_contents) - 1 else 0 for i, x in enumerate(dt_contents)]
+13/34: diffs
+13/35: sorted(diffs)
+13/36: sorted(diffs)[-4:]
+13/37: sorted(diffs)[-5:]
+13/38: sorted(diffs)[-4:]
+13/39: sorted(diffs)[-6:]
+13/40: sorted(diffs)[-7:]
+13/41: sorted(diffs)[-8:]
+13/42: sorted(diffs)[:8]
+13/43: sorted(diffs)[:10]
+13/44: sorted(diffs)[50:60]
+13/45: diffs.index(86369)
+13/46: times[147]
+13/47: times[146]
+13/48: times[148]
+13/49: time1 = times[147]
+13/50: time2 = times[148]
+13/51: time1
+13/52: time2
+13/53: time1 = time1.attrs['data-content']
+13/54: time1
+13/55: time1 = cal.parseDT(time1)[0]
+13/56: time1
+13/57: time2 = cal.parseDT(time2.attrs['data-content'])
+13/58: time2
+13/59: abs(time1 - time2)
+13/60: time2 = cal.parseDT(time2.attrs['data-content'])[]0
+13/61: time2 = cal.parseDT(time2.attrs['data-content'])[]
+13/62: time2 = cal.parseDT(time2.attrs['data-content'])[0]
+13/63: time2
+13/64: time2 = cal.parseDT(time2.attrs['data-content'])
+13/65: time2
+13/66: time2 = time2[0]
+13/67: time2
+13/68: tim1
+13/69: time1
+13/70: abs(time1 - time2)
+13/71: abs(time1 - time2).seconds
+13/72: time1
+13/73: time2
+13/74: time1 - time2
+13/75: (time1 - time2)
+13/76: (time1 - time2).seconds
+13/77: abd(time1 - time2).seconds
+13/78: abs(time1 - time2).seconds
+13/79: time1
+13/80: time1.hour
+13/81: time2.hour
+13/82: time2.day
+13/83: time2.day += 1
+13/84: import datetime
+13/85: time2 += datetime.timedelta(days=1)
+13/86: time2
+13/87: time1
+13/88: times
+14/1: import bs4
+14/2: import parsedatetime
+14/3: html = open('total.html').read()
+14/4: soup = bs4.BeautifulSoup(html, 'html.parser')
+14/5: items = [x for x in soup.children if x not in ['\n', '', ' ']]
+14/6: import parser
+14/7: day_breaks = parser.analyse_days(items)
+14/8: day_breaks
+14/9: items[827]
+14/10: items[826]
+14/11: items[828]
+14/12: items[827]
+14/13: items[826]
+14/14: items[828]
+14/15: items[829]
+14/16: items[828]
+14/17: day_breaks
+14/18: len(items)
+14/19: items[1188]
+14/20: items[1187]
+14/21: items[1189]
+14/22: day_breaks
+15/1: import parser
+15/2: items = parser.tester()
+15/3: day_breaks = parser.analyse_days(items)
+15/4: day_breaks
+15/5: diffs, indices = parser.analyse_days()
+15/6: diffs, indices = parser.analyse_days(items)
+15/7: diffs
+15/8: day_breaks
+15/9: diffs[220:230]
+15/10: diffs[0]
+15/11: items[0]
+15/12: items[1]
+15/13: items[0]
+15/14: items[1]
+15/15: diffs[0]
+15/16: day_breaks
+15/17: indices
+15/18: indices
+15/19: items[225]
+15/20: items[226]
+15/21: items[225]
+15/22: items[226]
+15/23: items[227]
+15/24: cal
+15/25: cal = parsedatetime.Calendar()
+15/26: import parsedatetime
+15/27: cal = parsedatetime.Calendar()
+15/28: cal.parseDT('2000
+15/29: cal.parseDT('20:00')
+15/30: items[0]
+15/31: previous = None
+15/32: new_days = list()
+15/33: NEW_DAY = cal.parseDT('20:00')
+15/34: NEW_DAY
+15/35: NEW_DAY = NEW_DAY[0]
+15/36: NEW_DAY
+15/37: item
+15/38: item = items[45]
+15/39: date = item.find(attrs={'class': 'im_message_date_text'})
+15/40: date = item.find(attrs={'class': 'im_message_date_text'}).attrs
+15/41: date = item.find(attrs={'class': 'im_message_date_text'}).attrs['data-content']
+15/42: date
+15/43: NEW_DAY.hour
+15/44: other = cal.parseDT(date)
+15/45: other
+15/46: other.hour
+15/47: other = other[0]
+15/48: other.hour
+16/1: import parsedatetime
+16/2: import parser
+16/3: items = parser.tester()
+16/4: days = parser.analyse_days()
+16/5: days = parser.analyse_days(items)
+17/1: import parser
+17/2: items = parser.tester()
+17/3: days = parser.analyse_days(items)
+18/1: import parser
+18/2: items = parser.tester()
+18/3: days = parser.analyse_days(items)
+18/4: days
+19/1: items = parser.tester()
+19/2: import parser
+19/3: items = parser.tester()
+19/4: days = parser.analyse_days(items)
+19/5: days
+20/1: import parser
+20/2: items = parser.tester()
+20/3: parser.analyse_days()
+20/4: parser.analyse_days(items)
+21/1: import parser
+21/2: items = parser.tester()
+21/3: parser.analyse_days(items)
+22/1: import parser
+22/2: items = parser.tester()
+22/3: parser.analyse_days(items)
+22/4: items[21]
+22/5: days = parser.analyse_days(items)
+22/6: days
+22/7: items[328]
+22/8: items
+22/9: days
+22/10: items[916]
+22/11: days
+22/12: day1 = items[0:21]
+22/13: day2 = items[21:328]
+22/14: day3 = items[328:916]
+22/15: day1 = items[21:328]
+22/16: day2 = items[328:916]
+22/17: day1
+22/18: day2
+22/19: days
+22/20: day1 = items[21:328]
+22/21: day2 = items[328:916]
+22/22: day3 = items[916:len(items])
+22/23: day3 = items[916:len(items)]
+22/24: day3[-1]
+22/25: days
+23/1: import parser
+23/2: items = parser.tester()
+23/3: days = parser.analyse_days(items)
+23/4: days
+23/5: len(items)
+23/6: a = list(range(15))
+23/7: a
+23/8: b = [3, 6, 8]
+23/9: for x in bP
+23/10:
+for i, x in b:
+    a[x:b[min(len(b) - 1, x+1)]]
+23/11: items = list()
+23/12:
+for i, x in b:
+    items.append(a[x:b[min(len(b) - 1, x+1)]])
+23/13:
+for i, x in b:
+    items.append(a[x:b[min(len(b) - 1, i+1)]])
+23/14: a
+23/15: b
+23/16:
+for i, x in b:
+    items.append(a[i:b[min(len(b) - 1, i+1)]])
+23/17:
+for i, x in b:
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[i:b[y]])
+23/18:
+for i, x in b:
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[i:b[y]])
+23/19: b[2]
+23/20: a[0:b[2]]
+23/21: a[1:b[2]]
+23/22:
+for i, x in b:
+    y = -1 if i == len(b) - 1 else i
+    print(i)
+    print(a)
+    print(b)
+    items.append(a[i:b[y]])
+23/23:
+for i, x in enumerate(b):
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[i:b[y]])
+23/24: items
+23/25: a
+23/26:
+for i, x in enumerate(b):
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[x:b[y]])
+23/27: items
+23/28: del items
+23/29: a
+23/30: b
+23/31:
+for i, x in enumerate(b):
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[x:b[y]])
+23/32: items = list()
+23/33:
+for i, x in enumerate(b):
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[x:b[y]])
+23/34: items
+23/35:
+for i, el in enumerate(b):
+    x = 0 if i == 0 else i
+    y = -1 if i == len(b) - 1 else i
+    items.append(a[b[x]:b[y]])
+23/36: items
+23/37: items = list()
+23/38:
+for i, el in enumerate(b):
+    x = 0 if i == 0 else i
+    y = -1 if i == len(b) - 1 else i + 1
+    items.append(a[b[x]:b[y]])
+23/39: items
+23/40: a
+23/41: b
+23/42:
+for i, el in enumerate(b):
+    x = 0 if i == 0 else b[i]
+    y = -1 if i == len(b) - 1 else i + 1
+    items.append(a[b[x]:b[y]])
+23/43: items = list()
+23/44:
+for i, el in enumerate(b):
+    x = 0 if i == 0 else b[i]
+    y = -1 if i == len(b) - 1 else i + 1
+    items.append(a[b[x]:b[y]])
+23/45: b
+23/46: len(a)
+23/47:
+for i, el in enumerate(b):
+    x = 0 if i == 0 else el
+    y = -1 if i == len(b) - 1 else i + 1
+    items.append(a[b[x]:b[y]])
+23/48: a
+23/49: b
+23/50: b.insert(0, 0)
+23/51: b
+23/52: b.insert(-1, -1)
+23/53: b
+23/54: b
+23/55: b.remove(-1)
+23/56: b.append(-1)
+23/57: b
+23/58: items
+23/59: items = list()
+23/60:
+for i, x in enumerate(b):
+    if i == len(b) - 1:
+        break
+    y = b[i+1]
+    items.append(a[x]:a[y])
+23/61:
+for i, x in enumerate(b):
+    if i == len(b) - 1:
+        break
+    y = b[i+1]
+    items.append(a[x:y])
+23/62: items
+23/63: a
+23/64: b
+23/65: items = list()
+23/66:
+for i, x in enumerate(b):
+    if i == len(b) - 1:
+        break
+    y = b[i+1]
+    items.append(a[x:y + 1])
+23/67: items
+23/68: a[3]
+23/69: a
+23/70: b
+23/71: items = list()
+23/72:
+for i, x in enumerate(b):
+    if i == len(b) - 1:
+        break
+    y = b[i+1]
+    items.append(a[x:y])
+23/73: items
+23/74: items[-1].append(a[-1])
+23/75: items
+24/1: import parser
+24/2: items = parser.tester()
+24/3: days = parser.analyse_days(items)
+24/4: days = list()
+24/5: day_breaks = parser.analyse_days(items)
+24/6: days = list()
+24/7: day_breaks
+24/8: day_breaks.insert(0,0)
+24/9: day_breaks.append(-1)
+24/10: day_breaks
+24/11:
+for i, x in enumerate(day_breaks):
+    if i == len(day_breaks) - 1:
+        break
+    y = day_breaks[i+1]
+    days.append(items[x:y])
+24/12: days
+24/13: days[0]
+24/14: len(days)
+24/15: len(days[0])
+24/16: day_breaks
+24/17: len(days[1])
+24/18: len(days[2])
+24/19: len(days[3])
+24/20: len(items) - 916
+25/1: import parser
+25/2: items = parser.tester()
+25/3: items[0]
+25/4: items[21]
+25/5: parser.main()
+25/6: text = '[Puzzle solved] CatalonIA solved a bonuspuzzle!'
+25/7: m = re.match(r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+25/8: import re
+25/9: m = re.match(r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+25/10: m
+25/11: text[15]
+25/12: text[16]
+25/13: text = text[15:]
+25/14: text
+25/15: text = text[1:]
+25/16: text
+25/17: m = re.match(r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+) solved ((?P<bonus>a bonuspuzzle)|puzzle (?P<number>\d))", text)
+25/18: m
+26/1: import parser
+26/2: items = parser.tester()
+26/3: day_breaks = parser.analyse_days(items)
+26/4: days = parser.convert_to_days(items, day_breaks)
+26/5: days
+26/6:
+for day, element in enumerate(days):
+    pass
+26/7: days
+26/8: enumerate(days)
+27/1: import parsedatetime
+27/2: import parsedatetime as pdt
+27/3: cal = pdt.Calendar()
+27/4: cal.parseDT('2000')
+27/5: cal.parseDT('year 2000')
+27/6: type(cal.parseDT('year 2000'))
+27/7: cal.parseDT('year 2000')
+27/8: cal.parseDT('march 2000')
+27/9: cal.parseDT('the year 2000')
+27/10: cal.parseDT('2000 ce')
+27/11: cal.parseDT('2000 bc')
+27/12: cal.parseDT('2000B.C.')
+27/13: cal.parseDT('2000 B.C.')
+29/1: import parsedatetime as pdt
+29/2: cal = pdt.Calendar()
+29/3: cal
+29/4: cal.parseDT
+29/5: cal.parseDT(datetimeString='14:53')
+29/6: cal.parseDT(datetimeString='yesterday 1400')
+29/7: cal.parseDT(datetimeString='a minute ago')
+29/8: cal.parseDT(datetimeString='some time ago')
+29/9: cal.parseDT(datetimeString='a long time ago')
+29/10: cal.parseDT(datetimeString='an hour from now')
+29/11: import re
+30/1: lines = open('buildings.txt').read)(
+30/2: lines = open('buildings.txt').read()
+30/3: gebouwen = list()
+30/4: import gebouwen
+30/5: builds, kunsts = gebouwen.parse_new()
+30/6: letters = 'tennis'
+30/7: check = [x for x in builds if all([l in x.name.lower() for l in letters.lower()])]
+30/8: check
+30/9: check [x for x in builds if sorted(letters).lower() in sorted(x.name).lower()]
+30/10: check=  [x for x in builds if sorted(letters).lower() in sorted(x.name).lower()]
+30/11: check=  [x for x in builds if sorted(letters.lower()) in sorted(x.name).lower()]
+30/12: check=  [x for x in builds if sorted(letters.lower()) in sorted(x.name.lower())]
+30/13: check
+30/14: builds
+30/15: builds[-9]
+30/16: tennis = builds[-12]
+30/17: tennis
+30/18: tennis.name.lower()
+30/19: sorted(tennis.name.lower())
+30/20: sorted('tennis'.lower())
+30/21: check=  [x for x in builds if ''.join(sorted(letters.lower())) in ''.join(sorted(x.name.lower()))]
+30/22: check
+30/23: ''.join(sorted(letters))
+30/24: ''.join(sorted(tennis.name.lower()))
+32/1: import asyncio
+32/2: import websockets
+32/3:
+async def hello(uri):
+    async with websockets.connect(uri) as websocket:
+        await websocket.send("Hello world!")
+32/4:
+asyncio.get_event_loop().run_until_complete(
+    hello('ws://localhost:8765'))
+32/5: puzzle_uri = 'wss://iapandora.nl/ws/puzzlefeed?subscribe-broadcast'
+32/6: puzzle_uri
+32/7: hello
+32/8: del hello
+32/9: hello
+32/10:
+async def hello(websocket, path):
+    name = await websocket.recv()
+    print(f"< {name}")
+32/11:
+async def hello(websocket, path):
+    name = await websocket.recv()
+    print(f"< {name}")
+    greeting = f"Hello {name}!"
+    await websocket.send(greeting)
+    print(f"> {greeting}")
+32/12: start_server = websockets.serve(hello, 'localhost', 8765)
+32/13: asyncio.get_event_loop().run_until_complete(start_server)
+32/14: asyncio.get_event_loop().run_forever()
+33/1:
+import asyncio
+import websockets
+
+async def hello():
+    async with websockets.connect(
+            'ws://localhost:8765') as websocket:
+        name = input("What's your name? ")
+
+        await websocket.send(name)
+        print(f"> {name}")
+
+        greeting = await websocket.recv()
+        print(f"< {greeting}")
+33/2: hello
+33/3: asyncio.get_event_loop().run_until_complete(hello())
+33/4:
+import asyncio
+import websockets
+
+async def hello():
+    async with websockets.connect(
+            'ws://localhost:8765') as websocket:
+        name = input("What's your name? ")
+
+        await websocket.send(name)
+        print(f"> {nae}")
+
+        greeting = await websocket.recv()
+        print(f"< {greeting}")
+33/5: asyncio.get_event_loop().run_until_complete(hello())
+33/6:
+import asyncio
+import websockets
+
+async def hello():
+    async with websockets.connect(
+            'ws://localhost:8765') as websocket:
+        name = input("What's your name? ")
+
+        await websocket.send(name)
+        print(f"> {name}")
+
+        greeting = await websocket.recv()
+        print(f"< {greeting}")
+33/7: asyncio.get_event_loop().run_until_complete(hello())
+33/8: asyncio.get_event_loop().run_until_complete(hello())
+33/9: hello()
+32/15: start_server = websockets.serve(hello, 'localhost', 8765)
+32/16: asyncio.get_event_loop().run_until_complete(start_server)
+32/17: asyncio.get_event_loop().run_forever()
+33/10: hello()
+33/11: asyncio.get_event_loop().run_until_complete(hello())
+32/18: uri
+32/19: uri = 'wss://iapandora.nl/ws/puzzlefeed?subscribe-broadcast'
+32/20: start_server = websockets.serve(hello, uri)
+32/21: asyncio.get_event_loop().run_until_complete(start_server)
+32/22: asyncio.get_event_loop().run_forever()
+33/12: asyncio.get_event_loop().run_until_complete(hello())
+32/23: uri
+34/1:
+import asyncio
+import websockets
+34/2:
+async def hello(uri):
+    async with websockets.connect(uri) as websocket:
+        await websocket.send("Hello world!")
+34/3: del hello
+34/4:
+async def echo(websocket, path):
+    async for message in websocket:
+        await websocket.send(message)
+34/5: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/6: uri = 'wss://iapandora.nl/ws/puzzlefeed?subscribe-broadcast'
+34/7: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/8: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri, 8765))
+34/9: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri, 8765))
+34/10: uri = 'ws://iapandora.nl/ws/puzzlefeed?subscribe-broadcast'
+34/11: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri, 8765))
+34/12: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/13: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, 'localhost'))
+34/14: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/15: uri
+34/16: uri = 'wss://iapandora.nl/ws/puzzlefeed?subscribe-broadcast'
+34/17: uri
+34/18: uri = "wss://iapandora.nl/ws/puzzlefeed?subscribe-broadcast"
+34/19: uri
+34/20: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/21: uri = 'ws://demos.kaazing.com/echo'
+34/22: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/23: uri
+34/24: uri = "wss://iapandora.nl/ws/puzzlefeed?subscribe-broadcast"
+34/25: uri
+34/26: uri = "iapandora.nl/ws/puzzlefeed?subscribe-broadcast"
+34/27: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/28: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri))
+34/29: uri
+34/30: asyncio.get_event_loop().run_until_complete(websockets.serve(echo, uri, 5678))
+34/31: uri
+35/1: a = {1:0,2:1}
+35/2: a
+35/3:
+for b in a:
+    print(b)
+35/4:
+for b in a.values():
+    print(b)
+35/5:
+for key, val in iter(a):
+    print(key)
+    print(val)
+35/6: a
+35/7: for key, val in zip
+35/8:
+for key, val in zip(a.keys(), a.values()):
+    print(key)
+    print(val)
+35/9:
+for key, val in zip(a.keys(), a.values()):
+    print(f"{key} {val}")
+35/10:
+for key, val in zip(a.keys(), a.values()):
+    print(f"{key} {va}")
+35/11:
+for key, val in zip(a.keys(), a.values()):
+    print(f"{key} {val}")
+35/12:
+for key, val in zip(a.keys(), a.values()):
+    print(f"{key}\t{val}")
+35/13: print(f"test")
+35/14: print(f"test{a}")
+35/15: print(f"test{a.keys()}")
+35/16: print(f"test{2}")
+35/17: b = 2.0
+35/18: print(f"test{b}")
+35/19: print(f"test{b}:.2f")
+35/20: print(f"test{b:.2f}")
+35/21: print(f"test{b:.%}")
+35/22: print(f"test{b.%}")
+35/23: print(f"test{b:%}")
+35/24: print("test{b:%}")
+37/1: import logging
+37/2: logging.info
+37/3: logging.info()
+37/4: logging.info('ad')
+37/5: logging.__all__()
+37/6: logging.__all__
+38/1: items = ['henk', 'berta', 'jan']
+38/2: items
+38/3: artists = dict()
+39/1: items = ['henk', 'berta', 'jan']
+39/2: a = {a[item] if item not in a else 1 for item in items}
+39/3: a = dict()
+39/4: a = {a[item] if item not in a else 1 for item in items}
+39/5: a = {a[item]: 0 if item not in a else 1 for item in items}
+39/6: a['henk'] = 0
+39/7: a
+39/8: a = {a[item]: 0 if item not in a else 1 for item in items}
+39/9: a
+40/1: import script
+41/1: import script
+41/2: songs = script.parse_excel('TOP-2000-2017.xls')
+42/1: import script
+42/2: songs = script.parse_excel('TOP-2000-2017.xls')
+42/3: songs[1]
+42/4: artists = script.artists_dict(songs)
+42/5: artists
+42/6: artists['The Beatles']
+43/1: print(*[1, 2, 3])
+43/2: print(*[1, 2, 3], sep='\n')
+43/3: ''.join([1, 2, 3])
+43/4: ''.join([str(x) for x in [1, 2, 3]])
+43/5: '\n'.join([str(x) for x in [1, 2, 3]])
+43/6: "\n".join([str(x) for x in [1, 2, 3]])
+43/7: print("\n".join([str(x) for x in [1, 2, 3]]))
+43/8: print("\n".join([str(x) for x in []]))
+43/9: print("\n".join([str(x) if [] else 'Not found' for x in []]))
+43/10: [str(x) if [] else 'Not found' for x in []]
+43/11: [str(x) if [] else 'Not found' for x in [1]]
+43/12: *[str(x) for x in [1, 2, 3]]
+43/13: songs = *[str(x) for x in [1, 2, 3]]
+43/14: songs = '*[str(x) for x in [1, 2, 3]]'
+43/15: songs
+44/1: import this
+44/2: this
+44/3: this()
+44/4: this.main()
+44/5: this.c
+44/6: this.d
+44/7: this.i
+44/8: this.s
+45/1: import this
+46/1: if ):
+46/2:
+if 0:
+    print(True)
+46/3:
+if -1:
+    print(True)
+47/1: import randomwoord
+48/1: import randomword
+48/2: randomword.define('Kniesoor')
+48/3: randomword.define('Kniesoor', 'NL')
+48/4: randomword.define('Kniesoor', randomword.NL)
+48/5: randomwoord.main
+48/6: randomword.main()
+49/1: import bs4
+49/2: import requests
+49/3: url = f'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/{word'
+49/4: url = f'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/{word}'
+49/5: word = 'kniesoor'
+49/6: url = f'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/{word}'
+49/7: url
+49/8: html = requests.get(url)
+49/9: soup = bs4.BeautifulSoup(html, 'html.parser')
+49/10: html = html.read()
+49/11: html
+49/12: html.text
+49/13: html = html.text
+49/14: soup = bs4.BeautifulSoup(html, 'html.parser')
+49/15: soup
+49/16: soup.findAll(attrs={'class': 'f0j'})
+49/17: items = soup.findAll(attrs={'class': 'f0j'})
+49/18: items
+49/19: items[0]
+49/20: item = items[0]
+49/21: item
+49/22: item.children()
+49/23: item.children
+49/24: list(item.children)
+49/25: list(item.children)[-1]
+49/26: list(list(item.children)[-1].children)
+49/27: list(list(item.children)[-1].children)[-1]
+49/28: defin = list(list(item.children)[-1].children)[-1]
+49/29: defin
+49/30: defin.text
+49/31: item
+49/32: item.text
+49/33: list(item.children)[-1]
+49/34: list(item.children)[-1].text
+49/35: word = 'voetbal'
+49/36: url = f'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/{word}'
+49/37: html = requests.get(url).text
+49/38: soup = bs4.BeautifulSoup(html, 'html.parser')
+49/39: soup.findAll(attrs={'class': 'f0j'})
+49/40: items =soup.findAll(attrs={'class': 'f0j'})
+49/41: items
+49/42: items[0].text
+49/43: item = items[0]
+49/44: item
+49/45: defin = list(list(item.children)[-1].children)[-1]
+49/46: defin
+49/47: defin.text
+49/48: defin = list(item.children)[-1][1:]
+49/49: defin = list(item.children)[-1].text[1:]
+49/50: defin
+49/51: import randomword
+49/52: randomword.define('kniesoor', randomword.NL)
+49/53: randomword.define('voetbal', randomword.NL)
+49/54: randomword.define(word, randomword.NL)
+49/55: word = 'zeediepten'
+49/56: randomword.define(word, randomword.NL)
+50/1: url = f'https://en.oxforddictionaries.com/definition/{word}'
+50/2: word = 'element'
+50/3: url = f'https://en.oxforddictionaries.com/definition/{word}'
+50/4: url
+50/5: html = requests.get(url).text
+50/6: import requests, bs4
+50/7: html = requests.get(url).text
+50/8: soup = bs4.BeautifulSoup(html, 'html.parser')
+50/9: elements = soup.findAll(attrs={'class': 'ind'})
+50/10: elements
+50/11: texts = [elem.text for elem in elements]
+50/12: texts
+52/1: lines = open('chat.txt').read()
+52/2: lines[5:]
+52/3: lines[0]
+52/4: lines[1]
+52/5: lines[2]
+52/6: lines[3]
+52/7: lines[4]
+52/8: lines[5]
+52/9: lines
+52/10: lines = str(lines)
+52/11: lines
+52/12: lines[-1]
+52/13: lines = lines.split('\n')
+52/14: lines
+52/15: lines[0]
+52/16: lines[1]
+52/17: lines = lines[2:]
+52/18: lines
+52/19: lines[1]
+52/20: lines[0]
+52/21: lines = lines[1:]
+52/22: lines[0]
+52/23: lines - lines.split(' - ')[-1]
+52/24: lines = [line.split(' - ')[-1] for line in lines]
+52/25: lines
+52/26: lines[0]
+52/27: ioana = [line for line in lines if 'Ioana' == lines[:5]]
+52/28: ioana
+52/29: ioana = [line for line in lines if 'Ioana' == lines[:6]]
+52/30: ioana
+52/31: ioana = [line for line in lines if 'Sieta' == lines[:5]]
+52/32: ioana
+52/33: lines[-1]
+52/34: lines[-2]
+52/35: ioana = [line for line in lines if 'Ioana' == line[:5]]
+52/36: ioana
+52/37: lines.index(ioana[-1])
+52/38: lines[491]
+52/39: lines = open('chat.txt').read()
+52/40: lines = str(lines).split('\n')
+52/41: lines
+52/42: lines[491]
+52/43: lines[494]
+53/1: import parsedatetime as pdt
+53/2: cal = pdt.Calendar()
+53/3: cal.parseDT('25-05-18')
+53/4: cal.parse('25-05-18')
+53/5: cal.parseDate('25-05-18')
+53/6: cal.parseDateText('25-05-18')
+53/7: import datetime
+53/8: datetime.strftime()
+53/9: from datetime import datetime
+53/10: datetime.strptime('')
+53/11: cal.parseDateText('25-05-18')
+53/12: datetime.strptime('25-05-18')
+53/13: datetime.strptime('25-05-18', '%d-%m-%y)
+53/14: datetime.strptime('25-05-18', '%d-%m-%y')
+53/15: metadata
+53/16: date = '03-05-18, 10:23'
+53/17: date
+53/18: datetime.strptime(date, '%d-%m-%y, %H:%M')
+53/19: cal.parseDT('Oct 4')
+53/20: cal.parseDT('2018-5-4')
+53/21: cal.parseDT('18-5-4')
+54/1: import parsedatetime as pdt
+54/2: cal = pdt.Calendar()
+54/3: cal.parseDT('3:55:37 PM')
+54/4: from datetime import datetime
+54/5: datetime.strptime('3:55:37 PM', '%I:%M:%S %p')
+55/1:
+with open('buildings.txt') as f:
+    lines = f.read()
+55/2: lines = lines.split('\n')[1:-1]
+55/3: lines
+55/4: line = lines[0]
+55/5: line
+55/6: import Gebouw
+55/7: from gebouw import Gebouw
+55/8: lines
+55/9: line
+55/10: line.split('\t')
+55/11: [line.split('\t') for line in lines]
+55/12: lines[10]
+55/13: lines[-1]
+55/14: lines[-10]
+55/15: [line.split('\t') for line in lines]
+55/16: [line.split('\t') for line.split('\t') in lines]
+55/17: [line.split('\t') for line in lines with]
+55/18: [line.split('\t') for line in lines with a = line.split('\t')]
+55/19: [line.split('\t') for line in lines with a as line.split('\t')]
+55/20: [line.split('\t') for line in lines]
+55/21: map(split('\t'), lines)
+55/22: map(lambda x: x.split('\t'), lines)
+55/23: list(map(lambda x: x.split('\t'), lines))
+55/24: [num for num in line.split('\t') for line in lines]
+55/25: [[item for item in line.split('\t')] for line in lines]
+55/26: [[[thing for thing in item]item for item in line.split('\t')] for line in lines]
+55/27: [[[thing for thing in item] for item in line.split('\t')] for line in lines]
+55/28: [[[(x, y) for x, y in enumerate(item)] for item in line.split('\t')] for line in lines]
+55/29: lines
+55/30: lines = lines[:3]
+55/31: lines
+55/32: [[[(x, y) for x, y in enumerate(item)] for item in line.split('\t')] for line in lines]
+55/33: lines
+55/34: lines = lines[1:]
+55/35: lines
+55/36: [[[thing for thing in item] for item in line.split('\t')] for line in lines]
+55/37: [[item for item in line.split('\t')] for line in lines]
+55/38: [[item[0] for item in line.split('\t')] for line in lines]
+55/39: [[item for item in line.split('\t')] for line in lines]
+55/40: [[item for item in line.split('\t')[i]] for line in lines]
+55/41: [[[item for item in line.split('\t')[i]] for i in range(len(line))] for line in lines]
+55/42: lines
+55/43: lines[0]
+55/44: lines[1]
+55/45: [item for item in line.split('\t') for line in lines]
+55/46: [[item for item in line.split('\t')] for line in lines]
+55/47: [[line[0]] for line in lines]
+55/48: henk = [[item for item in line.split('\t')] for line in lines]
+55/49: henk
+55/50: henk[0][0]
+55/51: lines
+55/52: [[item for item in line.split('\t')] for line in lines]
+55/53: [[line.split('\t')] for line in lines]
+55/54: [[item for item in line.split('\t')] for line in lines]
+55/55: [[line.index(item)] for item in line.split('\t')] for line in lines]
+55/56: [[[line.index(item)] for item in line.split('\t')] for line in lines]
+55/57: [[item for item in line.split('\t')] for line in lines]
+55/58: list(zip([[item for item in line.split('\t')] for line in lines]))
+55/59: builds = list(zip([[item for item in line.split('\t')] for line in lines]))
+55/60: builds
+55/61: [x for x in builds]
+55/62: [x[0] for x in builds]
+55/63: [x[0] for x in builds[0]]
+55/64: gebouwen = [Gebouw(int(x[0]), x[1], x[2]) for x in builds[0]]
+55/65: gebouwen
+55/66: builgds
+55/67: builds
+55/68: builds[0]
+55/69: builds[0][0]
+55/70: gebouwen = [Gebouw(int(x[0]), x[1], x[2]) for x in builds]
+55/71: gebouwen = [Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in builds]
+55/72: gebouwen
+55/73: builds = list(zip([[item[0] for item in line.split('\t')] for line in lines]))
+55/74: builds
+55/75: builds = list(zip([[item for item in line.split('\t')] for line in lines]))
+55/76: builds
+55/77: builds = list(zip([[item for item in line.split('\t')] for line[0] in lines]))
+55/78: builds = list(zip([[item for item in line.split('\t')] for line in lines]))
+55/79: builds
+55/80: builds = zip([[item for item in line.split('\t')] for line in lines])
+55/81: gebouwen = [Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in builds]
+55/82: gebouwen
+55/83:
+with open('buildings.txt') as f:
+    lines = f.read()
+55/84: builds = zip([[item for item in line.split('\t')] for line in lines.split('\n')[1:-1]])
+55/85: gebouwen = [Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in builds]
+55/86: gebouwen
+56/1: import Gebouwe
+56/2: from gebouw import Gebouw
+56/3:
+with open('buildings.txt') as f:
+    lines = f.read()
+56/4:
+gebouw_lines = zip([[item for item in line.split('\t')]
+                    for lin in lines.split('\n')[1:-1]])
+56/5:
+gebouw_lines = zip([[item for item in line.split('\t')]
+                    for line in lines.split('\n')[1:-1]])
+56/6: gebouw_lines
+56/7: list(gebouw_lines)
+56/8: list(gebouw_lines[0])
+56/9: list(gebouw_lines)[0]
+56/10: gebouw_lines
+56/11: list(gebouw_lines)
+56/12:
+gebouw_lines = zip([[item for item in line.split('\t')]
+                    for line in lines.split('\n')[1:-1]])
+56/13: gebouw_list = list(gebouw_lines)
+56/14: gebouw_list
+56/15:
+gebouw_lines = zip([[item for item in line.split('\t')]
+                    for line in lines.split('\n')[1:-1]])
+56/16: gebouw_list
+56/17: gebouw_list[0]
+57/1: from gebouw import Gebouw
+57/2:
+with open('buildings.txt') as f:
+    lines = f.read()
+57/3:
+[Kunst(x[0][0]) for x in zip([[item for item in line.split('\t')]
+                              for line in lines.split('\n')[1:-1]])]
+57/4: from gebouw import Gebouw, Kunst
+57/5:
+[Kunst(x[0][0]) for x in zip([[item for item in line.split('\t')]
+                              for line in lines.split('\n')[1:-1]])]
+57/6:
+[Gebouw(int(x[0][0]), x[0][1], x[0][2]) for x in
+    zip([[item for item in line.split('\t')]
+         for line in lines.split('\n')[1:-1]])]
+58/1: from datetime import datetime
+58/2: time = datetime.strptime('20:00', '%H:%M')
+58/3: time
+58/4: time_format = '%H:%M'
+58/5: time = '20:00'
+58/6: datetime.strptime(time, '%H:%M')
+58/7: datetime.strptime(time, time_format)
+59/1: import re
+59/2:
+        team = "(?P<team>(\w|\ |\'|\-|\/|\*|\.)+)"
+        bonus = "(?P<bonus>a bonuspuzzle)"
+        puzzle = "puzzle (?P<number>\d)"
+        regex = fr"{team} solved ({bonus}|{puzzle})"
+59/3: team
+59/4: bonus
+59/5: regex
+59/6: re.match(regex, 'A team solved a bonuspuzzle')
+59/7: m = re.match(regex, 'A team solved a bonuspuzzle')
+59/8: m.group('team')
+59/9: m.group('puzzle')
+59/10: m.group('bonus')
+59/11: m = re.match(regex, 'A team solved ')
+59/12: m.group('bonus')
+59/13: m.group('number')
+59/14: m = re.match('F solved a bonuspuzzle')
+59/15: m = re.match(regex, 'F solved a bonuspuzzle')
+59/16: m
+59/17: m.groups
+59/18: m.groups()
+59/19: m.group
+59/20: m.group('bonus')
+59/21: m.group()
+59/22: m.group('se')
+59/23: m = re.match(regex, 'F solved solved a bonuspuzzle')
+59/24: m
+59/25: m.groups()
+59/26: m.group('team')
+59/27: m.group('bonus')
+59/28: m.group('puzzle')
+59/29: text
+59/30: text = 'F solved a solved a solved a bonuspuzzle solved a bonuspuzzle'
+59/31: m = re.match(regex, text)
+59/32: m
+59/33: m.group('team')
+59/34: m.group('bonus')
+59/35: m.groups()
+59/36: regex
+59/37: re
+59/38: re.fullmatch()
+59/39: re.fullmatch(regex, text)
+59/40: text
+59/41: m = re.fullmatch(regex, text)
+59/42: m.groups()
+59/43: text = 'CatalonIA solved puzzle 5'
+59/44: m = re.fullmatch(regex, text)
+59/45: m.group('team')
+59/46: m.group('puzzle')
+59/47: m.group('number')
+59/48: text = 'CatalonIA solved puzzle 5 and got a time bonus of 50
+59/49: text = 'CatalonIA solved puzzle 5 and got a time bonus of 50'
+59/50: m = re.fullmatch(regex, text)
+59/51: m
+59/52: m = re.match(regex, text)
+59/53: m
+59/54: re
+59/55: re.A
+59/56: re.ASCII
+59/57: re
+59/58: re.DEBUG
+59/59: re.DEBUG()
+59/60: re.DEBUG.ASCII
+59/61: re.DEBUG.ASCII.DEBUG.ASCII.DOTALL
+59/62: re.finditer(regex, text)
+59/63: m = re.match(regex, text)
+59/64: m = re.finditer(regex, text)
+59/65: m
+59/66: m()
+59/67: list(m)
+59/68: m = re.finditer(regex, text)
+59/69: m = list(m)
+59/70: m[0]
+59/71: m[0].group('team')
+59/72: m = re.finditer(regex, text)
+59/73: m
+59/74: list(m)
+59/75: m = re.finditer(regex, [text, text])
+59/76: m = re.finditer(regex, text + text)
+59/77: m
+59/78: list(m)
+59/79: re.findall(regex, text)
+59/80: text
+59/81: regex
+59/82: re.Scanner
+59/83: re.Scanner()
+59/84: re.functools
+59/85: re.functools()
+59/86: re.search
+59/87: re.search()
+59/88: re.search(regex, text)
+59/89: re.search(regex, text).group()
+59/90: re.search(regex, text).group('team')
+59/91: s = re.search(regex, text)
+59/92: s.lastgroup()
+59/93: s.lastgroup
+59/94: s
+59/95: s.span
+59/96: s.span()
+59/97: s.start
+59/98: s.start()
+59/99: s.string
+59/100: s.regs
+59/101: text[:9]
+59/102: text[8:9]
+59/103: text[17:25]
+59/104: text[-1:-1]
+59/105: regex
+59/106: s.expand
+59/107: s.expand()
+59/108: s.end()
+59/109: s.endpos
+59/110: s.endpos()
+59/111: re.M
+59/112: re.compile
+59/113: re.compile()
+59/114: re.compile(regex)
+59/115: pattern = re.compile(regex)
+59/116: pattern
+59/117: pattern.match(text)
+59/118: import doctest
+59/119: doctest
+59/120: doctest()
+59/121: pattern.search(text)
+59/122: pattern.search('catalonia')
+59/123: pattern.match('catalonia')
+59/124: text
+59/125: text + text
+59/126: text = 'CatalonIA solved puzzle 5'
+59/127: text
+59/128: text + ' ' + text
+59/129: pattern.match(text)
+59/130: pattern.finditer(text)
+59/131: list(pattern.finditer(text))
+59/132: it = pattern.finditer(text)
+59/133: it
+59/134:
+for m in it:
+    print(m)
+59/135: len(it)
+59/136: pattern
+59/137: pattern.text
+59/138: pattern.pattern
+59/139: pattern.split(text)
+59/140: pattern.split(text + ' ' + text)
+60/1: from collections import deque
+60/2: deque
+60/3: deque()
+60/4: deque(1, 2, 3)
+60/5: deque([1, 2, 3])
+60/6: a = deque([1, 2, 3])
+60/7: a
+60/8: a[0]
+60/9: a[0]
+60/10: a[1]
+60/11: a.append(2)
+60/12: a
+60/13: a.pop()
+60/14: a
+60/15: b = [1, 2,3]
+60/16: a
+60/17: b
+60/18: b.append(2)
+60/19: b.pop
+60/20: b.pop()
+60/21: b
+60/22: b.appendleft
+60/23: a
+60/24: a.appendleft(2)
+60/25: a
+60/26: a.popleft()
+60/27: a
+60/28: a
+60/29: a.rotate(1)
+60/30: a
+60/31: a.rotate(2)
+60/32: a
+60/33: b
+60/34: a.maxlen
+60/35: a.maxlen()
+60/36: a.maxlen
+60/37: from collections import defaultdict
+60/38: del a, b
+60/39: a
+60/40: b
+60/41: a = defaultdict()
+60/42: a
+60/43: a = defaultdict([1, 2, 3])
+60/44: a = defaultdict(None, )
+60/45: a
+60/46: a = defaultdict(None, [1,2,3])
+60/47: a = defaultdict(None, zip([1,2,3],[4,5,6]))
+60/48: a
+60/49: a.default_factory
+60/50: a.default_factory()
+60/51: a.default_factory
+60/52: a[4]
+60/53: a.setdefault
+60/54: a.setdefault('default')
+60/55: a
+60/56: a[2]
+60/57: a['sd']
+60/58: a.get('sd')
+60/59: del a
+60/60: a = defaultdict('def
+60/61: a = defaultdict('default', zip(range(3), range(3,7)))
+61/1: num = '7.0'
+61/2: import re
+61/3: re.match('\d', num)
+61/4: re.match('\d', num).groups()
+61/5: re.match('(?P<number>\d)', num).groups()
+61/6: re.match('(?P<number>\d)', num).group('number')
+61/7: re.match('(?P<number>\number)', num).group('number')
+61/8: re.match('(?P<number>\d(.\d)?)', num).group('number')
+61/9: float(re.match('(?P<number>\d(.\d)?)', num).group('number'))
+61/10: num = 4.2
+61/11: float(re.match('(?P<number>\d(.\d)?)', num).group('number'))
+61/12: num = '4.2'
+61/13: float(re.match('(?P<number>\d(.\d)?)', num).group('number'))
+61/14: num = '4'
+61/15: float(re.match('(?P<number>\d(.\d)?)', num).group('number'))
+62/1: import re
+62/2: text = '            7.9         http://www.imdb.com/title/tt1170358/'
+62/3: re.match(r"(?P<number>\d(.\d)?)\s(?P<url>\S)", text)
+62/4: m = re.match(r"(?P<number>\d(.\d)?)\s(?P<url>\S)", text)
+62/5: m
+62/6: regex = r"(?P<number>\d(.\d)?)\s(?P<url>\S)"
+62/7: regex
+62/8: m = re.match(regex, text)
+62/9: m
+62/10: regex
+62/11: m
+62/12: text
+62/13: regex = r"\s" + regex
+62/14: regex
+62/15: m = re.match(regex, text)
+62/16: m
+62/17: text
+62/18: regex
+62/19: regex = r"(?P<number>\d(.\d)?)\s(?P<url>\S*)"
+62/20: m = re.match(regex, text)
+62/21: m
+62/22: regex = r"(?P<number>\d(.\d)?)\s*(?P<url>\S*)"
+62/23: regex
+62/24: m = re.match(regex, text)
+62/25: m
+62/26: regex = r"(?P<number>\d(.\d)?)\s+(?P<url>\S*)"
+62/27: m = re.match(regex, text)
+62/28: m
+62/29: re.find(regex, text)
+62/30: re.findall(regex, text)
+62/31: re.match(regex, text)
+62/32: re.sub
+62/33: regex = r"(?P<number>\d[.\d]?)\s+(?P<url>[\w|\W]*)"
+62/34: m = re.match(regex, text)
+62/35: m
+62/36: re.match(regex, text)
+62/37: text
+62/38: text2 = text[:15]
+62/39: text2
+62/40: m = re.match(regex, text2)
+62/41: m
+62/42: m = re.match(r"(?P<number>\d[.\d]?)", text2)
+62/43: m
+62/44: m = re.match(r"\s*(?P<number>\d[.\d]?)", text2)
+62/45: m
+62/46: m.group('number')
+62/47: text2
+62/48: m = re.match(r"\s*(?P<number>\d(.\d)?)", text2)
+62/49: m
+62/50: m.groups()
+62/51: m.groups('number')
+62/52: regex = r"\s*(?P<number>\d[.\d]?)\s+(?P<url>[\w|\W]*)"
+62/53: m = re.match(regex, text)
+62/54: m
+62/55: regex
+62/56: text
+62/57: regex = r"\s*(?P<number>\d(.\d)?)\s+(?P<url>\S*)"
+62/58: m = re.match(regex, text)
+62/59: m
+62/60: m.group('number')
+62/61: m.group('url')
+63/1: text = "self: 5.6"
+63/2: tet
+63/3: text
+63/4: import re
+63/5: re.findall(r'self: (?P<number>\d.\d)')
+63/6: re.findall(r'self: (?P<number>\d.\d)', text)
+63/7: re.findall(r'self: \d.\d', text)
+63/8: re.findall(r'self: <number>\d.\d', text)
+63/9: re.findall(r'self: ?<number>\d.\d', text)
+63/10: re.findall(r'self: ?P<number>\d.\d', text)
+63/11: re.findall(r'self: (?P<number>\d.\d)', text)
+64/1: import re
+64/2: line = '27-07-17, 12:19 - Iris: 💩'
+64/3: line
+64/4: print(uf'{line}')
+64/5: lien
+64/6: line
+64/7: line
+64/8: regex = r"(?P<date>\.*) - (?P<person>(\w|\ )+): (?P<text>\.*)"
+64/9: regex
+64/10: re.match(regex, line)
+64/11: regex = r"(?P<date>(\d-\d-\d, \d:\d)) - (?P<person>(\w|\ )+): (?P<text>\.*)"
+64/12: regex
+64/13: re.match(regex, line)
+64/14: date = line.split(' - ')[0]
+64/15: date
+64/16: date_regex = r"(?P<date>(\d-\d-\d, \d:\d))"
+64/17: re.match(date_regex, date)
+64/18: date_regex = r"(?P<date>(\d\-\d\-\d\,\ \d\:\d))"
+64/19: re.match(date_regex, date)
+64/20: date
+64/21: date_regex = r"(?P<date>(\d*-\d*-\d*, \d*:\d*))"
+64/22: re.match(date_regex, date)
+64/23: regex = r"(?P<date>(\d*-\d*-\d*, \d*:\d*)) - (?P<person>(\w|\ )+): (?P<text>\.*)"
+64/24: re.match(regex, line)
+64/25: re.match(regex, line).group('person')
+64/26: re.match(r"\.*", 'selfkjselfkj')
+64/27: re.match(r"\.*", 'selfkjselfkj\nsd')
+64/28: re.match(r"\.*", 'selfkjselfkj\nsd').group
+64/29: re.match(r"\.*", 'selfkjselfkj\nsd').group()
+64/30: re.match(r"\.*", 'selfkjselfkj\nsd').groups
+64/31: re.match(r"\.*", 'selfkjselfkj\nsd').groups()
+64/32: re.match(r"(?P<all>\.*)", 'seflksje').groups()
+64/33: re.match(r"(?P<all>\S*)", 'seflksje').groups()
+64/34: regex = r"(?P<date>(\d*-\d*-\d*, \d*:\d*)) - (?P<person>(\w|\ )+): (?P<text>\.*)"
+64/35: regex
+65/1: line = '27-07-17, 12:19 - Iris: 💩'
+65/2:
+        HH, MM = "(?P<hour>\d*)", "(?P<minute>\d*)"
+        mm, dd, yy = "(?P<month>\d*)", "(?P<day>\d*)", "(?P<year>\d*)"
+        date_information = f"(?P<date_information>{mm}-{dd}-{yy},\s{HH}:{MM})"
+
+        person_information = f"(?P<person>({NAME_IRIS}|{NAME_RENS}))\:\s(?P<text>\.*)"
+
+        total = rf"{date_information} - {person_information}"
+65/3: NAME_IRIS = 'Iris'
+65/4: NAME_RENS = 'Rens'
+65/5:
+        HH, MM = "(?P<hour>\d*)", "(?P<minute>\d*)"
+        mm, dd, yy = "(?P<month>\d*)", "(?P<day>\d*)", "(?P<year>\d*)"
+        date_information = f"(?P<date_information>{mm}-{dd}-{yy},\s{HH}:{MM})"
+
+        person_information = f"(?P<person>({NAME_IRIS}|{NAME_RENS}))\:\s(?P<text>\.*)"
+
+        total = rf"{date_information} - {person_information}"
+65/6: total
+65/7: import re
+65/8: match = re.match(total, line)
+65/9: match
+65/10: match.groupdict()
+66/1: import timeit
+66/2: import analyser
+66/3: analyser.main()
+66/4: timeit.timeit()
+66/5: timeit.timeit(analyser.main())
+66/6: timeit.timeit(analyser.main)
+66/7: timeit.timeit(analyser.main, number=100)
+66/8: timeit.timeit(analyser.main, number=100)
+67/1: import timeit
+68/1: import timeit
+68/2: import analyser
+68/3: timeit.timeit(analyser.main, number=100)
+68/4: timeit.timeit(analyser.main, number=100)
+69/1: import analyser
+69/2: import timeit
+69/3: timeit.timeit(analyser.main, number=100)
+70/1: import re
+70/2: input_str = "quick.orange.rabbit"
+70/3: pattern = r"(?P<hash>\w*).(?P<orange>orange).(?P<star>\w*)"
+70/4: p = re.compile(pattern)
+70/5: p.match(input_str)
+70/6: p.match(input_str).groups()
+70/7: input_str = "quick help.orange.rabbit"
+70/8: p.match(input_str).groups()
+70/9: p.match(input_str)
+70/10: pattern = r"(?P<hash>(\w*\ )*).(?P<orange>orange).(?P<star>\w*)"
+70/11: p.match(input_str)
+70/12: p.match(input_str).groups()
+70/13: pattern = r"(?P<hash>(\w*\s)*).(?P<orange>orange).(?P<star>\w*)"
+70/14: p.match(input_str)
+70/15: pattern = r"(?P<hash>(\w*\s*)*).(?P<orange>orange).(?P<star>\w*)"
+70/16: p.match(input_str)
+70/17: pattern = r"(?P<hash>(\w*\s)*).(?P<orange>orange).(?P<star>\w*)"
+70/18: input_str
+70/19: pattern = r"(?P<hash>(\w+\s)*).(?P<orange>orange).(?P<star>\w*)"
+70/20: p.match(input_str)
+70/21: re.match()
+70/22: re.match(r"(?P<hash>(\w+\s)*)", "quick rabbit")
+70/23: re.match(r"(?P<hash>(\w+\s)*)", "quick rabbit").groups()
+70/24: re.match(r"(?P<hash>(\w\s)*)", "quick rabbit")
+70/25: re.match(r"(?P<hash>(\w*\s)*)", "quick rabbit")
+70/26: re.match(r"(?P<hash>(\w*\s)*).", "quick rabbit")
+70/27: re.fullmatch(r"(?P<hash>(\w*\s)*).", "quick rabbit")
+70/28: re.fullmatch(r"(?P<hash>(\w*\s)*)", "quick rabbit")
+70/29: re.fullmatch(r"(?P<hash>(\w*\.)*)", "quick.rabbit")
+70/30: re.fullmatch(r"(?P<hash>(\w*|\.)*)", "quick.rabbit")
+70/31: re.fullmatch(r"(?P<hash>(\w*|\s)*)", "quick rabbit")
+70/32: re.fullmatch(r"(?P<hash>(\w*|\s)*).", "quick rabbit.")
+70/33: pattern = r"(?P<hash>(\w*|\s)*).(?P<orange>orange).(?P<star>\w*)"
+70/34: p = re.compile(pattern)
+70/35: p.match(input_str)
+70/36: p.match(input_str).groups()
+70/37: pattern = r"(?P<hash>(\w*|\.)*).(?P<orange>orange).(?P<star>\w*)"
+70/38: p = re.compile(pattern)
+70/39: p.match(input_str).groups()
+70/40: input_str = "quick.help.orange.rabbit"
+70/41: p.match(input_str).groups()
+70/42: pattern = r"(\w+|\s)*.orange.\w+"
+70/43: p = re.compile(pattern)
+70/44: p.match(input_str).groups()
+70/45: input_str = "quick help.orange.rabbit"
+70/46: p.match(input_str).groups()
+70/47: p.match(input_str)
+70/48: match = p.match(input_str)
+70/49: pattern = r"(?P<hash>(\w*|\.)*).(?P<orange>orange).(?P<star>\w*)"
+70/50: p = re.compile(pattern)
+70/51: match = p.match(input_str)
+70/52: match
+70/53: input_str = "quick.help.orange.rabbit"
+70/54: p = re.compile(pattern)
+70/55: match = p.match(input_str)
+70/56: match
+70/57: match.group('hash')
+71/1: import re, timeit
+71/2: pattern = r"(?P<hash>(\w*|\.)*).(?P<orange>orange).(?P<star>\w*)"
+71/3: input_str = "quick.help.orange.rabbit"
+71/4: re.match(pattern, input_str)
+71/5: timeit.timeit('re.match(pattern, input_str)')
+71/6: timeit.timeit('import re; re.match(pattern, input_str)')
+71/7: timeit.timeit('import re;re.match(pattern, input_str)')
+71/8: pattern = r"(?P<hash>(\w*|\.)*).(?P<orange>orange).(?P<star>\w*)"
+71/9: input_str = "quick.help.orange.rabbit"
+71/10: pattern = r"(?P<hash>(\w*|\.)*).(?P<orange>orange).(?P<star>\w*)"
+71/11: input_str = "quick.help.orange.rabbit"
+71/12: timeit.timeit('import re;
+71/13: timeit.timeit(f'import re; pattern = {pattern}; input_str = {input_str}; re.match(pattern, input_str)')
+71/14: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/15: pattern
+71/16: pattern = r"(?P<hash>(\w*|.)*).(?P<orange>orange).(?P<star>\w*)"
+71/17: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/18: pattern = r"(?P<hash>(\w*|\.)*)\.(?P<orange>orange)\.(?P<star>\w*)"
+71/19: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/20: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/21: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/22: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/23: pattern = r"(?P<hash>(\w*|.)*).(?P<orange>orange).(?P<star>\w*)"
+71/24: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+71/25: timeit.timeit(f'import re; pattern = "{pattern}"; input_str = "{input_str}"; re.match(pattern, input_str)')
+73/1: import hashlib
+73/2: hashlib.sha256('aslk')
+73/3: hashlib.sha256(u'aslk')
+73/4: hashlib.sha256(b'aslk')
+73/5: hash
+73/6: hash('sdkf')
+73/7: sha = hashlib.sha256(b'henk')
+73/8: sha
+73/9: sha.hexdigest
+73/10: sha.hexdigest()
+73/11: sha.name
+73/12: sha.update
+73/13: sha.update()
+73/14: sha.update(b'henl')
+73/15: sha.hexdigest()
+73/16: sha.update(b'henk')
+73/17: sha.hexdigest()
+73/18: m = hashlib.sha256()
+73/19: m
+73/20: m.update(b"Nobody inspects")
+73/21: m.update(b" the spammish repetition")
+73/22: m.digest()
+73/23: m.hexdigest()
+73/24: hashlib.sha256(b"Nobody inspects the spammish repetition")
+73/25: hashlib.sha256(b"Nobody inspects the spammish repetition").hexdigest()
+73/26: import timeit
+73/27: timeit.timeit('import hashlib; hashlib.sha256("test one two three").hexdigest()')
+73/28: timeit.timeit('import hashlib; hashlib.sha256(b"test one two three").hexdigest()')
+73/29: timeit.timeit('import hashlib; hashlib.sha256(b"test one two three").hexdigest()')
+73/30: timeit.timeit('import hashlib; hashlib.sha256(b"test one two three").hexdigest()', number=100)
+73/31: timeit.timeit('import hashlib; hashlib.sha256(b"test one two three").hexdigest()', number=100)
+73/32: num = 100000
+73/33: from hashlib import sha256
+73/34:
+for x in range(num):
+    digest = sha256(bytes(x))
+73/35: num = 100
+73/36:
+for x in range(num):
+    digest = sha256(bytes(x))
+73/37: digest
+73/38: digest.hexdigest()
+73/39: sha
+73/40: del sha
+73/41: sha256(bytes(999)).hexdigest()
+73/42: sha256(bytes(99)).hexdigest()
+73/43: num = 10000
+73/44:
+for x in range(num):
+    digest = sha256(bytes(x))
+73/45: num = 100000
+73/46:
+for x in range(num):
+    digest = sha256(bytes(x))
+73/47: num = 1000000
+73/48:
+for x in range(num):
+    digest = sha256(bytes(x))
+73/49: import tqdm
+73/50:
+for x in tqdm(range(num)):
+    digest = sha256(bytes(x))
+73/51: tqdm.trange(100)
+73/52:
+for x in tqdm.trange(num)):
+    digest = sha256(bytes(x))
+73/53:
+for x in tqdm.trange(num):
+    digest = sha256(bytes(x))
+73/54: kj
+73/55: group = lambda t, n: zip(*[t[i::n] for i range(n)])
+73/56: group = lambda t, n: zip(*[t[i::n] for i in range(n)])
+73/57: group
+73/58: group(tqdm.trange(num), 50)
+73/59: tqdm.trange(50)
+73/60: a = tqdm.trange(50)
+73/61: a
+73/62: type(a)
+73/63: group
+73/64: group(range(num), 50)
+73/65: list(group(range(num), 50))
+73/66:
+for nums in group(range(num), 500):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/67: num
+73/68: num = num / 10
+73/69: num
+73/70:
+for nums in group(range(num), 500):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/71: num = int(num)
+73/72:
+for nums in group(range(num), 500):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/73: num = 1000
+73/74:
+for nums in group(range(num), 500):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/75: num = 10000
+73/76:
+for nums in group(range(num), 500):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/77:
+for n in nums:
+    digest = sha256(bytes(n))
+73/78:
+for n in nums:
+    digest = sha256(bytes(n))
+73/79:
+for nums in group(range(num), 500):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/80:
+for nums in group(range(num), 50):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/81:
+for n in nums:
+    digest = sha256(bytes(n))
+73/82: num = num * 10
+73/83: num
+73/84:
+for n in nums:
+    digest = sha256(bytes(n))
+73/85:
+for nums in group(range(num), 50):
+    for n in nums:
+        digest = sha256(bytes(n))
+73/86: [num[i:i+n] for i in range(0, len(num), n)]
+73/87: num
+73/88: nums = list(range(num))
+73/89: nums
+73/90: [nums[i:i+n] for i in range(0, len(nums), n)]
+73/91: [nums[i:i+n] for i in range(0, len(nums), n)][0]
+73/92: [nums[i:i+n] for i in range(0, len(nums), n)][1]
+73/93: n
+73/94: [nums[i:i+n] for i in range(0, len(nums), n)][1]
+73/95: n
+73/96: [nums[i:i+n] for i in range(0, len(nums), n)][2]
+73/97: [nums[i:i+n] for i in range(0, len(nums), n)][0]
+73/98: n
+73/99: n = 50
+73/100: [nums[i:i+n] for i in range(0, len(nums), n)][0]
+73/101: nums
+73/102: sliced = [nums[i:i+n] for i in range(0, len(nums), n)][0]
+73/103: sliced[0]
+73/104: sliced[1]
+73/105: sliced = [nums[i:i+n] for i in range(0, len(nums), n)]
+73/106: sliced[0][4]
+73/107: sliced[0][0]
+73/108:
+for items in sliced:
+    for n in items:
+        digest = sha256(bytes(n))
+74/1: import random
+75/1: from numpy.random import choice
+75/2: ?
+75/3: choice?
+75/4: choice??
+75/5: ?
+75/6: %quickref
+75/7: %quickref
+75/8: %magic
+75/9: %timeit range(1000)
+75/10: %magic
+75/11: %quickref
+75/12: %alist
+75/13: %quickref
+75/14: x**100
+75/15: %quickref
+75/16: cp
+75/17: %quickref
+75/18: choice
+75/19: choice()
+75/20: choice?
+75/21: from numpy.random import choice
+75/22: choice?
+75/23: results = ['panama', 'draw', 'tunisia']
+75/24: chance_0 = 0.31
+75/25: chance_draw = .28
+75/26: chance_1 = 1 - (chance_0 + chance_draw)
+75/27: chance_*
+75/28: chance_1
+75/29: chance_0
+75/30: chance_draw
+75/31: choice(results, p=(chance_0, chance_draw, chance_1))
+75/32: choice(results, p=(chance_0, chance_draw, chance_1))
+75/33: choice(results, p=(chance_0, chance_draw, chance_1))
+75/34: choice(results, p=(chance_0, chance_draw, chance_1))
+75/35: choice(results, p=(chance_0, chance_draw, chance_1))
+75/36: choice(results, p=(chance_0, chance_draw, chance_1))
+75/37: choice(results, p=(chance_0, chance_draw, chance_1))
+75/38: choice(results, p=(chance_0, chance_draw, chance_1))
+75/39: choice(results, p=(chance_0, chance_draw, chance_1))
+75/40: sum(0.4, 0.3)
+76/1: from random import randint
+76/2: randint()
+76/3: randint(0, 4)
+76/4: randint(0, 4)
+76/5: randint(0, 4)
+76/6: randint(0, 4)
+76/7: randint(0, 4)
+76/8: randint(0, 4)
+76/9: randint(0, 4)
+76/10: randint(0, 4)
+76/11: randint(0, 4)
+76/12: randint(0, 4)
+76/13: randint(0, 4)
+76/14: from numpy.random import choice
+75/41: import numpy as np
+75/42: import math
+75/43: mu = 0
+75/44: variance = 1
+75/45: sigma = math.sqrt(variance)
+75/46: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/47: x
+75/48: x[0]
+75/49: x[0] - x[1]
+75/50: x[15] - x[16]
+75/51: variance = 1.5
+75/52: sigma = math.sqrt(variance)
+75/53: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/54: x
+75/55: choice(x)
+75/56: variance = 15
+75/57: sigma = math.sqrt(variance)
+75/58: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/59: choice(x)
+75/60: choice(x)
+75/61: choice(x)
+75/62: choice(x)
+75/63: choice(x)
+75/64: choice(x)
+75/65: x
+75/66: variance = 150
+75/67: sigma = math.sqrt(variance)
+75/68: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/69: x
+75/70: choice(x)
+75/71: choice(x)
+75/72: choice(x)
+75/73: choice(x)
+75/74: choice(x)
+75/75: mu = 1
+75/76: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/77: x
+75/78: choice(x)
+75/79: choice(x)
+75/80: choice(x)
+75/81: choice(x)
+75/82: choice(x)
+75/83: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/84: choice(x)
+75/85: choice(x)
+75/86: choice(x)
+75/87: choice(x)
+75/88: choice(x)
+75/89: choice(x)
+75/90: choice(x)
+75/91: choice(x)
+75/92: choice(x)
+75/93: choice(x)
+75/94: variance
+75/95: variance = 4
+75/96: sigma = math.sqrt(variance)
+75/97: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/98: choice(x)
+75/99: x
+75/100: x[:}
+75/101: x[:]
+75/102: x
+75/103: choice(x)
+75/104: choice(x)
+75/105: choice(x)
+75/106: choice(x)
+75/107: choice(x)
+75/108: choice(x)
+75/109: choice(x)
+75/110: choice(x)
+75/111: choice(x)
+75/112: choice(x)
+75/113: choice(x)
+75/114: choice(x)
+75/115: choice(x)
+75/116: choice(x)
+75/117: choice(x)
+75/118: x
+75/119: x
+75/120: x
+75/121: x
+75/122: choice(x)
+75/123: choice(x)
+75/124: choice(x)
+75/125: choice(x)
+75/126: choice(x)
+75/127: choice(x)
+75/128: choice(x)
+75/129: choice(x)
+75/130: choice(x)
+75/131: choice(x)
+75/132: choice(x)
+75/133: choice(x)
+75/134: variance = 1
+75/135: sigma = math.sqrt(variance)
+75/136: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/137: choice(x)
+75/138: choice(x)
+75/139: choice(x)
+75/140: choice(x)
+75/141: choice(x)
+75/142: choice(x)
+75/143: choice(x)
+75/144: choice(x)
+75/145: choice(x)
+75/146: choice(x)
+75/147: choice(x)
+75/148: choice(x)
+75/149: choice(x)
+75/150: choice(x)
+75/151: choice(x)
+75/152: choice(x)
+75/153: choice(x)
+75/154: choice(x)
+75/155: mu
+75/156: mu = 0
+75/157: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/158: choice(x)
+75/159: choice(x)
+75/160: choice(x)
+75/161: choice(x)
+75/162: choice(x)
+75/163: choice(x)
+75/164: choice(x)
+75/165: choice(x)
+75/166: choice(x)
+75/167: choice(x)
+75/168: choice(x)
+75/169: choice(x)
+75/170: choice(x)
+75/171: choice(x)
+75/172: choice(x)
+75/173: choice(x)
+75/174: choice(x)
+75/175: result = 'Away'
+75/176: mu
+75/177: variance
+75/178: variance = 0.3
+75/179: sigma = math.sqrt(variance)
+75/180: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/181: x
+75/182: variance = 0.8
+75/183: sigma = math.sqrt(variance)
+75/184: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/185: x
+75/186: mu
+75/187: len(x)
+75/188: variance
+75/189: variance = 0.9
+75/190: sigma = math.sqrt(variance)
+75/191: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/192: x
+75/193: mu
+75/194: from scipy.stats import norm
+75/195: ch = 0.21
+75/196: ca = .49
+75/197: diff = ch-ca
+75/198: diff
+75/199: mu = diff
+75/200: variance
+75/201: diff
+75/202: variance = 1 + abs(diff)
+75/203: variance
+75/204: sigma = math.sqrt(variance)
+75/205: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/206: x
+75/207: mu
+75/208: choice(x)
+75/209: choice(x)
+75/210: choice(x)
+75/211: choice(x)
+75/212: ca
+75/213: ch
+75/214: diff = ca-ch
+75/215: diff
+75/216: mu = diff
+75/217: variance
+75/218: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/219: x
+75/220: choice(X)
+75/221: choice(x)
+75/222: choice(x)
+75/223: choice(x)
+75/224: choice(x)
+75/225: choice(x)
+75/226: choice(x)
+75/227: choice(x)
+75/228: choice(x)
+75/229: choice(x)
+75/230: choice(x)
+75/231: choice(x)
+75/232: choice(x)
+75/233: choice(x)
+75/234: variance
+75/235: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/236: choice(x)
+75/237: choice(x)
+75/238: choice(x)
+75/239: choice(x)
+75/240: choice(x)
+75/241: choice(x)
+75/242: choice(x)
+75/243: choice(x)
+75/244: choice(x)
+75/245: choice(x)
+75/246: variance = 0.8 + abs(diff)
+75/247: variance
+75/248: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/249: sigma = math.sqrt(variance)
+75/250: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/251: x
+75/252: choice(x)
+75/253: choice(x)
+75/254: choice(x)
+75/255: choice(x)
+75/256: choice(x)
+75/257: choice(x)
+75/258: len([a for a in x if round(a) == -3])
+75/259: len([a for a in x if round(a) == 3])
+75/260: len([a for a in x if round(a) == 2])
+75/261: len([a for a in x if round(a) == -2])
+75/262: len([a for a in x if round(a) == 2])
+75/263: len([a for a in x if round(a) == 1])
+75/264: len([a for a in x if round(a) == -1])
+75/265: len([a for a in x if round(a) == 0])
+75/266: mu
+75/267: mu = diff * 2
+75/268: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/269: x
+75/270: len([a for a in x if round(a) == 0])
+75/271: len([a for a in x if round(a) == -1])
+75/272: len([a for a in x if round(a) == -1])
+75/273: len([a for a in x if round(a) == 1])
+75/274: len([a for a in x if round(a) == 2])
+75/275: len([a for a in x if round(a) == -2])
+75/276: len([a for a in x if round(a) == -3])
+75/277: len([a for a in x if round(a) == ])
+75/278: len([a for a in x if round(a) == 3])
+75/279: len([a for a in x if round(a) == 4])
+75/280: variance
+75/281: variance = 1
+75/282: sigma = math.sqrt(variance)
+75/283: mu = 1
+75/284: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/285: x
+75/286: mu
+75/287: mu = 0
+75/288: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/289: mu
+75/290: x
+75/291: len([a for a in x if round(a) == -3])
+75/292: len([a for a in x if round(a) == -2])
+75/293: len([a for a in x if round(a) == -1])
+75/294: variance
+75/295: variance = 0.7
+75/296: sigma = math.sqrt(variance)
+75/297: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/298: len([a for a in x if round(a) == -1])
+75/299: len([a for a in x if round(a) == -2])
+75/300: len([a for a in x if round(a) == -3])
+75/301: variance = .8
+75/302: sigma = math.sqrt(variance)
+75/303: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100)
+75/304: len([a for a in x if round(a) == -3])
+75/305: len([a for a in x if round(a) == -2])
+75/306: len([a for a in x if round(a) == -1])
+75/307: len([a for a in x if round(a) == 0])
+75/308: len([a for a in x if round(a) == 1])
+75/309: len([a for a in x if round(a) == 2])
+75/310: len([a for a in x if round(a) == 3])
+75/311: len([a for a in x if round(a) == 4])
+75/312: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
+75/313: x
+75/314: len([a for a in x if round(a) == 4])
+75/315: len([a for a in x if round(a) == 3])
+75/316: len([a for a in x if round(a) == 2])
+75/317: len([a for a in x if round(a) == 1])
+75/318: variance
+75/319: sigma
+75/320: variance = .4
+75/321: sigma = math.sqrt(variance)
+75/322: sigma
+75/323: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
+75/324: len([a for a in x if round(a) == 1])
+75/325: len([a for a in x if round(a) == 0])
+75/326: len([a for a in x if round(a) == 2])
+75/327: len([a for a in x if round(a) == 3])
+75/328: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100000)
+75/329: len([a for a in x if round(a) == 3])
+75/330: len(x)
+75/331: variance = .8
+75/332: sigma
+75/333: sigma = math.sqrt(variance)
+75/334: sigma
+75/335: x = np.linspace(mu - 3*sigma, mu + 3*sigma, 100000)
+75/336: len([a for a in x if round(a) == 3])
+75/337: len([a for a in x if round(a) == 2])
+75/338: len([a for a in x if round(a) == 1])
+75/339: len([a for a in x if round(a) == 0])
+75/340: len([a for a in x if round(a) == 4])
+75/341: len([a for a in x if round(a) == -4])
+75/342: sigma
+75/343: x = np.linspace(mu - 2*sigma, mu + 2*sigma, 100000)
+75/344: len([a for a in x if round(a) == -4])
+75/345: len([a for a in x if round(a) == 3])
+75/346: len([a for a in x if round(a) == 2])
+75/347: len([a for a in x if round(a) == 1])
+75/348: len([a for a in x if round(a) == 0])
+75/349: import matplotlib.pyplot as plt
+75/350: x = np.linspace(mu - 4*sigma, mu + 4*sigma, 100000)
+75/351: x
+75/352: len([a for a in x if round(a) == 0])
+75/353: len([a for a in x if round(a) == 1])
+75/354: len([a for a in x if round(a) == 2])
+75/355: len([a for a in x if round(a) == 3])
+75/356: len([a for a in x if round(a) == 4])
+75/357: len([a for a in x if round(a) == 5])
+75/358: variance
+75/359: np.linspace?
+77/1: variance
+77/2: variance = .8
+77/3: sigma = math.sqrt(variance)
+77/4: import math, matplotlib.pyplot as plt, numpy as np
+77/5: sigma = math.sqrt(variance)
+77/6: x = np.linspace(mu - 4*sigma, mu + 4*sigma, 100000)
+77/7: mu = 9
+77/8: mu = 0
+77/9: x = np.linspace(mu - 4*sigma, mu + 4*sigma, 100000)
+77/10: matplotlib.mlab?
+77/11: import matplotlib.mlab as mlab
+77/12: mlab?
+77/13: mlab.normpdf(x, mu, sigma)
+77/14: a = mlab.normpdf(x, mu, sigma)
+77/15: a
+77/16: len(a)
+77/17: len([b for b in a if round(b) == 3])
+77/18: len([b for b in a if round(b) == 2])
+77/19: len([b for b in a if round(b) == 1])
+77/20: a
+77/21: a[100]
+77/22: a[200]
+77/23: len(a)
+77/24: a[50000]
+77/25: a[50001]
+77/26: x = np.linspace(mu - 4*sigma, mu + 4*sigma, 100000)
+77/27: x
+77/28: len(x)
+77/29: len([a for a in x if round(a) == 5])
+77/30: len([a for a in x if round(a) == 4])
+77/31: len([a for a in x if round(a) == 3])
+77/32: len([a for a in x if round(a) == 2])
+77/33: len([a for a in x if round(a) == 1])
+77/34: np.linspace?
+77/35: numpy.random
+77/36: from numpy.random import normal
+77/37: normal
+77/38: normal?
+77/39: normal()
+77/40: normal()
+77/41: normal()
+77/42: normal()
+77/43: normal?
+77/44: variance
+77/45: diff
+77/46: difference
+77/47: ch=.21
+77/48: ca=.49
+77/49: diff = ca-ch
+77/50: diff
+77/51: normal(scale=1 + abs(diff))
+77/52: normal(scale=1 + abs(diff))
+77/53: normal(scale=1 + abs(diff))
+77/54: normal(scale=1 + abs(diff))
+77/55: normal(scale=1 + abs(diff))
+77/56: normal(scale=1 + abs(diff))
+77/57: normal(scale=1 + abs(diff))
+77/58: normal(scale=1 + abs(diff))
+77/59: normal(scale=1 + abs(diff))
+77/60: normal(scale=1 + abs(diff))
+77/61: normal(scale=1 + abs(diff * 2))
+77/62: normal(scale=1 + abs(diff * 2))
+77/63: normal(scale=1 + abs(diff * 2))
+77/64: normal(scale=1 + abs(diff * 2))
+77/65: normal(scale=1 + abs(diff * 2))
+77/66: normal(scale=1 + abs(diff * 2))
+77/67: normal(scale=1 + abs(diff * 2))
+77/68: normal(scale=1 + abs(diff * 2))
+77/69: normal(scale=1 + abs(diff * 2))
+77/70: normal(scale=1 + abs(diff * 2))
+77/71: normal(scale=1 + abs(diff * 2))
+77/72: normal(scale=1 + abs(diff * 2))
+77/73: normal(scale=1 + abs(diff * 2))
+77/74: normal(scale=1 + abs(diff / 2))
+77/75: normal(scale=1 + abs(diff / 2))
+77/76: normal(scale=1 + abs(diff / 2))
+77/77: normal(scale=1 + abs(diff / 2))
+77/78: normal(scale=1 + abs(diff / 2))
+77/79: normal(scale=1 + abs(diff / 2))
+77/80: normal(scale=1 + abs(diff / 2))
+77/81: normal(scale=1 + abs(diff / 2))
+77/82: normal(scale=1 + abs(diff / 2))
+77/83: normal(scale=1))
+77/84: normal(scale=1)
+77/85: normal(scale=1)
+77/86: normal(scale=1)
+77/87: normal(scale=1)
+77/88: normal(scale=1)
+77/89: normal(scale=1)
+77/90: normal(scale=100)
+77/91: normal(scale=100)
+77/92: normal(scale=100)
+77/93: normal(scale=100)
+77/94: plt
+77/95: s = normal(scale=1 + abs(diff), 10000)
+77/96: s = normal(scale=1 + abs(diff), count=10000)
+77/97: normal
+77/98: normal?
+77/99: s = normal(scale=1 + abs(diff), size=10000)
+77/100: s
+77/101: type(s)
+77/102: count, bins, ignored = plt.hist(s, 30, normed=True)
+77/103: normal(scale = 1 + abs(diff))
+77/104: normal(scale = 1 + abs(diff))
+77/105: normal(scale = 1 + abs(diff))
+77/106: normal(scale = 1 + abs(diff))
+77/107: normal(scale = 1 + abs(diff))
+77/108: normal(scale = 1 + abs(diff))
+77/109: normal(scale = 1 + abs(diff))
+77/110: normal(scale = 1 + abs(diff))
+77/111: normal(scale = 1 + abs(diff))
+77/112: normal(scale = 1 + abs(diff))
+77/113: normal(scale = 1 + abs(diff))
+77/114: normal(scale = 1 + abs(diff))
+77/115: normal(loc=diff, scale = 1 + abs(diff))
+77/116: normal(loc=diff, scale = 1 + abs(diff))
+77/117: normal(loc=diff, scale = 1 + abs(diff))
+77/118: normal(loc=diff, scale = 1 + abs(diff))
+77/119: normal(loc=diff, scale = 1 + abs(diff))
+77/120: normal(loc=diff, scale = 1 + abs(diff))
+77/121: normal(loc=diff, scale = 1 + abs(diff))
+77/122: normal(loc=diff, scale = 1 + abs(diff))
+77/123: normal(loc=diff, scale = 1 + abs(diff))
+77/124: normal(loc=diff, scale = 1 + abs(diff))
+77/125: normal(loc=diff, scale = 1 + abs(diff))
+77/126: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/127: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/128: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/129: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/130: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/131: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/132: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/133: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/134: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/135: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/136: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/137: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/138: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/139: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/140: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/141: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/142: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/143: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/144: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/145: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/146: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/147: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/148: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/149: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/150: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/151: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/152: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/153: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/154: normal(loc=diff, scale = 1 + abs(diff * 4))
+77/155: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/156: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/157: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/158: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/159: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/160: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/161: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/162: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/163: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/164: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/165: normal(loc=diff, scale = 1 + abs(diff * 3))
+77/166: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/167: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/168: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/169: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/170: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/171: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/172: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/173: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/174: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/175: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/176: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/177: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/178: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/179: diff
+77/180: ca
+77/181: ch
+77/182: ch=.6615
+77/183: ca=.12
+77/184: diff = ca-ch
+77/185: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/186: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/187: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/188: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/189: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/190: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/191: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/192: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/193: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/194: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/195: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/196: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/197: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/198: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/199: diff
+77/200: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/201: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/202: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/203: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/204: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/205: normal(loc=diff, scale = 1 + abs(diff * 2))
+77/206: normal(loc=diff, scale = 1 + abs(diff * 2), size=1000)
+77/207: a = normal(loc=diff, scale = 1 + abs(diff * 2), size=1000)
+77/208: a
+77/209: len([b for b in a if b > 0])
+77/210: len([b for b in a if b < 0])
+77/211: a = normal(loc=diff, scale = 1 + abs(diff * 3), size=1000)
+77/212: len([b for b in a if b < 0])
+77/213: len([b for b in a if b > 0])
+77/214: a = normal(loc=diff, scale = 1 + abs(diff), size=1000)
+77/215: len([b for b in a if b > 0])
+77/216: len([b for b in a if b < 0])
+77/217: max(a)
+77/218: min(a)
+77/219: len([b for b in a if round(b) == -4])
+77/220: len([b for b in a if round(b) == -5])
+77/221: len([b for b in a if round(b) == -6])
+77/222: len([b for b in a if round(b) == -3])
+77/223: len([b for b in a if round(b) == -2])
+77/224: len([b for b in a if round(b) == -1])
+77/225: len([b for b in a if round(b) == 0])
+77/226: len([b for b in a if round(b) == 1])
+77/227: len([b for b in a if round(b) == 2])
+77/228: len([b for b in a if round(b) == 3])
+77/229: diff
+77/230: a = normal(loc=diff*2, scale = 1 + abs(diff), size=1000)
+77/231: len([b for b in a if b > 0])
+77/232: len([b for b in a if b < 0])
+77/233: normal(loc=diff*2, scale = 1 + abs(diff))
+77/234: normal(loc=diff*2, scale = 1 + abs(diff))
+77/235: normal(loc=diff*2, scale = 1 + abs(diff))
+77/236: normal(loc=diff*2, scale = 1 + abs(diff))
+77/237: normal(loc=diff*2, scale = 1 + abs(diff))
+77/238: normal(loc=diff*2, scale = 1 + abs(diff))
+77/239: normal(loc=diff*2, scale = 1 + abs(diff))
+77/240: normal(loc=diff*2, scale = 1 + abs(diff))
+77/241: normal(loc=diff*2, scale = 1 + abs(diff))
+77/242: normal(loc=diff*2, scale = 1 + abs(diff))
+77/243: normal(loc=diff*2, scale = 1 + abs(diff))
+77/244: normal(loc=diff*2, scale = 1 + abs(diff))
+77/245: normal(loc=diff*2, scale = 1 + abs(diff))
+77/246: ch = .7679
+77/247: ca=.0668
+77/248: 1 - sum((ch,ca))
+77/249: normal(loc=diff*2, scale = 1 + abs(diff))
+77/250: normal(loc=diff*2, scale = 1 + abs(diff))
+77/251: normal(loc=diff*2, scale = 1 + abs(diff))
+77/252: normal(loc=diff*2, scale = 1 + abs(diff))
+77/253: normal(loc=diff*2, scale = 1 + abs(diff))
+77/254: normal(loc=diff*2, scale = 1 + abs(diff))
+77/255: normal(loc=diff*2, scale = 1 + abs(diff))
+77/256: normal(loc=diff*2, scale = 1 + abs(diff))
+77/257: diff
+77/258: diff = ca-ch
+77/259: diff
+77/260: normal(loc=diff*2, scale = 1 + abs(diff))
+77/261: normal(loc=diff*2, scale = 1 + abs(diff))
+77/262: normal(loc=diff*2, scale = 1 + abs(diff))
+77/263: normal(loc=diff*2, scale = 1 + abs(diff))
+77/264: normal(loc=diff*2, scale = 1 + abs(diff))
+77/265: normal(loc=diff*2, scale = 1 + abs(diff))
+77/266: normal(loc=diff*2, scale = 1 + abs(diff))
+77/267: normal(loc=diff*2, scale = 1 + abs(diff))
+77/268: normal(loc=diff*2, scale = 1 + abs(diff))
+77/269: normal(loc=diff*2, scale = 1 + abs(diff))
+77/270: normal(loc=diff*2, scale = 1 + abs(diff))
+77/271: normal(loc=diff*2, scale = 1 + abs(diff))
+77/272: normal(loc=diff*2, scale = 1 + abs(diff))
+77/273: normal(loc=diff*2, scale = 1 + abs(diff))
+77/274: normal(loc=diff*2, scale = 1 + abs(diff))
+77/275: normal(loc=diff*2, scale = 1 + abs(diff))
+77/276: normal(loc=diff*2, scale = 1 + abs(diff))
+77/277: normal(loc=diff*2, scale = 1 + abs(diff))
+77/278: normal(loc=diff*2, scale = 1 + abs(diff))
+77/279: normal(loc=diff*2, scale = 1 + abs(diff))
+77/280: normal(loc=diff*2, scale = 1 + abs(diff))
+77/281: normal(loc=diff*2, scale = 1 + abs(diff))
+77/282: normal(loc=diff*2, scale = 1 + abs(diff))
+77/283: normal(loc=diff*2, scale = 1 + abs(diff))
+77/284: normal(loc=diff*2, scale = 1 + abs(diff))
+77/285: normal(loc=diff*2, scale = 1 + abs(diff))
+77/286: normal(loc=diff*2, scale = 1 + abs(diff))
+77/287: normal(loc=diff*2, scale = 1 + abs(diff))
+77/288: diff
+77/289: a = normal(loc=diff*2, scale = 1 + abs(diff), size=1000)
+77/290: len(a)
+77/291: len([b for b in a if abs(round(b)) > 4])
+77/292: len([b for b in a if round(b) == -3])
+77/293: len([b for b in a if round(b) == -4])
+77/294: len([b for b in a if round(b) == -5])
+77/295: len([b for b in a if abs(round(b)) > 3])
+77/296: len([b for b in a if abs(round(b)) > 2])
+77/297: len([b for b in a if abs(round(b)) > 1])
+77/298: len([b for b in a if abs(round(b)) > 0])
+77/299: len([b for b in a if abs(round(b)) > -1])
+77/300: len([b for b in a if abs(round(b)) > 0])
+77/301: len([b for b in a if abs(round(b)) > 1])
+77/302: len([b for b in a if abs(round(b)) == 0])
+77/303: len([b for b in a if abs(round(b)) == 1])
+77/304: len([b for b in a if abs(round(b)) == 2])
+77/305: len([b for b in a if abs(round(b)) == 3])
+77/306: len([b for b in a if abs(round(b)) == 4])
+77/307: len([b for b in a if abs(round(b)) == 5])
+77/308: len([b for b in a if abs(round(b)) == 6])
+77/309: len([b for b in a if abs(round(b)) == 7])
+77/310: ch=.5394
+77/311: ca=.2052
+77/312: diff = ca-ch
+77/313: a
+77/314: a = normal(loc=diff*2, scale = 1 + abs(diff), size=1000)
+77/315: len([b for b in a if abs(round(b)) == 7])
+77/316: len([b for b in a if abs(round(b)) == 0])
+77/317: len([b for b in a if abs(round(b)) == 1])
+77/318: len([b for b in a if abs(round(b)) == 2])
+77/319: diff
+77/320: len([b for b in a if abs(round(b)) == 3])
+77/321: len([b for b in a if abs(round(b)) == 0])
+77/322: len([b for b in a if abs(round(b)) == 1])
+77/323: len([b for b in a if abs(round(b)) == 2])
+77/324: len([b for b in a if abs(round(b)) == 3])
+77/325: len([b for b in a if abs(round(b)) == 4])
+77/326: len([b for b in a if round(b) == -3])
+77/327: len([b for b in a if round(b) == 3])
+77/328: len([b for b in a if round(b) == -3])
+77/329: len([b for b in a if round(b) == -2])
+77/330: len([b for b in a if round(b) == -2])
+77/331: len([b for b in a if round(b) == 2])
+77/332: len([b for b in a if round(b) == -1])
+77/333: len([b for b in a if round(b) == 1])
+77/334: len([b for b in a if round(b) == 0])
+77/335: len([b for b in a if round(b) > 0])
+77/336: len([b for b in a if round(b) < 0])
+77/337: normal(loc=diff*2, scale = 1 + abs(diff))
+77/338: normal(loc=diff*2, scale = 1 + abs(diff))
+77/339: normal(loc=diff*2, scale = 1 + abs(diff))
+77/340: normal(loc=diff*2, scale = 1 + abs(diff))
+77/341: normal(loc=diff*2, scale = 1 + abs(diff))
+77/342: normal(loc=diff*2, scale = 1 + abs(diff))
+77/343: normal(loc=diff*2, scale = 1 + abs(diff))
+77/344: normal(loc=diff*2, scale = 1 + abs(diff))
+77/345: normal(loc=diff*2, scale = 1 + abs(diff))
+77/346: normal(loc=diff*2, scale = 1 + abs(diff))
+77/347: normal(loc=diff*2, scale = 1 + abs(diff))
+77/348: normal(loc=diff*2, scale = 1 + abs(diff))
+77/349: len([b for b in a if round(b) < 0])
+77/350: len([b for b in a if round(b) == -1])
+77/351: len([b for b in a if round(b) == -2])
+77/352: len([b for b in a if round(b) == -3])
+76/15: from numpy.random import normal
+76/16: ch=.5394
+76/17: ca=.2052
+76/18: diff = ca-ch
+76/19: diff
+76/20: normal(loc=diff*2, scale=1 + abs(diff))
+76/21: goal_dff = normal(loc=diff*2, scale=1+abs(diff))
+76/22: goal_dff
+76/23: goal_dff = round(normal(loc=diff*2, scale=1+abs(diff)))
+76/24: goal_dff
+76/25: base = 0
+76/26: result = (base, base)
+76/27: goal_dff
+76/28: result = (base + abs(goal_dff) if goal_dff < 0 else base, base + abs(goal_dff) if goal_dff > 0 else base)
+76/29: result
+76/30: base = 1
+76/31: result = (base + abs(goal_dff) if goal_dff < 0 else base, base + abs(goal_dff) if goal_dff > 0 else base)
+76/32: result
+76/33: goal_dff = -4
+76/34: result = (base + abs(goal_dff) if goal_dff < 0 else base, base + abs(goal_dff) if goal_dff > 0 else base)
+76/35: result
+76/36: goal_dff = 2
+76/37: result = (base + abs(goal_dff) if goal_dff < 0 else base, base + abs(goal_dff) if goal_dff > 0 else base)
+76/38: result
+78/1: import math
+78/2: math.log(0) + 2
+78/3: math.log(0)
+78/4: math.log(1)
+78/5: math.log2(1)
+78/6: math.log2(0.5)
+78/7: -math.log2(0.5)
+78/8: -math.log2(0.01)
+78/9: -math.log2(0.1)
+78/10: -math.log2(10)
+78/11: -math.log2(8)
+78/12: -math.log2(4)
+78/13: -math.log2(3)
+78/14: -math.log2(2)
+78/15: -math.log2(1)
+78/16: from random import random
+78/17: from random import randrange
+78/18: randrange(0.1, 1)
+78/19: random()
+78/20: random()
+78/21: random()
+78/22: random()
+78/23: -math.log2(random())
+78/24: -math.log2(random())
+78/25: -math.log2(random())
+78/26: -math.log2(random())
+78/27: -math.log2(random())
+78/28: -math.log2(random())
+78/29: -math.log2(random())
+78/30: -math.log2(random())
+78/31: -math.log2(random())
+78/32: -math.log2(random() / 3)
+78/33: -math.log2(random() / 3)
+78/34: -math.log2(random() / 3)
+78/35: -math.log2(random() / 3)
+78/36: -math.log2(0.1)
+78/37: -math.log2(0.01)
+78/38: random()
+78/39: random()
+78/40: -math.log2(0.3)
+78/41: -math.log2(0.569)
+78/42: -math.log2(0.569)
+78/43: -math.log2(0.569)
+78/44: -math.log2(0.5)
+78/45: -math.log2(0.2)
+78/46: -math.log2(0.25)
+78/47: -math.log2(0.25 / 2)
+78/48: -math.log2(0.25 * 1.5)
+78/49: -math.log2(math.random() * 1.5)
+78/50: -math.log2(andom() * 1.5)
+78/51: -math.log2(random() * 1.5)
+78/52: -math.log2(random() * 1.5)
+78/53: -math.log2(random() * 1.5)
+78/54: -math.log2(random() * 1.5)
+78/55: -math.log2(random() * 1.5)
+78/56: -math.log2(random() * 1.5)
+78/57: abs(-math.log2(random() * 1.5))
+78/58: abs(-math.log2(random() * 1.5))
+78/59: abs(-math.log2(random() * 1.5))
+78/60: abs(-math.log2(random() * 1.5))
+78/61: abs(-math.log2(random() * 1.5))
+78/62: abs(-math.log2(random() * 1.5))
+78/63: abs(-math.log2(random() * 1.5))
+78/64: abs(-math.log2(random() * 1.5))
+78/65: abs(-math.log2(random() * 1.5))
+78/66: abs(-math.log2(random() * 1.5))
+78/67: abs(-math.log2(random() * 1.5))
+78/68: abs(-math.log2(random() * 1.5))
+78/69: abs(-math.log2(random() * 1.5))
+78/70: abs(-math.log2(random() * 1.5))
+78/71: abs(-math.log2(random() * 1.5))
+78/72: abs(-math.log2(random() * 1.5))
+78/73: abs(-math.log2(random() * 1.5))
+78/74: abs(-math.log2(random() * 1.5))
+78/75: abs(-math.log2(random() * 1.5))
+78/76: abs(-math.log2(random() * 1.5))
+78/77: abs(-math.log2(random() * 1.5))
+78/78: abs(-math.log2(random() * 1.5))
+78/79: abs(-math.log2(random() * 1.5))
+78/80: abs(-math.log2(random() * 1.5))
+78/81: abs(-math.log2(random() * 1.5))
+78/82: abs(-math.log2(random() * 1.5))
+78/83: abs(-math.log2(random() * 1.5))
+78/84: abs(-math.log2(random() * 1.5))
+78/85: abs(-math.log2(random() * 1.5))
+78/86: abs(-math.log2(random() * 1.5))
+78/87: abs(-math.log2(random() * 1.5))
+78/88: abs(-math.log2(random() * 1.5))
+78/89: abs(-math.log2(random() * 1.5))
+78/90: abs(-math.log2(random() * 1.5))
+79/1: abs(-math.log2(random() * 1.5))
+79/2: import math
+79/3: from random import randdom
+79/4: from random import random
+79/5: abs(-math.log2(random() * 1.5))
+79/6: abs(-math.log2(random() * 1.5))
+79/7: abs(-math.log2(random() * 1.5))
+79/8: abs(-math.log2(random() * 1.5))
+79/9: round(abs(-math.log2(random() * 1.5)))
+79/10: round(abs(-math.log2(random() * 1.5)))
+79/11: round(abs(-math.log2(random() * 1.5)))
+79/12: round(abs(-math.log2(random() * 1.5)))
+79/13: round(abs(-math.log2(random() * 1.5)))
+79/14: round(abs(-math.log2(random() * 1.5)))
+79/15: round(abs(-math.log2(random() * 1.5)))
+79/16: round(abs(-math.log2(random() * 1.5)))
+79/17: round(abs(-math.log2(random() * 1.5)))
+79/18: round(abs(-math.log2(random() * 1.5)))
+79/19: round(abs(-math.log2(random() * 1.5)))
+79/20: round(abs(-math.log2(random() * 1.5)))
+79/21: round(abs(-math.log2(random() * 1.5)))
+79/22: round(abs(-math.log2(random() * 1.5)))
+79/23: round(abs(-math.log2(random() * 1.5)))
+79/24: round(abs(-math.log2(random() * 1.5)))
+79/25: round(abs(-math.log2(random() * 3)))
+79/26: round(abs(-math.log2(random() * 3)))
+79/27: round(abs(-math.log2(random() * 3)))
+79/28: round(abs(-math.log2(random() * 3)))
+79/29: round(abs(-math.log2(random() * 3)))
+79/30: round(abs(-math.log2(random() * 3)))
+79/31: round(abs(-math.log2(random() * 3)))
+79/32: round(abs(-math.log2(random() * 3)))
+79/33: round(abs(-math.log2(random() * 3)))
+79/34: round(abs(-math.log2(random() * 3)))
+79/35: round(abs(-math.log2(random() * 3)))
+79/36: round(abs(-math.log2(random() * 3)))
+79/37: round(abs(-math.log2(random() * 3)))
+79/38: round(abs(-math.log2(random() * 3)))
+79/39: round(abs(-math.log2(random() * 3)))
+79/40: round(abs(-math.log2(random() * 3)))
+79/41: round(abs(-math.log2(random() * 3)))
+79/42: round(abs(-math.log2(random() * 3)))
+79/43: round(abs(-math.log2(random() * 30)))
+79/44: round(abs(-math.log2(random() * 30)))
+79/45: round(abs(-math.log2(random() * 30)))
+79/46: round(abs(-math.log2(random() * 30)))
+79/47: round(abs(-math.log2(random() * 30)))
+79/48: round(abs(-math.log2(random() * 30)))
+79/49: round(abs(-math.log2(random() * 30)))
+79/50: round(abs(-math.log2(random() * 30)))
+79/51: round(abs(-math.log2(random() * 30)))
+79/52: round(abs(-math.log2(random() * 30)))
+79/53: round(abs(-math.log2(random() * 0.6)))
+79/54: round(abs(-math.log2(random() * 0.6)))
+79/55: round(abs(-math.log2(random() * 0.6)))
+79/56: round(abs(-math.log2(random() * 0.6)))
+79/57: round(abs(-math.log2(random() * 0.6)))
+79/58: round(abs(-math.log2(random() * 0.6)))
+79/59: round(abs(-math.log2(random() * 0.6)))
+79/60: round(abs(-math.log2(random() * 0.6)))
+79/61: round(abs(-math.log2(random() * 0.6)))
+79/62: round(abs(-math.log2(random() * 0.6)))
+79/63: round(abs(-math.log2(random() * 0.6)))
+79/64: round(abs(-math.log2(random() * 0.6)))
+79/65: round(abs(-math.log2(random() * 0.6)))
+79/66: round(abs(-math.log2(random() * 0.6)))
+79/67: round(abs(-math.log2(random() * 0.6)))
+79/68: -math.log2(1)
+79/69: -math.log2(.9)
+79/70: -math.log2(.9 * .6)
+79/71: -math.log2(.9 * 1.5)
+79/72: -math.log2(.9 * 1.5)
+79/73: round(abs(-math.log2(random() * 1.25)))
+79/74: round(abs(-math.log2(random() * 1.25)))
+79/75: round(abs(-math.log2(random() * 1.25)))
+79/76: round(abs(-math.log2(random() * 1.25)))
+79/77: round(abs(-math.log2(random() * 1.25)))
+79/78: round(abs(-math.log2(random() * 1.25)))
+79/79: round(abs(-math.log2(random() * 1.25)))
+79/80: round(abs(-math.log2(random() * 1.25)))
+79/81: round(abs(-math.log2(random() * 1.25)))
+79/82: round(abs(-math.log2(random() * 1.25)))
+79/83: round(abs(-math.log2(random() * 1.25)))
+79/84: round(abs(-math.log2(random() * 1.25)))
+79/85: round(abs(-math.log2(random() * 1.25)))
+79/86: round(abs(-math.log2(random() * 1.25)))
+79/87: round(abs(-math.log2(random() * 1.25)))
+79/88: round(abs(-math.log2(random() * 1.25)))
+79/89: round(abs(-math.log2(random() * 1.25)))
+79/90: round(abs(-math.log2(random() * 1.25)))
+79/91: round(abs(-math.log2(random() * 1.25)))
+79/92: round(abs(-math.log2(random() * 1.25)))
+79/93: round(abs(-math.log2(random() * 1.25)))
+79/94: round(abs(-math.log2(random() * 1.25)))
+79/95: round(abs(-math.log2(random() * 1.25)))
+79/96: round(abs(-math.log2(random() * 1.25)))
+79/97: round(abs(-math.log2(random() * 1.25)))
+79/98: round(abs(-math.log2(random() * 1.25)))
+79/99: random()
+79/100: random()
+79/101: random()
+79/102: -math.log2(0.09468 * 1.25)
+79/103: -math.log2(0.09468 * 1.25)
+79/104: -math.log2(0.009468 * 1.25)
+79/105: -math.log2(0.001)
+79/106: -math.log2(0.005)
+79/107: -math.log2(0.005)
+79/108: -math.log2(0.005)
+79/109: -math.log2(0.010)
+79/110: min(round(abs(-math.log2(random() + 0.15))), 0)
+79/111: min(round(abs(-math.log2(random() + 0.15))), 0)
+79/112: min(round(abs(-math.log2(random() + 0.15))), 0)
+79/113: min(round(abs(-math.log2(random() + 0.15))), 0)
+79/114: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/115: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/116: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/117: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/118: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/119: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/120: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/121: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/122: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/123: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/124: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/125: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/126: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/127: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/128: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/129: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/130: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/131: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/132: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/133: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/134: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/135: max(round(abs(-math.log2(random() + 0.15))), 0)
+79/136: min(round(abs(-math.log2(random() + 0.15))), 0)
+79/137: -math.log2(.15)
+79/138: -math.log2(.16)
+79/139: -math.log2(.18)
+79/140: -math.log2(.10)
+79/141: -math.log2(.101)
+79/142: -math.log2(.11)
+79/143: -math.log2(.12)
+79/144: -math.log2(.12)
+79/145: -math.log2(.13)
+79/146: min(round(abs(-math.log2(random() + 0.13))), 0)
+79/147: min(round(abs(-math.log2(random() + 0.13))), 0)
+79/148: min(round(abs(-math.log2(random() + 0.13))), 0)
+79/149: min(round(abs(-math.log2(random() + 0.13))), 0)
+79/150: min(round(abs(-math.log2(random() + 0.13))), 0)
+79/151: min(round(abs(-math.log2(random() + 0.13))), 0)
+79/152: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/153: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/154: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/155: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/156: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/157: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/158: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/159: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/160: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/161: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/162: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/163: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/164: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/165: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/166: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/167: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/168: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/169: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/170: max(round(abs(-math.log2(random() + 0.13))), 0)
+79/171: a = [max(round(abs(-math.log2(random() + 0.13))), 0) for _ in range(1000)]
+79/172: a
+79/173: len(a)
+79/174: max(a)
+79/175: count
+79/176: a.count(3)
+80/1: import pandas as pd
+80/2: xls = pd.ExcelFile('wc_matches.csv')
+80/3: xls = pd.ExcelFile('wc_matches.ods')
+80/4: df = pd.read_csv('wc_matches.csv')
+80/5: df
+80/6: df = pd.read_csv('wc_matches.csv', parse_dates=['ts'], usecols=['team1', 'team2', 'prob1', 'prob2)
+80/7: df = pd.read_csv('wc_matches.csv', parse_dates=['ts'], usecols=['team1', 'team2', 'prob1', 'prob2', 'score1', 'score2'])
+80/8: df = pd.read_csv('wc_matches.csv', usecols=['team1', 'team2', 'prob1', 'prob2', 'score1', 'score2'])
+80/9: df
+80/10: df.groupby('team1')
+80/11: df.groupby('team1')()
+80/12: df.groupby('team1')
+80/13: df.groupby('team1').agg
+80/14: df.groupby('team1').agg()
+80/15:
+for x in df:
+    print(x)
+80/16: for x in df.rows
+80/17: df.rows
+80/18: df.items
+80/19:
+for x in df.items:
+    print(x)
+80/20: df.items
+80/21: type(df.items)
+80/22: df.items9)
+80/23: df.items()
+80/24: for x in df.items()
+80/25:
+for x in df.items():
+    print(x)
+80/26: type(df)
+80/27:
+for index, row in df.iterrows():
+    print(row)
+80/28: import generator
+80/29: generator.main(0.6, 0.2)
+80/30: generator.main(0.6, 0.2)
+80/31: generator.main(0.6, 0.2)
+80/32: generator.main(0.6, 0.2)
+80/33: generator.main(0.6, 0.2)
+80/34: generator.main(0.6, 0.2)
+80/35: generator.main(0.6, 0.2)
+80/36: generator.main(0.6, 0.2)
+80/37: generator.main(0.6, 0.2)
+80/38: generator.main(0.6, 0.2)
+80/39: generator.main(0.6, 0.2)
+80/40: generator.main(0.6, 0.2)
+80/41: generator.main(0.6, 0.2)
+80/42: generator.main(0.6, 0.2)
+80/43: generator.main(0.6, 0.2)
+80/44: generator.main(0.6, 0.2)
+80/45: generator.main(0.6, 0.2)
+80/46: generator.main(0.6, 0.2)
+80/47: generator.main(0.6, 0.2)
+80/48: generator.main(0.6, 0.2)
+80/49: generator.main(0.6, 0.2)
+80/50: generator.main(0.6, 0.2)
+80/51: generator.main(0.6, 0.2)
+80/52: generator.main(0.6, 0.2)
+80/53: generator.main(0.6, 0.2)
+80/54: generator.main(0.6, 0.2)
+80/55: generator.main(0.6, 0.2)
+80/56: generator.main(0.6, 0.2)
+80/57: generator.main(0.6, 0.2)
+80/58: generator.main(0.6, 0.2)
+80/59: generator.main(0.6, 0.2)
+80/60: generator.main(0.6, 0.2)
+80/61: generator.main(0.2459, 0.4809)
+80/62: generator.main(0.2459, 0.4809)
+80/63: generator.main(0.2459, 0.4809)
+80/64: generator.main(0.2459, 0.4809)
+80/65: generator.main(0.2459, 0.4809)
+80/66: generator.main(0.2459, 0.4809)
+80/67: generator.main(0.2459, 0.4809)
+80/68: generator.main(0.2459, 0.4809)
+80/69: generator.main(0.2459, 0.4809)
+80/70: generator.main(0.2459, 0.4809)
+80/71: generator.main(0.2459, 0.4809)
+80/72: generator.main(0.2459, 0.4809)
+80/73: generator.main(0.2459, 0.4809)
+80/74: generator.main(0.2459, 0.4809)
+80/75: generator.main(0.2459, 0.4809)
+80/76: generator.main(0.2459, 0.4809)
+80/77: generator.main(0.2459, 0.4809)
+80/78: generator.main(0.2459, 0.4809)
+80/79: generator.main(0.2459, 0.4809)
+80/80: generator.main(0.2459, 0.4809)
+80/81: generator.main(0.2459, 0.4809)
+80/82: generator.main(0.2459, 0.4809)
+80/83: generator.main(0.2459, 0.4809)
+80/84: generator.main(0.2459, 0.4809)
+80/85: generator.main(0.2459, 0.4809)
+80/86: generator.main(1, 0)
+80/87: generator.main(1, 0)
+80/88: generator.main(1, 0)
+80/89: generator.main(1, 0)
+80/90: generator.main(1, 0)
+80/91: generator.main(1, 0)
+80/92: generator.main(1, 0)
+81/1: import pandas as pd
+81/2: df = pd.read_csv('wc_matches.csv', usecols=['team1', 'team2', 'prob1', 'prob2', 'score1', 'score2'])
+81/3: import generator
+81/4: generator.main(0.2459, .4809)
+81/5: generator.main(0.2459, .4809)
+81/6: generator.main(0.2459, .4809)
+81/7: generator.main(0.2459, .4809)
+81/8: generator.main(0.2459, .4809)
+81/9: generator.main(0.2459, .4809)
+81/10: generator.main(0.2459, .4809)
+81/11: generator.main(0.2459, .4809)
+81/12: generator.main(0.2459, .4809)
+81/13: generator.main(0.2459, .4809)
+81/14: generator.main(0.2459, .4809)
+81/15: generator.main(0.2459, .4809)
+81/16: generator.main(0.2459, .4809)
+81/17: generator.main(0.2459, .4809)
+81/18: generator.main(0.2459, .4809)
+81/19: generator.main(0.2459, .4809)
+81/20: generator.main(0.2459, .4809)
+81/21: generator.main(0.2459, .4809)
+81/22: generator.main(0.2459, .4809)
+81/23: generator.main(0.2459, .4809)
+81/24: generator.main(0.2459, .4809)
+81/25: generator.main(0.2459, .4809)
+81/26: generator.main(0.2459, .4809)
+81/27: generator.main(0.2459, .4809)
+81/28: generator.main(0.2459, .4809)
+81/29: generator.main(0.2459, .4809)
+81/30: generator.main(0.2459, .4809)
+81/31: generator.main(0.2459, .4809)
+81/32: df
+81/33: df.iterrows()
+81/34: len(df.iterrows())
+81/35: df.iterrows()
+81/36: from collections import namedtuple
+81/37: namedtuple?
+81/38: Match = namedtuple('Match', 'team1 team2 pred1 pred2 out1 out2')
+81/39: Match
+81/40: df
+81/41:
+for index, row in df.iterrows():
+    if index < 5:
+        print(row)
+82/1: namedtuple?
+82/2: from collections import namedtuple
+82/3: namedtuple?
+81/42:
+for index, row in df.iterrows():
+    team1, team2 = row['team1'], row['team2']
+    prob1, prob2 = row['prob1'], row['prob2']
+    score1, score2 = row['score1'], row['score2']
+    pred1, pred2 = generator.main(prob1, prob2)
+    print(Match(team1, team2, pred1, pred2, score1, score2))
+84/1: from collections import namedtuple
+84/2: import generator
+84/3: import pandas as pd
+84/4: df = pd.read_csv('wc_matches.csv', usecols=['team1', 'team2', 'prob1', 'prob2', 'score1', 'score2'])
+84/5: Match
+84/6: Match = namedtuple('Match', 'team1 team2 pred1 pred2 out1 out2')
+84/7:
+for index, row in df.iterrows():
+    team1, team2 = row['team1'], row['team2']
+    prob1, prob2 = row['prob1'], row['prob2']
+    score1, score2 = row['score1'], row['score2']
+    pred1, pred2 = generator.main(prob1, prob2)
+    print(Match(team1, team2, pred1, pred2, score1, score2))
+84/8: 7 == 7.1
+84/9: 7 == 7.0
+84/10: predictions = list()
+84/11:
+for index, row in df.iterrows():
+    team1, team2 = row['team1'], row['team2']
+    prob1, prob2 = row['prob1'], row['prob2']
+    score1, score2 = row['score1'], row['score2']
+    pred1, pred2 = generator.main(prob1, prob2)
+    predictions.append(Match(team1 ,team2, pred1, pred2, score1, score2))
+84/12: predictions
+84/13: len([pred for pred in predictions if pred.pred1 == pred.out1 and pred.pred2 == pred.out2])
+84/14: len([pred for pred in predictions if pred.pred1 == pred.out1])
+84/15: [pred for pred in predictions if pred.pred1 == pred.out1 and pred.pred2 == pred.out2]
+85/1: import tester
+85/2: tester.points((1,1), (3,3))
+86/1: import sys
+86/2: sys.setrecursionlimit
+86/3: sys.setrecursionlimit?
+86/4: sys.setrecursionlimit(2000)
+86/5: sys.setrecursionlimit(4000)
+87/1: from numpy.random import normal
+87/2: normal()
+87/3: normal()
+87/4: normal()
+88/1: total = (0,0)
+88/2: total
+88/3: total[0]
+88/4: total[0] = total[0] + 4
+88/5: total[0] = 1
+89/1: from pybrain.tools.shortcuts import buildNetwork
+90/1: from pybrain.tools.shortcuts import buildNetwork
+91/1: import keras
+92/1: import keras
+92/2: from keras.models import Sequential
+92/3: model = Sequential()
+92/4: from keras.layers import Dense
+92/5: model.add(Dense(units=1, input_dim=100))
+92/6: model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+92/7: from keras.datasets import mnist
+92/8: mnist.load_data()
+92/9: (x_train, y_train), (x_test, y_test) = mnist.load_data()
+92/10: x_train
+92/11: y_train
+92/12: len(x_train)
+92/13: len(y_train)
+92/14: len(x_test)
+92/15: len(y_test)
+93/1: import pandas as pd
+93/2: df = pd.read_csv('wc_matches.csv', usecols=['prob1', 'prob2', 'score1', 'score2'])
+93/3: from collections import namedtuple
+93/4: Match = namedtuple('Match', 'prob1 prob2 score1 score2')
+93/5: matches = list()
+93/6: import math
+93/7:
+for index, row in df.iterrows():
+    if math.isnan(row['score1']):
+        continue
+    matches.append(Match(row['prob1'], row['prob2'], row['score1'], row['score2']))
+93/8: matches
+93/9: len(matches)
+93/10: end_result = list()
+93/11:
+for match in matches:
+    end_result.append(((match.prob1, match.prob2), (match.score1, match.score2)))
+93/12: end_result
+94/1: import keras
+94/2: import numpy as np
+94/3:
+dataset = [((0.6615, 0.12), (5.0, 0.0)),
+ ((0.1845, 0.5433), (0.0, 1.0)),
+ ((0.4004, 0.2667), (0.0, 1.0)),
+ ((0.2459, 0.4809), (3.0, 3.0)),
+ ((0.7694, 0.0746), (2.0, 1.0)),
+ ((0.6091, 0.1504), (1.0, 1.0)),
+ ((0.2942, 0.418), (0.0, 1.0)),
+ ((0.5062, 0.2038), (2.0, 0.0)),
+ ((0.2312, 0.489), (0.0, 1.0)),
+ ((0.6276, 0.1537), (0.0, 1.0)),
+ ((0.5884, 0.1643), (1.0, 1.0)),
+ ((0.5443, 0.18899999999999997), (1.0, 0.0)),
+ ((0.7679, 0.0668), (3.0, 0.0)),
+ ((0.0944, 0.6874), (1.0, 2.0)),
+ ((0.4844, 0.2316), (1.0, 2.0)),
+ ((0.4546, 0.2584), (1.0, 2.0)),
+ ((0.5642, 0.1644), (3.0, 1.0)),
+ ((0.5409, 0.1771), (1.0, 0.0)),
+ ((0.7529, 0.0724), (1.0, 0.0)),
+ ((0.0655, 0.7572), (0.0, 1.0)),
+ ((0.5394, 0.2052), (1.0, 1.0)),
+ ((0.5838, 0.1715), (1.0, 0.0)),
+ ((0.4034, 0.28800000000000003), (0.0, 3.0)),
+ ((0.7855, 0.0499), (2.0, 0.0)),
+ ((0.3433, 0.3592), (2.0, 0.0)),
+ ((0.2975, 0.4162), (1.0, 2.0)),
+ ((0.7564, 0.0775), (5.0, 2.0)),
+ ((0.1863, 0.5478), (1.0, 2.0)),
+ ((0.583, 0.1778), (2.0, 1.0)),
+ ((0.7574, 0.0538), (6.0, 1.0)),
+ ((0.4082, 0.297), (2.0, 2.0)),
+ ((0.2924, 0.4205), (0.0, 3.0)),
+ ((0.2293, 0.4862), (2.0, 1.0)),
+ ((0.3532, 0.3523), (3.0, 0.0)),
+ ((0.6651, 0.1141), (2.0, 2.0)),
+ ((0.1407, 0.5793), (1.0, 1.0)),
+ ((0.2037, 0.5402), (0.0, 0.0)),
+ ((0.2611, 0.4544), (0.0, 2.0)),
+ ((0.1741, 0.5398), (1.0, 2.0)),
+ ((0.1701, 0.5846), (1.0, 2.0)),
+ ((0.0492, 0.8145), (2.0, 0.0)),
+ ((0.3383, 0.3662), (0.0, 3.0)),
+ ((0.5687, 0.172), (2.0, 2.0)),
+ ((0.1306, 0.6358), (0.0, 2.0))]
+94/4: dataset
+94/5: len(dataset)
+94/6: [x[0] for x in dataset]
+94/7: x_train = np.array([x[0][0] for x in dataset])
+94/8: y_train = np.array(x[0][1] for x in dataset])
+94/9: y_train = np.array([x[0][1] for x in dataset])
+94/10: x_train
+94/11: y_train
+94/12: (x_train, y_train)
+94/13: x_test = np.array([x[1][0] for x in dataset])
+94/14: y_test = np.array([x[1][1] for x in dataset])
+94/15: x_train = x_train.astype('float32')
+94/16: x_train
+94/17: y_train = y_train.astype('float32')
+94/18: x_test = x_test.astype('float32')
+94/19: x_test
+94/20: x_test = x_test.astype('int32')
+94/21: x_test
+94/22: b = x_test
+94/23: b
+94/24: b /= 255
+94/25: b
+94/26: x_train.shape
+94/27: x_train.shape[0]
+94/28: import keras
+94/29: y_train = keras.utils.to_categorical(y_train, 10)
+94/30: y_train
+94/31: y_train[0]
+94/32: y_train[0][5]
+94/33: y_train = np.array([x[0][1] for x in dataset])
+94/34: y_train
+94/35: y_train = keras.utils.to_categorical(y_train, num_classes=10)
+94/36: y_train
+94/37: y_train = np.array([x[0][1] for x in dataset])
+94/38: from keras.models import Sequential
+94/39: model = Sequential()
+94/40: model.add(Dense(128, activation='relu'))
+94/41: from keras.layers import Dense
+94/42: model.add(Dense(128, activation='relu'))
+94/43: model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
+94/44: model.fit(x_train, y_train, batch_size=128, epochs=12, verbose=1, validation_data=(x_test, y_test))
+94/45: model = Sequential()
+94/46: from keras.layers import Dense, Flatten
+94/47: model.add(Flatten())
+94/48: model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
+94/49: model.fit(x_train, y_train, batch_size=128, epochs=12, verbose=1, validation_data=(x_test, y_test))
+94/50: y_train2 = keras.utils.to_categorical(y_train, 10)
+94/51: y_test2 = keras.utils.to_categorical(y_test, 10)
+94/52: model.fit(x_train, y_train, batch_size=128, epochs=12, verbose=1, validation_data=(x_test, y_test))
+94/53: del model
+94/54: model = Sequential()
+94/55: model.add(Dense(128, activation='relu'))
+94/56: model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
+94/57: model.fit(x_train, y_train, batch_size=128, epochs=12, verbose=1, validation_data=(x_test, y_test))
+94/58: del model
+94/59: model = Sequential()
+94/60: model.add(Flatten())
+94/61: model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
+94/62: model.fit(x_train, y_train, batch_size=128, epochs=12, verbose=1, validation_data=(x_test, y_test))
+94/63: del model
+94/64: model = Sequential()
+94/65: model.add(Dense(10, activation='softmax'))
+94/66: model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
+94/67: model.fit(x_train, y_train, batch_size=128, epochs=12, verbose=1, validation_data=(x_test, y_test))
+95/1: from sklearn
+95/2: from sklearn import datasets
+96/1: from sklearn import datasets
+96/2: iris = datasets.load_iris()
+96/3: digits = datasets.load_digits()
+96/4: print(digits)
+96/5: print(digits.data)
+96/6: print(digits.target)
+96/7: digits.images
+96/8: digits.images[0]
+97/1: from sklearn import datasets
+97/2: digits = datasets.load_digits()
+97/3: digits
+97/4: digits[0]
+97/5: digits.values()
+97/6: digits.images
+97/7: digits.images[0]
+97/8: digits.values()[0]
+97/9: digits.values
+97/10: digits.values().
+97/11: digits.values().get
+97/12: digits.values()
+97/13: clf
+97/14: from sklearn import svm
+97/15: clf = svm.SVC(gamma=0.001, C=100.)
+97/16: clf.fit(digits.data[:-1], digits.target[:-1])
+97/17: clf.predict(digits.data[-1:])
+97/18: digits.target
+97/19: digits.target[0]
+97/20: digits.target[3]
+97/21: digits.target[4]
+97/22: digits.target[5]
+97/23: digits.target[6]
+97/24: digits.target[7]
+97/25: digits.target[8]
+97/26: digits.target[9]
+97/27:
+digits.target[10
+]
+97/28: digits.target[10]
+97/29: digits.target[11]
+97/30: digits.images
+98/1: import matplotlib, numpy, sklearn
+99/1: import matplotlib, numpy, sklearn
+99/2: import matplotlib.pyplot as plt
+100/1: from matplotlib import pyplot
+101/1: from matplotlib import pyplot
+101/2: from matplotlib import pyplot as plt
+101/3: pyplot
+101/4: del pyplot
+101/5: plt
+101/6: from sklearn import datasets
+101/7: from sklearn import svm
+101/8: digits = datasets.load_digits()
+101/9: print(digits.data)
+101/10: print(digits.target)
+101/11: print(digits.images[0])
+101/12: print(digits.images[:-1])
+101/13: print(digits.images[-1])
+101/14: clf = svm.SVM()
+101/15: clf = svm.SVC()
+101/16: clf
+101/17: clf = svm.SVC(gamma=0.001)
+101/18: x,y = digits.data[:-1], digits.target[:-1]
+101/19: clf.fit(x,y)
+101/20: print(f"Prediction: {clf.predict(digits.data[-1])}")
+102/1: import matplotlib.pyplot as plt
+102/2: from sklearn import datasets, svm
+102/3: digits = datasets.load_digits()
+102/4: clf = svm.SVC(gamma=0.001, C=100)
+102/5: x, y = digits.data[:-1], digits.target[:-1]
+102/6: clf.fit(x, y)
+102/7: plt.imshow(digits.images[-1], cmap=plt.cm.gray_r, interpolation="nearest")
+102/8: plt.show()
+102/9: clf.predict(digits.data[-1])
+102/10: clf.predict(digits.data[[-1]])
+102/11: plt.show()
+102/12: plt.imshow(digits.images[-1], cmap=plt.cm.gray_r, interpolation="nearest")
+102/13: plt.show()
+103/1: import matplotlib.pyplot as plt
+103/2: from sklearn import datasets, svm
+105/1: import pandas as pd
+105/2: file = pd.read_csv('spi_matches.csv')
+105/3: file
+105/4: from collections import namedtuple
+105/5: Game = namedtuple('Game', 'team1 team2 prob1 prob2 score1 score2')
+105/6: file[2]
+105/7: file
+105/8: file.all
+105/9: file.all[2]
+105/10: file.all()
+105/11: games = list()
+105/12: Match
+105/13: Game
+105/14: Game.mro
+105/15: Game.mro()
+105/16: Game
+105/17: Game = namedtuple('Game', 'team1 team2 prob1 prob2 score1 score2')
+105/18:
+for index, row in file.iterrows():
+    games.append(Game(row['team1'], row['team2'], row['prob1'], row['prob2'], row['score1'], row['score2']))
+105/19: len(games)
+105/20: games[4]
+105/21: games[6]
+105/22: games[8]
+105/23: dataset = list(tuple())
+105/24: dataset
+105/25:
+for game in games:
+    dataset.append((game.prob1, game.prob2), (game.score1, game.score2))
+105/26:
+for game in games:
+    dataset.append(((game.prob1, game.prob2), (game.score1, game.score2)))
+105/27: dataset
+105/28: dataset[4]
+105/29: len(dataset)
+105/30: clv = svm
+105/31: from sklearn import svm
+105/32: clf = svm.SVC(gamma=0.001)
+105/33: dataset
+105/34: Set = namedtuple('Set', 'data target')
+105/35: Set
+105/36: dataset
+105/37: [x[0] for x in dataset]
+105/38: items = Set(data=x[0], target=x[1] for x in dataset)
+105/39: items = Set(data=x[0], target=x[1]) for x in dataset
+105/40: data = [x[0] for x in dataset]
+105/41: target = [x[1] for x in dataset]
+105/42: data
+105/43: items = Set(data=data, target=target)
+105/44: items.data
+105/45: items.data[-1]
+105/46: x, y = items.data[:-1], items.target[:-1]
+105/47: clf.fit(x,y)
+105/48: import numpy as np
+105/49: x
+105/50: x = np.array(x)
+105/51: x
+105/52: x.shape
+105/53: y = np.array(y)
+105/54: y.shape
+105/55: y
+105/56: y[-5]
+105/57: y[-50]
+105/58: y[-500]
+105/59: type(x)
+105/60: y.shape = (11647, 1)
+105/61: y.shape = (23204, 1)
+105/62: y.shape = (23294, 1)
+105/63: y
+105/64: y[3]
+105/65: y[2]
+105/66: from sklearn import datasets
+105/67: digits = datasets.load_digits()
+105/68: x, y = digits.data[:-1], digits.target[:-1]
+105/69: x.shap
+105/70: x.shape
+105/71: y.shape
+105/72: y
+105/73: x
+106/1: import numpy as np
+106/2: import pandas as pd
+106/3: from sklearn import svm
+106/4: Set = namedtuple('Set', 'data target')
+106/5: from collections import namedtuple
+106/6: Set = namedtuple('Set', 'data target')
+106/7: file = pd.read_csv('spi_matches.csv')
+106/8: Game = namedtuple('Game', 'team1 team2 prob1 prob2 score1 score2')
+106/9: games = list()
+106/10:
+for index, row in file.iterrows():
+    games.append(Game(row['team1'], row['team2'], row['prob1'], row['prob2'], row['score1'], row['score2']))
+106/11: games
+106/12: dataset = list(tuple())
+106/13:
+for game in games:
+    dataset.append(((game.prob1, game.prob2), (game.score1 - game.score2)))
+106/14: dataset
+106/15: data = [x[0] for x in dataset]
+106/16: target = [x[1] for x in dataset]
+106/17: items = Set(data=data, target=target)
+106/18: items
+106/19: x, y = items.data[:-1], items.target[:-1]
+106/20: x
+106/21: y
+106/22: x.shape
+106/23: clf = svm.SVC(gamma=0.001)
+106/24: data
+106/25: data = [np.ndarray(x) for x in data]
+107/1: import pandas as pd
+107/2: file = pd.read_csv('spi_matches.csv')
+107/3: from collections import namedtuple
+107/4: Game = namedtuple('Game', 'team1 team2 prob1 prob2 score1 score2')
+107/5:
+for index, row in file.iterrows():
+    games.append(Game(row['team1'], row['team2'], row['prob1'], row['prob2'], row['score1'], row['score2']))
+107/6: games = list()
+107/7:
+for index, row in file.iterrows():
+    games.append(Game(row['team1'], row['team2'], row['prob1'], row['prob2'], row['score1'], row['score2']))
+107/8: Set = namedtuple('Set', 'data target')
+107/9: dataset
+107/10: dataset = list(tuple())
+107/11: import numpy as np
+107/12: dataset
+107/13: games
+107/14:
+for game in games:
+    dataset.append(((game.prob1, game.prob2), (game.score1 - game.score2)))
+107/15: dataset
+107/16: data = [x[0] for x in dataset]
+107/17: data
+107/18: data = np.ndarray(data)
+107/19: np.ndarray?
+107/20: np.ndarray([5, 6, 7, 8])
+107/21: data
+107/22: len(data)
+107/23: data = np.ndarray((10849, 2), data)
+107/24: np.ndarray?
+107/25: data = np.ndarray((10849, 2), data)
+107/26: arr = np.ndarray((10849, 2), int)
+107/27: arr
+107/28: np.zeros
+107/29: np.zeros()
+107/30: shape = (10849, 2)
+107/31: np.zeros(shape)
+107/32: np[0]
+107/33: zeros = np.zeros(shape)
+107/34: zeros
+107/35: zeros[0]
+107/36: zeros[0] = data[0]
+107/37: zeros
+107/38: zeros.shape
+107/39: zeros[x] = data[x] for x, item in enumerate(data)
+107/40:
+for x, item in enumerate(data):
+    zeros[x] = data[x]
+107/41: zeros
+107/42: zeros.shaep
+107/43: zeros.shape
+107/44: target
+107/45: target = [x[1] for x in dataset]
+107/46: target
+107/47: zeros.shape
+107/48: data = zeros
+107/49: data
+107/50: del zeros
+107/51: data
+107/52: zeros
+107/53: shape
+107/54: zeros = np.zeros((10849, 1))
+107/55: zeros
+107/56:
+for x, item in enumerate(taget):
+    zeros[x] = target[x]
+107/57:
+for x, item in enumerate(target):
+    zeros[x] = target[x]
+107/58: zeros
+107/59: target = zeros
+107/60: data
+107/61: target
+107/62: (data, target)
+107/63: clf
+107/64: from sklearn import svm
+107/65: clf = svm.SVC(gamma=0.001)
+107/66: x, y = data[:-5], target[:-5]
+107/67: x
+107/68: x.shape
+107/69: y.shape
+107/70: clf.fit(x,y)
+107/71: clf.predict(data[-5])
+107/72: y.shape
+107/73: target
+107/74: data
+107/75: target.shape
+107/76: zeros
+107/77: zeros.shape
+107/78: zeros = np.zeros((10849,))
+107/79: zeros
+107/80: zeros.shape
+107/81:
+for x, item in enumerate(target):
+    zeros[x] = target[x]
+107/82: zeros
+107/83: target
+107/84: target = zeros
+107/85: target.shape
+107/86: x, y = data[:-5], target[:-5]
+107/87: del clf
+107/88: clf = svm.SVC(gamma=0.001)
+107/89: clf.fit(x, y)
+107/90: clf.predict(data[-5])
+107/91: data[-5]
+107/92: from sklearn import datasets
+107/93: digits = datasets.load_digits()
+107/94: digits.data[-1]
+107/95: digits.data[-1].shape
+107/96: data[-5].shape
+107/97: data[-5]
+107/98: item
+107/99: item = [data[-5]]
+107/100: item
+107/101: item = list(data[-5])
+107/102: item
+107/103: item = list(item)
+107/104: item
+107/105: item = [item]
+107/106: item
+107/107: clf.predict(item)
+107/108: item[0] = [0.8942, 0.0402]
+107/109: clf.predict(item)
+107/110: digits
+107/111: digits.data
+107/112: digits.data.shape
+107/113: data.shape
+107/114: digits.target.shape
+107/115: target.shape
+107/116: digits.data[0].shape
+107/117: data[0].shape
+107/118: target[0].shape
+107/119: digits.target[0].shape
+107/120: x
+107/121: del clf
+107/122: clf = svm.SVC(gamma=0.001)
+107/123: x, y = data[:-5], target[:-5]
+107/124: x = X.reshape(1, -1)
+107/125: X = x.reshape(1, -1)
+107/126: X
+107/127: clf.fit(X, y)
+107/128: X.shape
+107/129: y.shape
+107/130: x
+107/131: x.shape
+107/132: del X
+107/133: x
+107/134: del clf
+107/135: clf = svm.SVC()
+107/136: clf.fit(x, y)
+107/137: clf.predict([0.8, 0.1])
+107/138: item
+107/139: item = item[0]
+107/140: imte
+107/141: item
+107/142: item = np.ndarray((2,))
+107/143: item
+107/144: clf.predict(item)
+107/145: item
+107/146: item = item.reshape(1, -1)
+107/147: clf.predict(item)
+107/148: item
+107/149: item = [[0.1, 0.8]]
+107/150: clf.predict(item)
+107/151: item = [[0.1, 0.9]]
+107/152: clf.predict(item)
+107/153: item = [[0.01, 0.9]]
+107/154: clf.predict(item)
+107/155: item = [[0.01, 0.99]]
+107/156: clf.predict(item)
+107/157: item = [[0, 0.99]]
+107/158: clf.predict(item)
+107/159: target
+107/160: target.min
+107/161: target.min()
+107/162: target.max()
+107/163: target.count
+107/164: count
+109/1:
+with open('pagina.html') as f:
+    lines = list(f)
+109/2: lines
+109/3: text = str(lines)
+109/4: text
+109/5: test[0]
+109/6: text[0]
+109/7: 'compareGame' in text
+109/8: 'compareGame overview played active' in text
+109/9: 'compareGame overview played' in text
+109/10: import bs4.BeautifulSoup as bs
+109/11: from bs4 import BeautifulSoup as bs
+109/12: bs
+109/13: html = open('pagina.html').read()
+109/14: soup = bs(html, 'html.parser')
+109/15: soup.find_all(attrs={'class': 'compareGame overview played'})
+109/16: soup.find_all(attrs={'class': 'compareGame overview played active'})
+109/17: matches = soup.find_all(attrs={'class': 'compareGame overview played active'})
+109/18: matches[0]
+109/19: match = matches[0]
+109/20: match.findAll('td')
+109/21: match
+109/22: predictions = match.findAll('td')
+109/23: predictions
+109/24: predictions
+109/25: [predictions[i:i+1] for i in range(len(predictions) - 1)]
+109/26: [predictions[i:i+1] for i in range(len(predictions) - 1, 2)]
+109/27: [predictions[i:i+1] for i in range(len(predictions), 2)]
+109/28: [predictions[i:i+1] for i in range(0, len(predictions), 2)]
+109/29: [predictions[i:i+2] for i in range(0, len(predictions), 2)]
+109/30: [predictions[i:i+2] for i in range(0, len(predictions), 2)][0]
+109/31: [predictions[i:i+2] for i in range(0, len(predictions), 2)][0][0]
+109/32: [predictions[i:i+2] for i in range(0, len(predictions), 2)][0][0].text
+109/33: [predictions[i:i+2] for i in range(0, len(predictions), 2)]
+109/34: grouped = [predictions[i:i+2] for i in range(0, len(predictions), 2)]
+109/35: grouped
+109/36: group = grouped[0]
+109/37: groupe
+109/38: group
+109/39: group[1].text
+110/1: import parser
+110/2: parser.main()
+111/1: import parser
+111/2: players = parser.main()
+111/3: len(players['FancyRensie'])
+111/4: len(players['Fatherhenk'])
+111/5: len(players['Minibol'])
+111/6: len(players['Tajine'])
+112/1: import parser
+112/2: players = parser.main()
+112/3: parser.analyse_players(players)
+113/1: import parser
+113/2: players = parser.main()
+113/3: parser.analyse_players(players)
+114/1: import parser
+114/2: players = parser.main()
+114/3: parser.analyse_players(players)
+109/40: %load_ext autoreload
+109/41: %autoreload 2
+115/1: import parser
+115/2: players = parser.main()
+115/3: parser.analyse_players(players)
+115/4: parser.analyse_players(players)
+115/5: parser.analyse_players(players)
+115/6: %load_ext autoreload
+115/7: %autoreload 2
+115/8: parser.analyse_players(players)
+115/9: parser.analyse_players(players)
+116/1: %autoreload 2
+116/2: %load_ext autoreload
+116/3: %autoreload 2
+116/4: import parser
+116/5: players = parser.main()
+116/6: parser.analyse_players(players)
+116/7: parser.analyse_players(players)
+121/1: import parser
+121/2: players = parser.main()
+121/3: parser.analyse_players(players)
+121/4: parser.analyse_players(players)
+121/5: parser.analyse_players(players)
+121/6: parser.analyse_players(players)
+121/7: parser.analyse_players(players)
+121/8: parser.analyse_players(players)
+121/9: parser.analyse_players(players)
+121/10: parser.analyse_players(players)
+121/11: parser.analyse_players(players)
+121/12: sum((1, 2))
+121/13: sum((1, 2))
+121/14: parser.analyse_players(players)
+121/15: parser.analyse_players(players)
+121/16: parser.analyse_players(players)
+121/17: parser.analyse_players(players)
+121/18: parser.analyse_players(players)
+121/19: a = [(1,2),(3,4)]
+121/20: a
+121/21: sum(a)
+121/22: sum(sum(b) for b in a)
+121/23: max(sum(b) for b in a)
+121/24: parser.analyse_players(players)
+121/25: parser.analyse_players(players)
+121/26: parser.analyse_players(players)
+121/27: parser.analyse_players(players)
+121/28: parser.analyse_players(players)
+122/1: import time
+122/2: time.time
+122/3: time.time()
+122/4: time.clock
+122/5: time.clock()
+122/6: time.ctime()
+122/7: time.ctime()
+122/8: form mpd
+122/9: import mpd
+124/1: history
+124/2: lsekjfse
+   1: %history -g
+   2: %history -g -f history
