@@ -74,10 +74,10 @@ def get_probs(csv_file):
 
 if __name__ == '__main__':
     (data, target) = build_dataset(csv, diff=True)
-    diff_clf = learn(data, target)
+    diff_clf = learn(data, target)  # clf used to predict the goal difference
 
     (data, target) = build_dataset(csv, diff=False)
-    base_clf = learn(data, target)
+    base_clf = learn(data, target)  # clf used to predict the 'base' goal level
 
     for teams, probs in get_probs(pd.read_csv(DATA_DIR + PROB_FILE)):
         print(f"{teams[0]} - {teams[1]}")
