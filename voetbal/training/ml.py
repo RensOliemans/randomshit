@@ -7,6 +7,7 @@ from sklearn import svm
 
 DATA_DIR = 'data/'
 DATA_FILE = 'spi_matches.csv'
+# DATA_FILE = 'wc_matches_train.csv'
 
 PROB_FILE = 'wc_matches.csv'
 
@@ -53,7 +54,8 @@ def build_dataset(csv_file, diff=True):
 
 
 def learn(data, target):
-    clf = svm.SVC(gamma=0.01)
+    clf = svm.LinearSVC()
+    clf.set_params(penalty='l1', loss='squared_hinge', dual=False)
     clf.fit(data, target)
     return clf
 
@@ -78,5 +80,5 @@ if __name__ == '__main__':
         if difference > 0:
             score[0] = score[0] + difference
         else:
-            score[1] = score[1] + difference
+            score[1] = score[1] + abs(difference)
         print(f"{score[0]} - {score[1]}\n")
