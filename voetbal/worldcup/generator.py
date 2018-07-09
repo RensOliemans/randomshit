@@ -7,9 +7,9 @@ from numpy.random import normal
 
 def main(home, away, counter=0):
     diff = away - home
-    goal_difference = round(normal(loc=diff*2.08, scale=0.1))
+    goal_difference = round(normal(loc=diff*2.08, scale=1.0))
     if goal_difference == 0:
-        goal_difference += choice([-1, 1])
+        goal_difference += choice([-1, 1, -1, 1, 0])
     goal_base = max(round(abs(-math.log2(random() + 0.7))), 0)
     result = (goal_base + abs(goal_difference) if goal_difference < 0 else goal_base,
               goal_base + abs(goal_difference) if goal_difference > 0 else goal_base)
