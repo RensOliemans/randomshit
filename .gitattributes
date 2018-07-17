@@ -1,0 +1,5 @@
+# override html so github doesn't see html as largest language in the project
+# (probably because the files are huge)
+drank/*.html linguist-generated=true
+pandora/telegram/*.html linguist-generated=true
+voetbal/flexvoetbal/*.html linguist-generated=true
