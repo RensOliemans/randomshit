@@ -30,7 +30,7 @@ def main(a: 'Amount of proverbs' = 5, d: 'To define' = True):
 if __name__ == '__main__':
     parser.add_argument('-a', '--amount', type=int,
                         help='Amount of proverbs', default=5)
-    parser.add_argument('-d', '--define', type=bool,
-                        help='To define', default=True)
+    parser.add_argument('-nd', '--no-define', action="store_false",
+                        help="Don't define", default=True)
     args = parser.parse_args()
-    main(args.amount, args.define)
+    main(args.amount, args.no_define)
