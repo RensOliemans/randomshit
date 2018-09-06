@@ -3,7 +3,7 @@ import datetime
 
 import parsedatetime
 
-FILENAME = 'chat.txt'
+FILENAME = 'chats/messages'
 # Poop icon
 EMOTICON_UNI = '\U0001f4a9'
 # Change this if the names change
@@ -54,7 +54,7 @@ def parse_line(line):
         # person[0]   = PERSON                person[1]   = CHAT_TEXT
 
         # Example of input: 15-05-18, 16:16
-        date_format = '%d-%m-%y, %H:%M'
+        date_format = '%Y-%m-%d %H:%M:%S'
         date = datetime.datetime.strptime(metadata[0], date_format)
         return Day(date, person)
 
@@ -98,8 +98,9 @@ def frequencies(iris, rens):
         if not person:
             raise ValueError("Pooped zero times, can't calculate average time "
                              "(are the names correct?)")
-        first_poop = person[0].date
-        last_poop = person[-1].date
+        first, last = get_extremes(person)
+        first_poop = first.date
+        last_poop = last.date
         difference = last_poop - first_poop
 
         # datetime.timedelta has days and seconds (the difference between two
@@ -114,6 +115,16 @@ def frequencies(iris, rens):
     rens_days, rens_frequency = frequency(rens)
     average_days = (iris_days + rens_days) / 2
     return average_days, iris_frequency, rens_frequency
+
+
+def get_extremes(poops):
+    first, last = poops[0], poops[0]
+    for poop in poops:
+        if poop.date > last.date:
+            last = poop
+        if poop.date < first.date:
+            first = poop
+    return first, last
 
 
 def main():
