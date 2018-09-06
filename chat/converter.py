@@ -1,11 +1,23 @@
+'''
+This module converts messages from WhatsApp to an internal representation,
+so that multiple WhatsApp chats (even from different persons) can be combined
+into one single output.
+'''
+
 import re
 from datetime import datetime
 
+# Relevant for files
 FILE_DIRECTORY = 'chats'
 FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat1.txt'
 FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
+
+# Relevant for message format
 NAMES = {'Iris': ['Iris <3'], 'Rens': ['Rens Oliemans']}
 FORMATS = ['%d-%m-%y, %H:%M', '%Y-%m-%d %H:%M:%S', '%m/%d/%y, %H:%M']
+# The \< and 3 are for the person name
+PATTERN = r"(?P<date>(\S| )+) - (?P<person>(\w|\<|3| )+): (?P<message>(\S| )+)"
+message_prog = re.compile(PATTERN)
 
 
 def main():
@@ -44,17 +56,16 @@ def replace_names(message):
 
 
 def parse_message(message):
-    # The \< and 3 are for the person name
-    pattern = r"(?P<date>(\S| )+) - (?P<person>(\w|\<|3| )+): (?P<message>(\S| )+)"
-    match = re.match(pattern, message)
-    if match:
-        date = match.group('date')
-        person = match.group('person')
-        message = match.group('message')
+    result = message_prog.match(message)
+    if result:
+        date = result.group('date')
+        person = result.group('person')
+        message = result.group('message')
         for form in FORMATS:
             try:
                 date_object = datetime.strptime(date, form)
             except ValueError as e:
+                # Try a different date format, another one might be the correct one
                 continue
         return Message(date_object, person, message)
 
