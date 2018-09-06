@@ -1,67 +1,62 @@
 import re
 from datetime import datetime
 
-FILENAME_IN = 'chat.txt'
-FILENAME_DATA = 'messages'
-IRIS = 'Iris'
-RENS = 'Rens'
-ALTERNATIEF = {IRIS: ['Iris <3'], RENS: ['Rens Oliemans']}
-
-iris, rens = list(), list()
+FILE_DIRECTORY = 'chats'
+FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat1.txt'
+FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
+NAMES = {'Iris': ['Iris <3'], 'Rens': ['Rens Oliemans']}
+FORMATS = ['%d-%m-%y, %H:%M', '%Y-%m-%d %H:%M:%S', '%m/%d/%y, %H:%M']
 
 
 def main():
-    items = get_items(FILENAME_DATA)
+    messages = set()
+    with open(FILENAME_DATA) as f:
+        # First get the stored data
+        for row in list(f):
+            message = parse_message(row)
+            messages.add(message)
 
-    with open(FILENAME_IN) as f:
-        messages = list(f)
-        for line in messages:
-            item = parse_message(line)
-            if item is None:
+    with open(FILENAME_INPUT) as f:
+        # Then get the 'new input'
+        for row in list(f):
+            message = parse_message(row)
+            if message is None:
                 continue
-            if item.person not in ALTERNATIEF.keys():
-                for key in ALTERNATIEF:
-                    if item.person in ALTERNATIEF[key]:
-                        item.person = key
-            items.add(item)
-        print(*items, sep='\n')
 
-        fo = open(FILENAME_DATA, 'w')
-        for item in items:
-            fo.write(str(item))
-            fo.write('\n')
-            pass
+            message = replace_names(message)
+            messages.add(message)
+        print(len(messages))
 
-        fo.close()
+    with open(FILENAME_DATA, 'w') as f:
+        # Finally, write the (total) results to the data file
+        for message in messages:
+            f.write(str(message) + '\n')
 
 
-def parse_message(message, date_format='%d-%m-%y, %H:%M'):
-    pattern = r"(?P<date>(\S| )+) - (?P<person>\w+): (?P<message>(\S| )+)"
-    message.replace('\n', '')
+def replace_names(message):
+    if message.person in NAMES.keys():
+        return message
+    else:
+        for key in NAMES:
+            if message.person in NAMES[key]:
+                message.person = key
+                return message
 
+
+def parse_message(message):
+    # The \< and 3 are for the person name
+    pattern = r"(?P<date>(\S| )+) - (?P<person>(\w|\<|3| )+): (?P<message>(\S| )+)"
     match = re.match(pattern, message)
     if match:
         date = match.group('date')
         person = match.group('person')
         message = match.group('message')
-        date_object = datetime.strptime(date, date_format)
+        for form in FORMATS:
+            try:
+                date_object = datetime.strptime(date, form)
+            except ValueError as e:
+                continue
         return Message(date_object, person, message)
-    else:
-        # print(message)
-        pass
-
-
-def get_items(filename):
-    f = open(filename)
-    items = list(f)
-
-    messages = set()
-    for item in items:
-        # It's been converted to datetime since then, so the format is different
-        message = parse_message(item, date_format='%Y-%m-%d %H:%M:%S')
-        messages.add(message)
-    f.close()
-    return messages
 
 
 class Message:
