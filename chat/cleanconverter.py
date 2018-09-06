@@ -1,8 +1,9 @@
 import re
 from datetime import datetime
 
-FILENAME_IN = 'chats/newchat.txt'
-FILENAME_DATA = 'chats/messages'
+FILE_DIRECTORY = 'chats'
+FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat1.txt'
+FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
 NAMES = {'Iris': ['Iris <3'], 'Rens': ['Rens Oliemans']}
 FORMATS = ['%d-%m-%y, %H:%M', '%Y-%m-%d %H:%M:%S', '%m/%d/%y, %H:%M']
 
@@ -15,7 +16,7 @@ def main():
             message = parse_message(row)
             messages.add(message)
 
-    with open(FILENAME_IN) as f:
+    with open(FILENAME_INPUT) as f:
         # Then get the 'new input'
         for row in list(f):
             message = parse_message(row)

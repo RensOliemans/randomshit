@@ -1,8 +1,6 @@
 """ Analyses Whatsapp chats hehe. """
 import datetime
 
-import parsedatetime
-
 FILENAME = 'chats/messages'
 # Poop icon
 EMOTICON_UNI = '\U0001f4a9'
@@ -11,8 +9,6 @@ NAME_RENS = 'Rens'
 NAME_IRIS = 'Iris'
 # Time at which the poop becomes counted as next day
 NIGHT_HOUR = 4
-
-cal = parsedatetime.Calendar()
 
 
 def parse_file(filename):
