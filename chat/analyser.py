@@ -1,14 +1,19 @@
 """ Analyses Whatsapp chats hehe. """
 import datetime
+import re
 
 FILENAME = 'chats/messages'
-# Poop icon
-EMOTICON_UNI = '\U0001f4a9'
-# Change this if the names change
-NAME_RENS = 'Rens'
-NAME_IRIS = 'Iris'
 # Time at which the poop becomes counted as next day
 NIGHT_HOUR = 4
+
+# Relevant for format of the messages
+DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+MESSAGE_PATTERN = r"(?P<date>(\S|\s)+) - (?P<person>(\w|\s)+): (?P<message>(\S|\s)+)"
+message_prog = re.compile(MESSAGE_PATTERN)
+# Poop icon
+EMOTICON_UNI = '\U0001f4a9'
+NAME_RENS = 'Rens'
+NAME_IRIS = 'Iris'
 
 
 def parse_file(filename):
@@ -41,17 +46,10 @@ def parse_line(line):
     date = None
     person = None
     if EMOTICON_UNI in line:
-        # format of line:
-        # mm-dd-yy, hh:mm - PERSON: CHAT_TEXT
-
-        metadata = line.split(' - ')
-        # metadata[0] = mm/dd/yy, hh:mm       metadata[1] = PERSON: CHAT_TEXT
-        person = metadata[1].split(':')[0]
-        # person[0]   = PERSON                person[1]   = CHAT_TEXT
-
-        # Example of input: 15-05-18, 16:16
-        date_format = '%Y-%m-%d %H:%M:%S'
-        date = datetime.datetime.strptime(metadata[0], date_format)
+        result = message_prog.match(line)
+        date_string = result.group('date')
+        person = result.group('person')
+        date = datetime.datetime.strptime(date_string, DATE_FORMAT)
         return Day(date, person)
 
 
