@@ -5,6 +5,7 @@ into one single output.
 '''
 
 import re
+from shutil import copyfile
 from datetime import datetime
 
 # Relevant for files
@@ -21,6 +22,9 @@ message_prog = re.compile(PATTERN)
 
 
 def main():
+    # Back up messages file before doing anything with it
+    copyfile(FILENAME_DATA, FILENAME_DATA + '.bak')
+
     messages = set()
     with open(FILENAME_DATA) as f:
         # First get the stored data
@@ -78,6 +82,10 @@ class Message:
         self.message = message
 
     def __hash__(self):
+        # This is in so that two messages with the same time will be only added
+        # to a set once. This is so that if two people with different settings
+        # (resulting in different self.person values) import their chat file,
+        # the messages will still only be counted once
         return int(self.date_time.timestamp())
 
     def __eq__(self, other):
