@@ -6,10 +6,12 @@ FILENAME = 'chats/messages'
 # Time at which the poop becomes counted as next day
 NIGHT_HOUR = 4
 
+
 # Relevant for format of the messages
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 MESSAGE_PATTERN = r"(?P<date>(\S|\s)+) - (?P<person>(\w|\s)+): (?P<message>(\S|\s)+)"
 message_prog = re.compile(MESSAGE_PATTERN)
+
 # Poop icon
 EMOTICON_UNI = '\U0001f4a9'
 NAME_RENS = 'Rens'
