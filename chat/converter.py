@@ -10,7 +10,7 @@ from datetime import datetime
 
 # Relevant for files
 FILE_DIRECTORY = 'chats'
-FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat1.txt'
+FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat2.txt'
 FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
 
 # Relevant for message format
