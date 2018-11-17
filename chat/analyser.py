@@ -25,16 +25,12 @@ def parse_file(filename):
     :param filename: name of the file
     :returns two lists of days, belonging to two people
     """
-    chat = open(filename)
+    chat = list(open(filename))
     iris, rens = list(), list()
-    for line in chat:
-        day = parse_line(line)
-        if day is None:
-            continue
-        if day.person == NAME_RENS:
-            rens.append(day)
-        elif day.person == NAME_IRIS:
-            iris.append(day)
+    rens = [day for day in (parse_line(line) for line in chat)
+            if day is not None and day.person == NAME_RENS]
+    iris = [day for day in (parse_line(line) for line in chat)
+            if day is not None and day.person == NAME_IRIS]
     return iris, rens
 
 
@@ -94,9 +90,7 @@ def frequencies(iris, rens):
         if not person:
             raise ValueError("Pooped zero times, can't calculate average time "
                              "(are the names correct?)")
-        first, last = get_extremes(person)
-        first_poop = first.date
-        last_poop = last.date
+        first_poop, last_poop = min(person).date, max(person).date
         difference = last_poop - first_poop
 
         # datetime.timedelta has days and seconds (the difference between two
@@ -111,16 +105,6 @@ def frequencies(iris, rens):
     rens_days, rens_frequency = frequency(rens)
     average_days = (iris_days + rens_days) / 2
     return average_days, iris_frequency, rens_frequency
-
-
-def get_extremes(poops):
-    first, last = poops[0], poops[0]
-    for poop in poops:
-        if poop.date > last.date:
-            last = poop
-        if poop.date < first.date:
-            first = poop
-    return first, last
 
 
 def main():
@@ -156,6 +140,12 @@ class Day(object):
 
     def __repr__(self):
         return str(self)
+
+    def __lt__(self, other):
+        return self.date < other.date
+
+    def __gt__(self, other):
+        return self.date > other.date
 
 
 if __name__ == "__main__":
