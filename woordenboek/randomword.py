@@ -27,6 +27,7 @@ def get_word(filename=EN, amount_of_words=5, length_of_words=0):
         if length_of_words:
             words = [x[:-1] for x in dictionary if len(x[:-1]) == length_of_words]
         else:
+            # Don't care about word length
             words = [x[:-1] for x in dictionary]
 
     amount = min(len(words), amount_of_words)
