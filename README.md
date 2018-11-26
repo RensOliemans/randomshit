@@ -4,6 +4,7 @@ Hey, this is a github repo with a lot of random projects, mostly things I do whe
 
 I started with this to learn Python by hacking some things together, so the main part is Python code. I'll probably add some other languages later on
 
+---
+Git branching model inspiration:
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a48ef5f4b5e64bf6855d16e2383b4647)](https://www.codacy.com/app/RensOliemans/randomshit?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RensOliemans/randomshit&amp;utm_campaign=Badge_Grade)
-
+https://nvie.com/posts/a-successful-git-branching-model/
