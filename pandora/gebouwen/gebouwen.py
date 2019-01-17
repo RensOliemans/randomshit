@@ -1,4 +1,4 @@
-'''
+"""
 Laat de gebouwen (en kunstwerken) op campus zien die je wilt zien. Er zijn een aantal argumenten die je kan meegeven, met -h zie je die.
 Ze kunnen ook samen gebruikt worden. Een paar voorbeelden daarvan:
     `python3 gebouwen.py -ka 7 -m '1e 2e'`  # laat kunstwerken & gebouwen zien, lengte 7, waar letters van index 1 en 2 'e' zijn
@@ -13,7 +13,7 @@ Alle straatnamen staan er ook in, als kunstwerken.
 
 Alles is hoofdletterongevoelig, dus `-b wa` pakt Waaier.
 
-'''
+''"""
 import argparse
 
 from gebouw import Gebouw, Kunst

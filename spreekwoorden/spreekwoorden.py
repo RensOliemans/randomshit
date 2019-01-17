@@ -19,7 +19,7 @@ def load_proverbs():
 def main(a: 'Amount of proverbs' = 5, d: 'To define' = True):
     """ Gets some Dutch proverbs at random. """
     proverbs = load_proverbs()
-    chosen = sample(proverbs.items(), a)
+    chosen = sample(proverbs.items(), min(a, len(proverbs.items())))
     if d:
         max_len = max([len(elem[0]) for elem in chosen]) + 4
         print('\n'.join(f'{elem[0]:{max_len}}{elem[1]}' for elem in chosen))
