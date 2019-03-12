@@ -14,10 +14,10 @@ MINIMAL_DIFFERENCE = 3 * 60  # 3 minutes
 MEETING_TIME = datetime.strptime('20:00', '%H:%M')
 TIME_FORMAT = '%I:%M:%S %p'
 
-TEAM_PATTERN = "(?P<team>(\w|\ |\'|\-|\/|\*|\.)+)"
-BONUS_PATTERN = "(?P<bonus>a bonuspuzzle)"
-PUZZLE_PATTERN = "puzzle (?P<number>\d)"
-SOLVED_PATTERN = "\[Puzzle solved\] "
+TEAM_PATTERN = r"(?P<team>(\w|\ |\'|\-|\/|\*|\.)+)"
+BONUS_PATTERN = r"(?P<bonus>a bonuspuzzle)"
+PUZZLE_PATTERN = r"puzzle (?P<number>\d)"
+SOLVED_PATTERN = r"\[Puzzle solved\] "
 
 
 class MessageIsOfIncorrectFormat(Exception):
@@ -149,7 +149,7 @@ def get_team_and_puzzle_number_from_message(message_text):
 
 def get_message_regex_match(message_text):
     try:
-        message_pattern = fr"{TEAM_PATTERN} solved ({BONUS_PATTERN}|{PUZZLE_PATTERN})"
+        message_pattern = f"{TEAM_PATTERN} solved ({BONUS_PATTERN}|{PUZZLE_PATTERN})"
         match = re.match(message_pattern, message_text)
         if match is None:
             match = re.match(SOLVED_PATTERN + message_pattern, message_text)
