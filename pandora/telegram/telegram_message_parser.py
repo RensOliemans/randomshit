@@ -1,3 +1,4 @@
+import itertools
 import re
 from collections import namedtuple
 from datetime import datetime
@@ -13,6 +14,14 @@ MINIMAL_DIFFERENCE = 3 * 60  # 3 minutes
 MEETING_TIME = datetime.strptime('20:00', '%H:%M')
 TIME_FORMAT = '%I:%M:%S %p'
 
+TEAM_PATTERN = "(?P<team>(\w|\ |\'|\-|\/|\*|\.)+)"
+BONUS_PATTERN = "(?P<bonus>a bonuspuzzle)"
+PUZZLE_PATTERN = "puzzle (?P<number>\d)"
+SOLVED_PATTERN = "\[Puzzle solved\] "
+
+
+class MessageIsOfIncorrectFormat(Exception):
+    pass
 
 
 def main():
@@ -29,9 +38,10 @@ def main():
     print(f'Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
           f'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
     for day, messages_of_day in enumerate(messages_per_day):
-        print('Day %s' % day)
-        puzzles = convert_messages_to_puzzles(messages_per_day)
-        puzzles = list(parse_items(messages_of_day))
+        print(f"Day {day}")
+        puzzles = list(convert_messages_to_puzzles(messages_of_day))
+        if not puzzles:
+            continue
         possible_puzzles = list(analyse(puzzles))
         pretty_print(possible_puzzles)
 
@@ -86,73 +96,91 @@ def split_messages_into_days(all_messages, indices_of_first_messages_of_days):
 
 
 def convert_messages_to_puzzles(messages_per_day):
+    puzzles_of_day = list()
     for message in messages_per_day:
-        message_text_div = message.find(attrs={'class': 'im_message_text'})
-        if message_text_div is None:
+
+        try:
+            message_contents, message_date = get_message_contents(message)
+        except MessageIsOfIncorrectFormat:
             continue
 
-        convert_message_contents_to_puzzle(message_text_div.contents)
+        if len(message_contents) > 0:
+            message_contents = remove_tags_from_message_contents(message_contents)
+        puzzles_of_day.extend(convert_message_contents_to_puzzles(message_contents, message_date))
+    return puzzles_of_day
 
 
-def convert_message_contents_to_puzzle(message_contents):
-    return
+def get_message_contents(message):
+    message_text_div = message.find(attrs={'class': 'im_message_text'})
+    message_date = message.find(attrs={'class': 'im_message_date_text'})
 
-def parse_items(items):
-    ''' gets a list of items and converts them to puzzles. '''
-    for item in items:
-        message = item.find(attrs={'class': 'im_message_text'})
-        if message is None:
-            # most likely some weird message
+    if message_text_div is None or message_date is None:
+        raise MessageIsOfIncorrectFormat(
+            "Message is of the wrong format. Likely not a puzzle message, "
+            "but a kill/status message instead")
+
+    return message_text_div.contents, message_date.attrs['data-content']
+
+
+def remove_tags_from_message_contents(message_contents):
+    return [x for x in message_contents if type(x) != bs4.element.Tag]
+
+
+def convert_message_contents_to_puzzles(message_contents, message_date):
+    for text in message_contents:
+        puzzle = get_puzzle(text, message_date)
+        if puzzle:
+            yield puzzle
+
+
+def get_puzzle(message_text, message_date):
+    result = get_team_and_puzzle_number_from_message(message_text)
+    if result is None:
+        return
+    number, team = result
+    return Puzzle(number, team, datetime.strptime(message_date, TIME_FORMAT))
+
+
+def get_team_and_puzzle_number_from_message(message_text):
+    match = get_message_regex_match(message_text)
+    if match is None:
+        return
+    team = match.group('team')
+    number = 'bonus' if match.group('bonus') else int(match.group('number'))
+    return number, team
+
+
+def get_message_regex_match(message_text):
+    try:
+        message_pattern = fr"{TEAM_PATTERN} solved ({BONUS_PATTERN}|{PUZZLE_PATTERN})"
+        match = re.match(message_pattern, message_text)
+        if match is None:
+            match = re.match(SOLVED_PATTERN + message_pattern, message_text)
+    except TypeError:
+        return
+    return match
+
+
+def get_close_enough_puzzles(puzzles):
+    for (puzzle, other_puzzle) in itertools.combinations(puzzles, 2):
+        if not only_one_of_puzzles_is_bonus(puzzle, other_puzzle):
             continue
-        contents = message.contents
-        if len(contents) > 1:
-            # multiple bot messages in one messages, separated by <br\> tags
-            # remove <br\> tags
-            contents = [x for x in contents if type(x) != bs4.element.Tag]
-            date = item.find(attrs={'class': 'im_message_date_text'}).attrs['data-content']
-            for text in contents:
-                # parse each item
-                puzzle = parse_item(text, date)
-                if puzzle:
-                    yield puzzle
-        elif contents:
-            text = contents[0]
-            date = item.find(attrs={'class': 'im_message_date_text'}).attrs['data-content']
-            puzzle = parse_item(text, date)
-            if puzzle:
-                yield puzzle
+        if puzzle.team != other_puzzle.team:
+            continue
+        if two_puzzles_are_close_enough(puzzle, other_puzzle):
+            return puzzle_that_is_not_bonus(puzzle, other_puzzle)
 
 
-def convert_to_days(items, indices):
-    ''' slices all items into seperate days. the points where the new days begin
-    are given by indices. '''
-    # for slicing
-    indices.insert(0, 0)
-    indices.append(-1)
-    for i, x in enumerate(indices):
-        if i == len(indices) - 1:
-            break
-        y = indices[i + 1]
-        yield items[x:y]
+def only_one_of_puzzles_is_bonus(puzzle, other_puzzle):
+    return (puzzle == 'bonus') != (other_puzzle == 'bonus')
 
 
-def analyse_days(items):
-    ''' takes a list of (all) items, determines at what indices the new days
-    begin. '''
-    previous = None
-    for item in items:
-        date = item.find(attrs={'class': 'im_message_date_text'})
-        if date:
-            date = date.attrs['data-content']
-            day = datetime.strptime(date, TIME_FORMAT)
-            # A new day begins when the previous message was before the start
-            # of the meeting, and the next message is after the start of the
-            # meeting
-            if (previous is not None and previous.hour < MEETING_TIME.hour
-                    and day.hour >= MEETING_TIME.hour):
-                # new day; first message after meeting time
-                yield items.index(item)
-            previous = day
+def two_puzzles_are_close_enough(puzzle, other_puzzle):
+    return abs(puzzle.date - other_puzzle.date).seconds < MINIMAL_DIFFERENCE
+
+
+def puzzle_that_is_not_bonus(puzzle, other_puzzle):
+    return puzzle if puzzle.number == 'bonus' else other_puzzle
 
 
 def analyse(puzzles):
@@ -169,54 +197,6 @@ def analyse(puzzles):
                 continue
             if abs(puzzle.date - other_puzzle.date).seconds < MINIMAL_DIFFERENCE:
                 yield other_puzzle
-
-
-def parse_item(text, date):
-    '''
-    takes the contents of a telegram messages and its timestamp, and returns
-    a puzzle namedtuple. returns None if it wasn't corret (f.e. kill message).
-    '''
-    try:
-        # TODO: change regex, depending on what kind of messages are being sent
-        # by the bot.
-        # In Pandora 2018, the following characters were used in the team names:
-        # letters, numbers, spaces, apostrophe, dash, forward slash, asterisk,
-        # period.
-        # Formats:
-        # <team> solved puzzle x[ and got a time bonus of y]?
-        # <team> solved a bonuspuzzle
-        team = "(?P<team>(\w|\ |\'|\-|\/|\*|\.)+)"
-        bonus = "(?P<bonus>a bonuspuzzle)"
-        puzzle = "puzzle (?P<number>\d)"
-        regex = fr"{team} solved ({bonus}|{puzzle})"
-        m = re.match(regex, text)
-        if m is None:
-            # In the first 2 Pandora days, the message format was different.
-            # The string
-            #   [Puzzle solved]
-            # was prepended to the string
-            # Formats:
-            # [Puzzle solved] <team> solved puzzle x[ and got a time bonus of y]?
-            # [Puzzle solved] <team> solved a bonuspuzzle
-            solved = "\[Puzzle solved\] "
-            m = re.match(solved + regex, text)
-    except TypeError:
-        # incorrect type - not a 'regular' message by the bot
-        # Example: The leaderboards. These aren't a string object, but
-        # something weird (like <pre><code> `leaderboard` </code></pre>) and
-        # re doesn't parse it
-        return
-    if m is None:
-        # no match found, this is either:
-        #  kill message
-        #  team eliminated
-        #  status messages by bot
-        return
-    team = m.group('team')
-    number = 'bonus' if m.group('bonus') else int(m.group('number'))
-
-    puzzle = Puzzle(number, team, datetime.strptime(date, TIME_FORMAT))
-    return puzzle
 
 
 def pretty_print(puzzles):
