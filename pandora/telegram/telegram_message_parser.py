@@ -40,9 +40,7 @@ def main():
     for day, messages_of_day in enumerate(messages_per_day):
         print(f"Day {day}")
         puzzles = list(convert_messages_to_puzzles(messages_of_day))
-        if not puzzles:
-            continue
-        possible_puzzles = list(analyse(puzzles))
+        possible_puzzles = list(get_close_enough_puzzles(puzzles))
         pretty_print(possible_puzzles)
 
 
@@ -115,9 +113,7 @@ def get_message_contents(message):
     message_date = message.find(attrs={'class': 'im_message_date_text'})
 
     if message_text_div is None or message_date is None:
-        raise MessageIsOfIncorrectFormat(
-            "Message is of the wrong format. Likely not a puzzle message, "
-            "but a kill/status message instead")
+        raise MessageIsOfIncorrectFormat("Message is of the wrong format.")
 
     return message_text_div.contents, message_date.attrs['data-content']
 
@@ -128,15 +124,15 @@ def remove_tags_from_message_contents(message_contents):
 
 def convert_message_contents_to_puzzles(message_contents, message_date):
     for text in message_contents:
-        puzzle = get_puzzle(text, message_date)
-        if puzzle:
+        try:
+            puzzle = get_puzzle(text, message_date)
             yield puzzle
+        except MessageIsOfIncorrectFormat:
+            continue
 
 
 def get_puzzle(message_text, message_date):
     result = get_team_and_puzzle_number_from_message(message_text)
-    if result is None:
-        return
     number, team = result
     return Puzzle(number, team, datetime.strptime(message_date, TIME_FORMAT))
 
@@ -144,7 +140,8 @@ def get_puzzle(message_text, message_date):
 def get_team_and_puzzle_number_from_message(message_text):
     match = get_message_regex_match(message_text)
     if match is None:
-        return
+        raise MessageIsOfIncorrectFormat("Could not parse the message regex, was likely a kill "
+                                         "message of some sorts instead of a puzzle message.")
     team = match.group('team')
     number = 'bonus' if match.group('bonus') else int(match.group('number'))
     return number, team
@@ -157,7 +154,8 @@ def get_message_regex_match(message_text):
         if match is None:
             match = re.match(SOLVED_PATTERN + message_pattern, message_text)
     except TypeError:
-        return
+        raise MessageIsOfIncorrectFormat("Message was of wrong type, was not a regular message"
+                                         "and likely a leaderboard/status message")
     return match
 
 
@@ -168,11 +166,11 @@ def get_close_enough_puzzles(puzzles):
         if puzzle.team != other_puzzle.team:
             continue
         if two_puzzles_are_close_enough(puzzle, other_puzzle):
-            return puzzle_that_is_not_bonus(puzzle, other_puzzle)
+            yield puzzle_that_is_not_bonus(puzzle, other_puzzle)
 
 
 def only_one_of_puzzles_is_bonus(puzzle, other_puzzle):
-    return (puzzle == 'bonus') != (other_puzzle == 'bonus')
+    return (puzzle.number == 'bonus') != (other_puzzle.number == 'bonus')
 
 
 def two_puzzles_are_close_enough(puzzle, other_puzzle):
@@ -181,22 +179,6 @@ def two_puzzles_are_close_enough(puzzle, other_puzzle):
 
 def puzzle_that_is_not_bonus(puzzle, other_puzzle):
     return puzzle if puzzle.number == 'bonus' else other_puzzle
-
-
-def analyse(puzzles):
-    ''' takes a list of puzzles and determines what puzzles are close enough
-    to a bonuspuzzle. '''
-    for puzzle in puzzles:
-        if puzzle.number != 'bonus':
-            continue
-
-        for other_puzzle in puzzles:
-            if (puzzle == other_puzzle
-                    or puzzle.team != other_puzzle.team
-                    or other_puzzle.number == 'bonus'):
-                continue
-            if abs(puzzle.date - other_puzzle.date).seconds < MINIMAL_DIFFERENCE:
-                yield other_puzzle
 
 
 def pretty_print(puzzles):
