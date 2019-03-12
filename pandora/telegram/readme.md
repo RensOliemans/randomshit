@@ -10,4 +10,4 @@ genoeg berichten hebt geselecteerd doe je rechter muisknop op een bericht en
 Inner HTML'
 
 Die data plak je in een texteditor en noem je 'berichten.html', en dan run je
-parser.py
+telegram_message_parser.py
