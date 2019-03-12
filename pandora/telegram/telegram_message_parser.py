@@ -30,17 +30,12 @@ def main():
     indices_of_first_messages_of_days = determine_indices_of_first_messages_per_day(all_messages)
     messages_per_day = split_messages_into_days(all_messages, indices_of_first_messages_of_days)
 
-    # Old ugly code
-    # items = all_messages
-    # day_breaks = list(analyse_days(items))
-    # days = convert_to_days(items, day_breaks)
-
     print(f'Possible puzzles next to bonuspuzzles (a bonuspuzzle was found '
           f'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
     for day, messages_of_day in enumerate(messages_per_day):
         print(f"Day {day}")
-        puzzles = list(convert_messages_to_puzzles(messages_of_day))
-        possible_puzzles = list(get_close_enough_puzzles(puzzles))
+        puzzles = convert_messages_to_puzzles(messages_of_day)
+        possible_puzzles = get_close_enough_puzzles(puzzles)
         pretty_print(possible_puzzles)
 
 
