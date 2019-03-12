@@ -35,8 +35,8 @@ def main():
     for day, messages_of_day in enumerate(messages_per_day):
         print(f"Day {day}")
         puzzles = convert_messages_to_puzzles(messages_of_day)
-        possible_puzzles = get_close_enough_puzzles(puzzles)
-        pretty_print(possible_puzzles)
+        puzzles_close_to_bonuspuzzles = get_close_enough_puzzles(puzzles)
+        pretty_print(puzzles_close_to_bonuspuzzles)
 
 
 def build_html_parser(filename):
@@ -78,20 +78,19 @@ def message_is_first_of_the_day(current_message_datetime, previous_message_datet
 
 
 def split_messages_into_days(all_messages, indices_of_first_messages_of_days):
-    begin_index = 0
+    start_index = 0
     messages_per_day = list()
 
     for _, end_index in enumerate(indices_of_first_messages_of_days):
-        messages_per_day.append(all_messages[begin_index:end_index])
-        begin_index = end_index
-    messages_per_day.append(all_messages[begin_index:])  # Don't forget the last day
+        messages_per_day.append(all_messages[start_index:end_index])
+        start_index = end_index
+    messages_per_day.append(all_messages[start_index:])  # Don't forget the last day
     return messages_per_day
 
 
 def convert_messages_to_puzzles(messages_per_day):
     puzzles_of_day = list()
     for message in messages_per_day:
-
         try:
             message_contents, message_date = get_message_contents(message)
         except MessageIsOfIncorrectFormat:
