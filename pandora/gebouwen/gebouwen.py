@@ -24,7 +24,6 @@ import argparse
 
 from buildings import Building, Artwork
 
-
 parser = argparse.ArgumentParser(description='Get all buildings (and artworks) on the UT.')
 parser.add_argument('-l', '--letters', type=str,
                     help='what letters does the building have (somewhere in the name)')
@@ -51,15 +50,15 @@ def main():
 
 def get_buildings_and_artworks(buildings_filename, artworks_filename):
     lines = get_lines_from_file(buildings_filename)
-    buildings = parse_buildings_from_lines(lines)
+    buildings = list(parse_buildings_from_lines(lines))
 
     lines = get_lines_from_file(artworks_filename)
-    artworks = parse_artworks_from_lines(lines)
+    artworks = list(parse_artworks_from_lines(lines))
 
     return buildings, artworks
 
 
-def get_lines_from_file(filename, building=True):
+def get_lines_from_file(filename):
     with open(filename) as f:
         lines = f.read().split('\n')[1:-1]
         return lines
@@ -87,19 +86,18 @@ def filter_items(buildings, artworks, filters):
     return filtered_items
 
 
-def apply_filters(items, filters):
-    filtered_items = items
+def apply_filters(items_to_filter, filters):
     if filters.begin:
-        filtered_items = apply_begin_filter(filtered_items, filters.begin)
+        items_to_filter = apply_begin_filter(items_to_filter, filters.begin)
     if filters.middle:
-        filtered_items = apply_middle_filter(filtered_items, filters.middle)
+        items_to_filter = apply_middle_filter(items_to_filter, filters.middle)
     if filters.end:
-        filtered_items = apply_end_filter(filtered_items, filters.end)
+        items_to_filter = apply_end_filter(items_to_filter, filters.end)
     if filters.letters:
-        filtered_items = apply_some_letters_filter(filtered_items, filters.letters)
+        items_to_filter = apply_some_letters_filter(items_to_filter, filters.letters)
     if filters.amount:
-        filtered_items = apply_amount_filter(filtered_items, filters.amount)
-    return filtered_items
+        items_to_filter = apply_amount_filter(items_to_filter, filters.amount)
+    return items_to_filter
 
 
 def apply_begin_filter(items, first_letters):
@@ -108,7 +106,9 @@ def apply_begin_filter(items, first_letters):
 
 def apply_middle_filter(items, middle_letters):
     indices = {int(x[0]): x[1] for x in middle_letters.split(' ')}
-    return [x for x in items if all(x.name.lower()[min(len(x) - 1, p)] == indices[p] for p in indices.keys())]
+    return [x for x in items
+            if all(x.name.lower()[min(len(x) - 1, p)] == indices[p]
+                   for p in indices.keys())]
 
 
 def apply_end_filter(items, last_letters):
