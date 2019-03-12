@@ -76,7 +76,7 @@ def distance(word, movements):
             except KeyError:
                 # key isn't in regular alphabet (number or punctuation prob)
                 # just skip
-                pass
+                continue
         prev_letter = letter
     return dist
 
