@@ -34,8 +34,8 @@ def main():
           f'within {MINIMAL_DIFFERENCE} seconds of these puzzles).')
     for day, messages_of_day in enumerate(messages_per_day):
         print(f"Day {day}")
-        puzzles = convert_messages_to_puzzles(messages_of_day)
-        puzzles_close_to_bonuspuzzles = get_close_enough_puzzles(puzzles)
+        all_puzzles_of_day = convert_messages_to_puzzles(messages_of_day)
+        puzzles_close_to_bonuspuzzles = get_close_enough_puzzles(all_puzzles_of_day)
         pretty_print(puzzles_close_to_bonuspuzzles)
 
 

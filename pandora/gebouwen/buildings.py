@@ -23,8 +23,8 @@ class Item:
 class Building(Item):
 
     def __init__(self, number, name, abbreviation):
+        super().__init__(name)
         self.number = number
-        self.name = name
         self.abbreviation = abbreviation
 
     def __eq__(self, other):
