@@ -1,6 +1,7 @@
 """ Analyses Whatsapp chats hehe. """
 import datetime
 import re
+import matplotlib.pyplot as plt
 
 FILENAME = 'chats/messages'
 # Time at which the poop becomes counted as next day
@@ -9,7 +10,7 @@ NIGHT_HOUR = 4
 
 # Relevant for format of the messages
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-MESSAGE_PATTERN = r"(?P<date>(\S|\s)+) - (?P<person>(\w|\s)+): (?P<message>(\S|\s)+)"
+MESSAGE_PATTERN = r"(?P<date>(\S|\s)+)--(?P<person>(\w|\s)+)--(?P<message>(\S|\s)+)"
 message_prog = re.compile(MESSAGE_PATTERN)
 
 # Poop icon
@@ -107,6 +108,54 @@ def frequencies(iris, rens):
     return average_days, iris_frequency, rens_frequency
 
 
+def get_date_list(iris, rens):
+    first_date: Day = min(min(iris), min(rens))
+    last_date: Day = max(max(iris), max(rens))
+    total_days = (last_date.date - first_date.date).days
+
+    return [first_date.date.date() + datetime.timedelta(days=x) for x in range(total_days)]
+
+
+def create_plot(iris, rens):
+    sorted_iris = sorted(iris)
+    sorted_rens = sorted(rens)
+
+    date_list = get_date_list(sorted_iris, sorted_rens)
+    iris_days = [i.date.date() for i in sorted_iris]
+    rens_days = [r.date.date() for r in sorted_rens]
+    iris_poops = {d: iris_days.count(d)
+                  for d in date_list}
+    rens_poops = {d: rens_days.count(d)
+                  for d in date_list}
+
+    x = date_list
+    iris_y = build_y(iris_poops.values())
+    rens_y = build_y(rens_poops.values())
+    build_plt(x, iris_y, rens_y)
+
+
+def build_plt(x, iris_y, rens_y):
+    fig, ax = plt.subplots()
+    ax.plot(x, iris_y, color='tab:blue', label='Iris')
+    ax.plot(x, rens_y, color='tab:orange', label='Rens')
+    plt.legend(loc='lower right')
+    fig.savefig('test.png')
+
+
+def build_y(poops):
+    total = 0
+    result = [0 for _, _ in enumerate(poops)]
+    for i, elem in enumerate(poops):
+        result[i] = total + elem
+        total += elem
+    return result
+
+
+def main2():
+    iris, rens = parse_file(FILENAME)
+    create_plot(iris, rens)
+
+
 def main():
     """ Main method. """
     iris, rens = parse_file(FILENAME)
@@ -150,3 +199,4 @@ class Day(object):
 
 if __name__ == "__main__":
     main()
+    # main2()
