@@ -38,9 +38,7 @@ def get_values(filename, r):
 def main(r=6):
     excel_files = [f for f in os.listdir() if f[-4:] == '.csv']
     for file in excel_files:
-        start = time.time()
         get_values(file, r)
-        print(f"Duration: {(time.time() - start) * 1000:.2f}ms\n")
 
     print(f"Aantal bestanden: {len(excel_files)}")
 
