@@ -1,4 +1,5 @@
 import os
+import time
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
@@ -31,14 +32,20 @@ def get_values(filename, r):
 
     print(f"Bestand: {filename}")
     print(f"x-waarden van pieken: {peaks}")
-    print(f"y-waarden:            {y_vals}\n")
+    print(f"y-waarden:            {y_vals}")
 
 
 def main(r=6):
     excel_files = [f for f in os.listdir() if f[-4:] == '.csv']
     for file in excel_files:
+        start = time.time()
         get_values(file, r)
+        print(f"Duration: {(time.time() - start) * 1000:.2f}ms\n")
+
+    print(f"Aantal bestanden: {len(excel_files)}")
 
 
 if __name__ == '__main__':
+    start = time.time()
     main()
+    print(f"Total duration: {time.time() - start:.2f}s")
