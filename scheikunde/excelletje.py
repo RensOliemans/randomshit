@@ -15,6 +15,7 @@ def plot_peaks(filename):
     plt.plot(peaks, y[peaks], "x")
     [plt.annotate(str(y[i].round(2)), xy=(i, y[i])) for i in peaks]
     plt.savefig(filename + '.png')
+    plt.close()
 
 
 def get_values(filename, r):
