@@ -13,7 +13,6 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
 
-        self._setup_close()
         self._setup_canvases()
         self._setup_variables()
 
@@ -22,18 +21,12 @@ class Application(tk.Frame):
         self._setup_input()
 
         self._setup_results()
+        self._setup_refresh_button()
         self._update()
 
         self._setup_submit_button()
-
         self._bind_returns()
-
-    def _setup_close(self):
-        def close(_):
-            self.parent.withdraw()
-            sys.exit()
-
-        self.parent.bind('<Escape>', close)
+        self._setup_close()
 
     def _setup_canvases(self):
         self.input_canvas = tk.Canvas(self.parent, height=300, width=1200)
@@ -51,6 +44,7 @@ class Application(tk.Frame):
 
         self._ev = tk.StringVar(self.input_canvas)
         self._sv = tk.StringVar(self.input_canvas)
+        self._used_labels = []
 
     def _setup_programmes(self):
         tk.OptionMenu(self.input_canvas, self._pv, *self._programmes).place(relx=0.05, rely=0.15)
@@ -81,11 +75,17 @@ class Application(tk.Frame):
     def _setup_results(self):
         tk.Label(self.results_canvas, text='Naam', font=16).grid(row=0, column=0)
         tk.Label(self.results_canvas, text='Temp', font=16).grid(row=0, column=1)
-        tk.Label(self.results_canvas, text='kWh', font=16).grid(row=0, column=2)
+        tk.Label(self.results_canvas, text='Gemiddelde kWh', font=16).grid(row=0, column=2)
         tk.Label(self.results_canvas, text='Metingen', font=16).grid(row=0, column=3)
 
+    def _setup_refresh_button(self):
+        tk.Button(self.input_canvas, text='Refresh', command=self._update).place(relx=.8, rely=.8)
+
     def _update(self):
-        averages = get_averages()
+        for label in self._used_labels:
+            label.destroy()
+
+        averages = sorted(get_averages())
         for i, a in enumerate(averages):
             name = tk.Label(self.results_canvas, text=a[0])
             temp = tk.Label(self.results_canvas, text=a[1])
@@ -96,6 +96,8 @@ class Application(tk.Frame):
             temp.grid(row=i + 1, column=1)
             kwh.grid(row=i + 1, column=2)
             count.grid(row=i + 1, column=3)
+
+            self._used_labels.extend([name, temp, kwh, count])
 
     def _bind_returns(self):
         self._begin.bind('<Return>', func=lambda _: self._submit())
@@ -126,6 +128,13 @@ class Application(tk.Frame):
     def _setup_error(self):
         self._error = tk.Label(self.input_canvas, textvar=self._ev, bg="red")
         self._success = tk.Label(self.input_canvas, textvar=self._sv, bg="#51d0de")
+
+    def _setup_close(self):
+        def close(_):
+            self.parent.withdraw()
+            sys.exit()
+
+        self.parent.bind('<Escape>', close)
 
     @staticmethod
     def _convert_programme(pv):
