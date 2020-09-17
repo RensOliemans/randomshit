@@ -13,6 +13,7 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
 
+        self._set_title()
         self._setup_canvases()
         self._setup_variables()
 
@@ -27,6 +28,9 @@ class Application(tk.Frame):
         self._setup_submit_button()
         self._bind_returns()
         self._setup_close()
+
+    def _set_title(self):
+        self.parent.title("Wasmachineverbruikmeetapplicatie")
 
     def _setup_canvases(self):
         self.input_canvas = tk.Canvas(self.parent, height=300, width=1200)
