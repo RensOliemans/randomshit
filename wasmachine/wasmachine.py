@@ -18,7 +18,7 @@ class Measurement:
         self.begin = begin
         self.end = end
         self.vol = vol
-        if 0.0 >= vol >= 1.0:
+        if not 0.0 <= vol <= 1.0:
             raise ValueError('Vol must be between 0 and 1')
         if end < begin:
             raise ValueError("End must not be lower than start")
@@ -31,6 +31,3 @@ class Measurement:
         return f"Measurement of programme {str(self.programme)}.\n" \
                f"Date: {self.date}, kWh: {self.kwh} ({self.end}-{self.begin})," \
                f"{int(self.vol * 100)}% filled."
-
-        # return f"Measurement: {self.programme=}, {self.date=}, {self.start=}, {self.end=}," \
-        #        f"{self.vol=}, {self.kwh=}"
