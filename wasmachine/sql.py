@@ -2,7 +2,7 @@ import sqlite3
 
 from wasmachine import Programme, Measurement
 
-conn = sqlite3.connect('wasmachine.db')
+conn = sqlite3.connect('/home/rens/Projects/randomshit/wasmachine/wasmachine.db')
 c = conn.cursor()
 
 
