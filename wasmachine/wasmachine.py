@@ -9,7 +9,7 @@ class Programme:
         return f"({self.name}, {self.temperature}, {self.rpm})"
 
     def __repr__(self):
-        return f"Programme: {self.id}, {self.name}, {self.temperature}"
+        return f"Programme: {self.id}, {self.name}, {self.temperature}, {self.rpm}"
 
 
 class Measurement:
