@@ -23,13 +23,14 @@ def get_programmes(sort=True):
 
 def get_measurements():
     c.execute('SELECT programme.id, programme.name, programme.temperature, '
+              'programme.rpm, '
               'measurement.date, measurement.begin, '
               'measurement.end, measurement.vol '
               'FROM programme, measurement '
               'WHERE programme.id = measurement.pid')
     for r in c.fetchall():
-        p = Programme(r[0], r[1], r[2])
-        yield Measurement(p, r[3], r[4], r[5], r[6])
+        p = Programme(r[0], r[1], r[2], r[3])
+        yield Measurement(p, r[4], r[5], r[6], r[7])
 
 
 def get_amount_measurements():
