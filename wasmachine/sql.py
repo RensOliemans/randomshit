@@ -6,19 +6,19 @@ conn = sqlite3.connect('/home/rens/Projects/randomshit/wasmachine/wasmachine.db'
 c = conn.cursor()
 
 
-def get_programme(name, temperature):
-    c.execute('SELECT id,name,temperature FROM programme WHERE name=? AND temperature=?',
-              (name, temperature))
+def get_programme(name, temperature, rpm):
+    c.execute('SELECT id,name,temperature, rpm FROM programme WHERE name=? AND temperature=? AND rpm=?',
+              (name, temperature, rpm))
     results = c.fetchone()
-    return Programme(results[0], results[1], results[2])
+    return Programme(results[0], results[1], results[2], results[3])
 
 
 def get_programmes(sort=True):
-    string = 'SELECT id,name,temperature FROM programme'
+    string = 'SELECT id,name,temperature, rpm FROM programme'
     if sort:
         string += ' ORDER BY name,temperature'
     c.execute(string)
-    return (Programme(p[0], p[1], p[2]) for p in c.fetchall())
+    return (Programme(p[0], p[1], p[2], p[3]) for p in c.fetchall())
 
 
 def get_measurements():
@@ -39,7 +39,8 @@ def get_amount_measurements():
 
 def get_averages():
     c.execute('SELECT programme.name, programme.temperature,'
-              'round(avg(measurement.end - measurement.begin),3),count(measurement.pid) '
+              'round(avg(measurement.end - measurement.begin),3),'
+              'programme.rpm, count(measurement.pid) '
               'FROM programme, measurement '
               'WHERE programme.id = measurement.pid '
               'GROUP BY programme.id')

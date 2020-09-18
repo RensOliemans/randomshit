@@ -1,11 +1,12 @@
 class Programme:
-    def __init__(self, id, name, temperature):
+    def __init__(self, id, name, temperature, rpm):
         self.id = id
         self.name = name
         self.temperature = temperature
+        self.rpm = rpm
 
     def __str__(self):
-        return f"({self.name}, {self.temperature})"
+        return f"({self.name}, {self.temperature}, {self.rpm})"
 
     def __repr__(self):
         return f"Programme: {self.id}, {self.name}, {self.temperature}"

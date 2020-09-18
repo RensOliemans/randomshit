@@ -62,7 +62,7 @@ class Application(tk.Frame):
         self._setup_inputs()
 
     def _setup_labels(self):
-        tk.Label(self.input_canvas, text="Programma").place(relx=0.05, rely=0.05)
+        tk.Label(self.input_canvas, text="Programma (naam,temp,rpm)").place(relx=0.05, rely=0.05)
         tk.Label(self.input_canvas, text="Datum").place(relx=0.25, rely=0.05)
         tk.Label(self.input_canvas, text="Begin (kWh)").place(relx=0.50, rely=0.05)
         tk.Label(self.input_canvas, text="Eind (kWh)").place(relx=0.60, rely=0.05)
@@ -80,7 +80,8 @@ class Application(tk.Frame):
         tk.Label(self.results_canvas, text='Naam', font=16).grid(row=0, column=0)
         tk.Label(self.results_canvas, text='Temp', font=16).grid(row=0, column=1)
         tk.Label(self.results_canvas, text='Gemiddelde kWh', font=16).grid(row=0, column=2)
-        tk.Label(self.results_canvas, text='Metingen', font=16).grid(row=0, column=3)
+        tk.Label(self.results_canvas, text='RPM', font=16).grid(row=0, column=3)
+        tk.Label(self.results_canvas, text='Metingen', font=16).grid(row=0, column=4)
 
     def _setup_refresh_button(self):
         tk.Button(self.input_canvas, text='Refresh', command=self._update).place(relx=.8, rely=.8)
@@ -94,14 +95,16 @@ class Application(tk.Frame):
             name = tk.Label(self.results_canvas, text=a[0])
             temp = tk.Label(self.results_canvas, text=a[1])
             kwh = tk.Label(self.results_canvas, text=a[2])
-            count = tk.Label(self.results_canvas, text=a[3])
+            rpm = tk.Label(self.results_canvas, text=a[3])
+            count = tk.Label(self.results_canvas, text=a[4])
 
             name.grid(row=i + 1, column=0)
             temp.grid(row=i + 1, column=1)
             kwh.grid(row=i + 1, column=2)
-            count.grid(row=i + 1, column=3)
+            rpm.grid(row=i + 1, column=3)
+            count.grid(row=i + 1, column=4)
 
-            self._used_labels.extend([name, temp, kwh, count])
+            self._used_labels.extend([name, temp, kwh, rpm, count])
 
     def _bind_returns(self):
         self._begin.bind('<Return>', func=lambda _: self._submit())
@@ -143,8 +146,8 @@ class Application(tk.Frame):
     @staticmethod
     def _convert_programme(pv):
         pv = pv[1:-1]
-        name, temp = pv.split(', ')
-        return get_programme(name, temp)
+        name, temp, rpm = pv.split(', ')
+        return get_programme(name, temp, rpm)
 
 
 if __name__ == '__main__':
