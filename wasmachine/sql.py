@@ -48,6 +48,13 @@ def get_averages():
     return c.fetchall()
 
 
+def get_previous_end():
+    c.execute('SELECT end '
+              'FROM measurement '
+              'WHERE id == (SELECT MAX(id) from measurement)')
+    return c.fetchone()
+
+
 def insert_measurement(measurement):
     c.execute('SELECT max(id) FROM measurement')
     max_id = c.fetchone()[0] or 0

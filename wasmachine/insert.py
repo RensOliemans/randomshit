@@ -4,7 +4,8 @@ import sys
 import tkinter as tk
 import tkcalendar as tkc
 
-from sql import get_programmes, get_programme, get_amount_measurements, insert_measurement, get_averages
+from sql import get_programmes, get_programme, get_amount_measurements, insert_measurement, get_averages, \
+    get_previous_end
 from wasmachine import Measurement
 
 
@@ -70,6 +71,7 @@ class Application(tk.Frame):
 
     def _setup_inputs(self):
         self._begin = tk.Entry(self.input_canvas)
+        self._begin.insert(0, get_previous_end())
         self._begin.place(relx=0.50, rely=.15, width=100)
         self._end = tk.Entry(self.input_canvas)
         self._end.place(relx=0.60, rely=.15, width=100)
