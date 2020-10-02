@@ -1,6 +1,6 @@
 import sqlite3
 
-from wasmachine import Programme, Measurement
+from wasmachine.data import Programme, Measurement
 
 conn = sqlite3.connect('/home/rens/Projects/randomshit/wasmachine/wasmachine/wasmachine.db')
 c = conn.cursor()
