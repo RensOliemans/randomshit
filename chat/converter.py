@@ -11,12 +11,12 @@ import sqlite3
 
 # Relevant for files
 FILE_DIRECTORY = 'chats'
-FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat-rens.txt'
+FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat-iris.txt'
 FILENAME_DB = FILE_DIRECTORY + '/' + 'db.sqlite'
 FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
 
 # Relevant for message format
-NAMES = {'Iris': ['Iris Bergers', 'Iris <3'], 'Rens': ['Rens Oliemans']}
+NAMES = {'Iris': ['Iris Bergers', 'Iris <3'], 'Rens': ['Rens Oliemans', 'Rens']}
 FORMATS = ['%d-%m-%y, %H:%M', '%d-%m-%Y %H:%M', '%Y-%m-%d %H:%M:%S',
            '%d/%m/%Y, %H:%M', '%m/%d/%y, %H:%M']
 # The \< and 3 are for the person name

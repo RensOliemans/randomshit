@@ -129,7 +129,7 @@ def build_plt(x, iris_y, rens_y):
     ax.plot(x, iris_y, color='tab:blue', label='Iris')
     ax.plot(x, rens_y, color='tab:orange', label='Rens')
     plt.legend(loc='lower right')
-    fig.savefig('test.png')
+    fig.savefig('test.pdf', format='pdf')
 
 
 def build_y(poops):
@@ -139,11 +139,6 @@ def build_y(poops):
         result[i] = total + elem
         total += elem
     return result
-
-
-def main2():
-    iris, rens = parse_file(FILENAME)
-    create_plot(iris, rens)
 
 
 def main():
@@ -166,6 +161,7 @@ def main():
     print("Average frequency:\n"
           "Iris: {:.2f} poops per day, Rens: {:.2f} poops per day"
           .format(1 / iris_frequency, 1 / rens_frequency))
+    create_plot(iris, rens)
 
 
 class Day(object):
@@ -189,4 +185,3 @@ class Day(object):
 
 if __name__ == "__main__":
     main()
-    # main2()
