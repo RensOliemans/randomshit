@@ -2,8 +2,10 @@
 import datetime
 import re
 import matplotlib.pyplot as plt
+import sqlite3
+from converter import Message
 
-FILENAME = 'chats/messages'
+FILENAME = 'chats/db.sqlite'
 # Time at which the poop becomes counted as next day
 NIGHT_HOUR = 4
 
@@ -26,30 +28,18 @@ def parse_file(filename):
     :param filename: name of the file
     :returns two lists of days, belonging to two people
     """
-    chat = list(open(filename))
-    iris, rens = list(), list()
-    rens = [day for day in (parse_line(line) for line in chat)
-            if day is not None and day.person == NAME_RENS]
-    iris = [day for day in (parse_line(line) for line in chat)
-            if day is not None and day.person == NAME_IRIS]
+    chat = get_messages(filename)
+    rens = [message for message in chat if message is not None and message.person == NAME_RENS]
+    iris = [message for message in chat if message is not None and message.person == NAME_IRIS]
     return iris, rens
 
 
-def parse_line(line):
-    """
-    Parses a single line.
-
-    :param line: a single line in a txt file
-    :returns a Day object if it is a valid line, None otherwise
-    """
-    date = None
-    person = None
-    if EMOTICON_UNI in line:
-        result = message_prog.match(line)
-        date_string = result.group('date')
-        person = result.group('person')
-        date = datetime.datetime.strptime(date_string, DATE_FORMAT)
-        return Day(date, person)
+def get_messages(dbname):
+    conn = sqlite3.connect(dbname)
+    c = conn.cursor()
+    messages = c.execute('SELECT * FROM messages').fetchall()
+    conn.close()
+    return [Message(datetime.datetime.strptime(m[0], DATE_FORMAT), m[1], m[2]) for m in messages]
 
 
 def average_times(iris, rens):

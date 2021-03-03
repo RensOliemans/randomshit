@@ -11,7 +11,7 @@ import sqlite3
 
 # Relevant for files
 FILE_DIRECTORY = 'chats'
-FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat2.txt'
+FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat-rens.txt'
 FILENAME_DB = FILE_DIRECTORY + '/' + 'db.sqlite'
 FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
 
@@ -59,9 +59,12 @@ class MessageConverter:
         count = c.execute('SELECT COUNT(*) FROM messages').fetchone()
         added = self._insert_messages(messages)
 
-        self._conn.commit()
+        go = bool(input(f'Want to add new messages? had {count}, chat contained {len(messages)} new, adding {added} '))
+
+        if go:
+            self._conn.commit()
         self._conn.close()
-        return count, len(messages), added
+        return count, len(messages), added if go else 0
 
     def _insert_messages(self, messages):
         added = 0
@@ -134,6 +137,10 @@ class Message:
 
     def __lt__(self, other):
         return self.date_time < other.date_time
+
+    @property
+    def date(self):
+        return self.date_time
 
 
 if __name__ == '__main__':
