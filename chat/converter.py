@@ -7,80 +7,107 @@ into one single output.
 import re
 from shutil import copyfile
 from datetime import datetime
+import sqlite3
 
 # Relevant for files
 FILE_DIRECTORY = 'chats'
 FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat2.txt'
+FILENAME_DB = FILE_DIRECTORY + '/' + 'db.sqlite'
 FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
 
 # Relevant for message format
-NAMES = {'Iris': ['Iris Bergers'], 'Rens': ['Rens Oliemans']}
-FORMATS = ['%d-%m-%y, %H:%M', '%Y-%m-%d %H:%M:%S', '%d/%m/%Y, %H:%M', '%m/%d/%y, %H:%M']
+NAMES = {'Iris': ['Iris Bergers', 'Iris <3'], 'Rens': ['Rens Oliemans']}
+FORMATS = ['%d-%m-%y, %H:%M', '%d-%m-%Y %H:%M', '%Y-%m-%d %H:%M:%S',
+           '%d/%m/%Y, %H:%M', '%m/%d/%y, %H:%M']
 # The \< and 3 are for the person name
 PATTERN = r"(?P<date>(\S| )+) - (?P<person>(\w|\<|3| )+): (?P<message>(\S| )+)"
 message_prog = re.compile(PATTERN)
 
 
-def update_messages():
-    backup_files()
+class MessageConverter:
+    def __init__(self, dbname, filename_input):
+        self._dbname = dbname
+        self._input_file = filename_input
 
-    with open(FILENAME_DATA) as f:
-        messages = set([parse_message(row) for row in f])
-    new_messages = get_new_messages()
-    messages = messages.union(new_messages)
+        self._conn = None
 
-    with open(FILENAME_DATA, 'w') as f:
+    def update_messages(self):
+        self._backup_file()
+
+        messages = self._get_new_messages()
+        out = self._save_new_messages(list(messages))
+
+        self._show_results(out)
+
+    def _backup_file(self):
+        copyfile(self._input_file, self._input_file + '.bak')
+
+    def _get_new_messages(self):
+        with open(self._input_file) as f:
+            for row in f:
+                message = self.parse_message(row)
+                if message is None:
+                    continue
+
+                message = self.replace_names(message)
+                yield message
+
+    def _save_new_messages(self, messages):
+        self._conn = sqlite3.connect(self._dbname)
+        c = self._conn.cursor()
+
+        count = c.execute('SELECT COUNT(*) FROM messages').fetchone()
+        added = self._insert_messages(messages)
+
+        self._conn.commit()
+        self._conn.close()
+        return count, len(messages), added
+
+    def _insert_messages(self, messages):
+        added = 0
+        c = self._conn.cursor()
         for message in messages:
-            f.write(str(message) + '\n')
+            m = (message.date_time, message.person, message.message)
+            entry = c.execute('SELECT * FROM messages WHERE (date=? AND person=? AND message=?)', m).fetchone()
+            if entry is None:
+                c.execute('INSERT INTO messages VALUES (?, ?, ?)', m)
+                added += 1
 
-    print(len(messages))
+        return added
 
+    @staticmethod
+    def _show_results(out):
+        count, new, added = out
+        print(f'The database had {count} messages before.'
+              f'The chats contained {new} messages, of which {added} were added.')
 
-def backup_files():
-    copyfile(FILENAME_DATA, FILENAME_DATA + '.bak')
-    copyfile(FILENAME_INPUT, FILENAME_INPUT + '.bak')
+    @staticmethod
+    def parse_message(message):
+        result = message_prog.match(message)
+        if result:
+            date = result.group('date')
+            person = result.group('person')
+            message = result.group('message')
+            for form in FORMATS:
+                try:
+                    date_object = datetime.strptime(date, form)
+                except ValueError as e:
+                    # Try a different date format, another one might be the correct one
+                    continue
+            return Message(date_object, person, message)
 
-
-def parse_message(message):
-    result = message_prog.match(message)
-    if result:
-        date = result.group('date')
-        person = result.group('person')
-        message = result.group('message')
-        for form in FORMATS:
-            try:
-                date_object = datetime.strptime(date, form)
-            except ValueError as e:
-                # Try a different date format, another one might be the correct one
-                continue
-        return Message(date_object, person, message)
-
-
-def get_new_messages():
-    messages = set()
-    with open(FILENAME_INPUT) as f:
-        for row in list(f):
-            message = parse_message(row)
-            if message is None:
-                continue
-
-            message = replace_names(message)
-            messages.add(message)
-    return messages
-
-
-def replace_names(message):
-    if message.person in NAMES.keys():
-        return message
-    else:
-        for key in NAMES:
-            if message.person in NAMES[key]:
-                message.person = key
-                return message
+    @staticmethod
+    def replace_names(message):
+        if message.person in NAMES.keys():
+            return message
+        else:
+            for key in NAMES:
+                if message.person in NAMES[key]:
+                    message.person = key
+                    return message
 
 
 class Message:
-
     def __init__(self, date_time, person, message):
         self.date_time = date_time
         self.person = person
@@ -110,4 +137,5 @@ class Message:
 
 
 if __name__ == '__main__':
-    update_messages()
+    mc = MessageConverter(FILENAME_DB, FILENAME_INPUT)
+    mc.update_messages()
