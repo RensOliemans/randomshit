@@ -23,6 +23,15 @@ class DirtyA(Person):
         return f'<DirtyA. Guess: {self.guess}>'
 
 
+class Vicky(Person):
+    def __init__(self):
+        super().__init__()
+        self.guess = r.uniform(0.0, 15.0)
+
+    def __repr__(self):
+        return f'<Vicky. Guess: {self.guess}>'
+
+
 class Other(Person):
     def __repr__(self):
         return f'<Other. Guess: {self.guess}>'
