@@ -12,16 +12,17 @@ N = 10000
 def run():
     # analyze('verspreid', verspreid)
     analyze('verdeeld_een_uur', verdeeld_een_uur)
-    analyze('verdeeld_twee_uur', verdeeld_twee_uur)
+    analyze('verdeeld_twee_uur', verdeeld_twee_uur, factor=2)
     analyze('random_in_uur', random_in_uur)
     analyze('vicky', vicky)
 
 
-def analyze(name, f):
+def analyze(name, f, factor=1):
     p = Pool(8)
     start = time.time()
     results = p.starmap(f, [[X, C]] * N)
-    print(f'Win % for {name}: {len([s for s in results if s]) / N:.2%}')
+    wins = len([s for s in results if s]) * factor
+    print(f'Win % for {name}: {wins / N:.2%}')
     print(f'Took {time.time() - start:.2f}s')
     p.close()
 
