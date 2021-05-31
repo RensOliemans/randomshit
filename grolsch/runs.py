@@ -53,14 +53,6 @@ def vicky(x=X, c=C):
     return game.roll() in us
 
 
-def verdeeld_een_uur(x=X, c=C):
-    verdeeld(x, c, 60)
-
-
-def verdeeld_twee_uur(x=X, c=C):
-    verdeeld(x, c, 120)
-
-
 def verdeeld(x=X, c=C, total=60):
     others: List[Person] = [Other() for _ in range(x)]
     us = [DirtyA() for _ in range(c)]
@@ -68,8 +60,18 @@ def verdeeld(x=X, c=C, total=60):
         person.guess = i * (total / 37)
     total = others + us
     game = Game(total)
-    win = game.roll() in us
-    return win
+    return game.roll() in us
+
+
+def verdeeld_een_uur(x=X, c=C):
+    return verdeeld(x, c, 60)
+
+
+def verdeeld_twee_uur(x=X, c=C):
+    return verdeeld(x, c, 120)
+
+
+
 
 
 if __name__ == '__main__':
