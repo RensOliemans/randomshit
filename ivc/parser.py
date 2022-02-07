@@ -10,12 +10,13 @@ TEAM = 'Inter-Actief'
 PIXELWIDTH = 5
 DIST = 3
 EXPECTED_APPEARANCES = 7
+COLOR = (138, 66, 29)
 
 
 def main():
     image, d = parse_image(FILENAME)
     boxes = find_all_boxes(d, TEAM, DIST, EXPECTED_APPEARANCES)
-    highlight_boxes(image, boxes, PIXELWIDTH)
+    highlight_boxes(image, boxes, PIXELWIDTH, COLOR)
     output(image, OUTPUT)
 
 
@@ -39,13 +40,13 @@ def find_boxes(data, text, dist):
             yield data['left'][i], data['top'][i], data['width'][i], data['height'][i]
 
 
-def highlight_boxes(img, boxes, pixelwidth):
+def highlight_boxes(img, boxes, pixelwidth, color):
     for (x, y, w, h) in boxes:
         x -= pixelwidth
         y -= pixelwidth
         w += 2 * pixelwidth
         h += 2 * pixelwidth
-        img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        img = cv2.rectangle(img, (x, y), (x + w, y + h), color, 2)
 
 
 def same(found, actual, dist):
