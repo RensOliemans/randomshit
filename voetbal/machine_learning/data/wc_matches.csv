@@ -1,5 +1,0 @@
-date,league_id,league,team1,team2,spi1,spi2,prob1,prob2,probtie,proj_score1,proj_score2,score1,score2,xg1,xg2,nsxg1,nsxg2,adj_score1,adj_score2
-2018-07-06,1908,FIFA World Cup,Uruguay,France,82.16,86.97,0.3847,0.6153,0,1.08,1.49,,,,,,,,
-2018-07-06,1908,FIFA World Cup,Brazil,Belgium,93.09,87.35,0.6419,0.3581,0,1.7,1.13,,,,,,,,
-2018-07-07,1908,FIFA World Cup,Russia,Croatia,69.88,82.19,0.3876,0.6124,0,1.1,1.52,,,,,,,,
-2018-07-07,1908,FIFA World Cup,Sweden,England,,,0.38,0.62,0,1.1,1.52,,,,,,,,
