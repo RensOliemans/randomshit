@@ -12,28 +12,40 @@ DIST = 3
 EXPECTED_APPEARANCES = 7
 
 
+def main():
+    image, d = parse_image(FILENAME)
+    boxes = find_all_boxes(d, TEAM, DIST, EXPECTED_APPEARANCES)
+    highlight_boxes(image, boxes, PIXELWIDTH)
+    output(image, OUTPUT)
+
+
 def parse_image(filename):
     img = cv2.imread(filename)
     return img, pytesseract.image_to_data(img, output_type=Output.DICT)
 
 
-def find_boxes(image, data, team, pixelwidth, dist, expected):
-    n = highlight_boxes(image, d, team, pixelwidth, dist)
-    while n < expected:
+def find_all_boxes(data, team, dist, expected):
+    boxes = list(find_boxes(data, team, dist))
+    while len(boxes) < expected:
         dist += 1
-        n = highlight_boxes(image, d, team, pixelwidth, dist)
+        boxes = list(find_boxes(data, team, dist))
+
+    return boxes
 
 
-def highlight_boxes(img, data, text, pixelwidth, dist=5):
-    n = 0
+def find_boxes(data, text, dist):
     for i, box in enumerate(data['text']):
         if same(box, text, dist):
-            (x, y, w, h) = (data['left'][i] - pixelwidth, data['top'][i] - pixelwidth,
-                            data['width'][i] + 2 * pixelwidth, data['height'][i] + 2 * pixelwidth)
-            img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            n += 1
+            yield data['left'][i], data['top'][i], data['width'][i], data['height'][i]
 
-    return n
+
+def highlight_boxes(img, boxes, pixelwidth):
+    for (x, y, w, h) in boxes:
+        x -= pixelwidth
+        y -= pixelwidth
+        w += 2 * pixelwidth
+        h += 2 * pixelwidth
+        img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
 
 def same(found, actual, dist):
@@ -49,6 +61,4 @@ def output(img, filename=None):
 
 
 if __name__ == '__main__':
-    image, d = parse_image(FILENAME)
-    find_boxes(image, d, TEAM, PIXELWIDTH, DIST, EXPECTED_APPEARANCES)
-    output(image, OUTPUT)
+    main()
