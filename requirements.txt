@@ -8,3 +8,7 @@ pycrypto
 requests
 pandas
 python-Levenshtein
+begins
+matplotlib
+scipy
+tqdm
