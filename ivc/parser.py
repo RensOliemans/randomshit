@@ -10,6 +10,7 @@ TEAM = 'Inter-Actief'
 PIXELWIDTH = 5
 DIST = 3
 EXPECTED_APPEARANCES = 7
+# https://huisstijl.inter-actief.net/ in OpenCV's BGR format
 COLOR = (138, 66, 29)
 
 
