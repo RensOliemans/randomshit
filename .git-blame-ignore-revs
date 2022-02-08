@@ -1,2 +1,6 @@
-# Black code formatting
-f7f60d170f9276f96c64ce3c75035a5bbd7b3050
+# When making commits that are strictly formatting/style changes, add the
+# commit hash here, so git blame can ignore the change.
+# See docs for more details:
+# https://git-scm.com/docs/git-config#Documentation/git-config.txt-blameignoreRevsFile
+
+f7f60d170f9276f96c64ce3c75035a5bbd7b3050  # initial black-format
