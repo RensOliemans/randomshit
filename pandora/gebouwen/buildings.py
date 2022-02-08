@@ -21,7 +21,6 @@ class Item:
 
 
 class Building(Item):
-
     def __init__(self, number, name, abbreviation):
         super().__init__(name)
         self.number = number

@@ -14,12 +14,16 @@ def create_cards(numbers, amount, maximum):
 
 
 @begin.start(auto_convert=True)
-def main(n: 'Numbers per card' = 25, a: 'Amount of cards' = 40,
-         m: 'Maximum number' = 100, s: 'Shuffled' = True):
-    """ Generates bingo cards """
+def main(
+    n: "Numbers per card" = 25,
+    a: "Amount of cards" = 40,
+    m: "Maximum number" = 100,
+    s: "Shuffled" = True,
+):
+    """Generates bingo cards"""
 
     cards = create_cards(numbers=n, amount=a, maximum=m)
-    print('The cards are:')
+    print("The cards are:")
     for card in cards:
         card = list(card)
         shuffle(card) if s else None

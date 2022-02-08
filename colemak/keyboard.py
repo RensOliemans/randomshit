@@ -1,24 +1,24 @@
 import os
 
 KEYBOARD_QWERTY = [
-    ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';'],
-    ['Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/']
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";"],
+    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"],
 ]
 KEYBOARD_DVORAK = [
-    ["'", ',', '.', 'P', 'Y', 'F', 'G', 'C', 'R', 'L'],
-    ['A', 'O', 'E', 'U', 'I', 'D', 'H', 'T', 'N', 'S'],
-    [';', 'Q', 'J', 'K', 'X', 'B', 'M', 'W', 'V', 'Z']
+    ["'", ",", ".", "P", "Y", "F", "G", "C", "R", "L"],
+    ["A", "O", "E", "U", "I", "D", "H", "T", "N", "S"],
+    [";", "Q", "J", "K", "X", "B", "M", "W", "V", "Z"],
 ]
 KEYBOARD_COLEMAK = [
-    ['Q', 'W', 'F', 'P', 'G', 'J', 'L', 'U', 'Y', ';'],
-    ['A', 'R', 'S', 'T', 'D', 'H', 'N', 'E', 'I', 'O'],
-    ['Z', 'X', 'C', 'V', 'B', 'K', 'M', ',', '.', '/']
+    ["Q", "W", "F", "P", "G", "J", "L", "U", "Y", ";"],
+    ["A", "R", "S", "T", "D", "H", "N", "E", "I", "O"],
+    ["Z", "X", "C", "V", "B", "K", "M", ",", ".", "/"],
 ]
 KEYBOARD_WORKMAN = [
-    ['Q', 'D', 'R', 'W', 'B', 'J', 'F', 'U', 'P', ';'],
-    ['A', 'S', 'H', 'T', 'G', 'Y', 'N', 'E', 'O', 'I'],
-    ['Z', 'X', 'M', 'C', 'V', 'K', 'L', ',', '.', '/']
+    ["Q", "D", "R", "W", "B", "J", "F", "U", "P", ";"],
+    ["A", "S", "H", "T", "G", "Y", "N", "E", "O", "I"],
+    ["Z", "X", "M", "C", "V", "K", "L", ",", ".", "/"],
 ]
 
 
@@ -94,7 +94,7 @@ def distances(words, movements):
 
 def dic_to_words(filename):
     with open(filename) as dictionary:
-        return [word.split('/')[0] for word in dictionary]
+        return [word.split("/")[0] for word in dictionary]
 
 
 def calculate_avg_moving(words, keyboard):
@@ -118,11 +118,10 @@ def show_movings(words):
 
 
 def main():
-    dict_dir_name = '/home/rens/Projects/randomshit/Dictionaries/'
-    dictionaries = [dic for dic in os.listdir(dict_dir_name)
-                    if dic[-4:] == '.dic']
+    dict_dir_name = "/home/rens/Projects/randomshit/Dictionaries/"
+    dictionaries = [dic for dic in os.listdir(dict_dir_name) if dic[-4:] == ".dic"]
     # only a couple
-    dictionaries = ['English (British).dic', 'Dutch.dic']
+    dictionaries = ["English (British).dic", "Dutch.dic"]
 
     for dictionary in dictionaries:
         dictionary = dict_dir_name + dictionary

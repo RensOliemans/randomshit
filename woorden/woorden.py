@@ -4,8 +4,8 @@ from itertools import combinations
 
 import begin
 
-DICTS_DIR = '/home/rens/Projects/randomshit/Dictionaries/'
-FILENAME = DICTS_DIR + 'Dutch.dic'
+DICTS_DIR = "/home/rens/Projects/randomshit/Dictionaries/"
+FILENAME = DICTS_DIR + "Dutch.dic"
 
 
 def find_word(word, words):
@@ -19,9 +19,9 @@ def find_combis(word, amount, words):
 
 @begin.start(auto_convert=True)
 @begin.logging
-def main(w: 'Word', a: 'Amount of letters' = 0):
-    """ Finds (Dutch) words with the given amount of letters. If 'l' is
-    not given, it will use all letters in the given word. """
+def main(w: "Word", a: "Amount of letters" = 0):
+    """Finds (Dutch) words with the given amount of letters. If 'l' is
+    not given, it will use all letters in the given word."""
     start = time.time()
     a = a or len(w)
 
@@ -34,6 +34,6 @@ def main(w: 'Word', a: 'Amount of letters' = 0):
         options = find_word(combi, words)
         if options:
             total_options.extend(options)
-            logging.debug('Combinatie: %s. Woorden: %s.', ''.join(combi), options)
-    logging.info(f'{time.time() - start:.4} seconds')
+            logging.debug("Combinatie: %s. Woorden: %s.", "".join(combi), options)
+    logging.info(f"{time.time() - start:.4} seconds")
     print(sorted(set(total_options)))

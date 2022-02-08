@@ -17,22 +17,31 @@ def play(worpen, dobbelstenen, getal, timeit):
     for _ in range(worpen):
         if is_het_getal(dobbelstenen=dobbelstenen, getal=getal):
             raak += 1
-    result += (f"Met {dobbelstenen:<2} dobbelstenen: {raak:<5}\tKans op {getal}: "
-               f"{raak / worpen:.2%}.")
+    result += (
+        f"Met {dobbelstenen:<2} dobbelstenen: {raak:<5}\tKans op {getal}: "
+        f"{raak / worpen:.2%}."
+    )
     if timeit:
         result += f"\tJob took {time.time() - start:.2} seconds."
     return result
 
 
 @begin.start(auto_convert=True)
-def main(w: 'worpen' = 10000, d: 'dobbelstenen' = 5, g: 'getal' = 12,
-         t: 'time' = True, a: 'disable all results' = True):
+def main(
+    w: "worpen" = 10000,
+    d: "dobbelstenen" = 5,
+    g: "getal" = 12,
+    t: "time" = True,
+    a: "disable all results" = True,
+):
     """
     Probeert een getal te gooien met een aantal dobbelstenen, en kijkt
     hoe vaak dat lukt
     """
-    print("Instellingen: {} worpen met {} dobbelstenen, het doel is om {}"
-          " te gooien".format(w, d, g))
+    print(
+        "Instellingen: {} worpen met {} dobbelstenen, het doel is om {}"
+        " te gooien".format(w, d, g)
+    )
 
     if a:
         for x in range(d):

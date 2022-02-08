@@ -7,20 +7,20 @@ from scipy.signal import find_peaks
 
 def plot_peaks(filename):
     df = pd.read_csv(filename)
-    y = df[' Ct']
+    y = df[" Ct"]
     peaks, properties = find_peaks(y, prominence=(50, None))
-    print(properties['prominences'])
+    print(properties["prominences"])
 
     plt.plot(y)
     plt.plot(peaks, y[peaks], "x")
     [plt.annotate(str(y[i].round(2)), xy=(i, y[i])) for i in peaks]
-    plt.savefig(filename + '.png')
+    plt.savefig(filename + ".png")
     plt.close()
 
 
 def get_values(filename, r):
     df = pd.read_csv(filename)
-    y = df[' Ct']
+    y = df[" Ct"]
 
     peaks, properties = find_peaks(y, prominence=(50, None))
 
@@ -37,14 +37,14 @@ def get_values(filename, r):
 
 
 def main(r=6):
-    excel_files = [f for f in os.listdir() if f[-4:] == '.csv']
+    excel_files = [f for f in os.listdir() if f[-4:] == ".csv"]
     for file in excel_files:
         get_values(file, r)
 
     print(f"Aantal bestanden: {len(excel_files)}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start = time.time()
     main()
     print(f"Total duration: {time.time() - start:.2f}s")

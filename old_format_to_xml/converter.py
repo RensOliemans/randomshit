@@ -1,11 +1,20 @@
 import re
 from lxml import etree
+
 INDENT_LEVEL = 4
 
 
 class Movie(object):
-    def __init__(self, title="", duration="", file_url="", tomatoes="",
-                 imdb=None, rating=None, part_of_serie=False):
+    def __init__(
+        self,
+        title="",
+        duration="",
+        file_url="",
+        tomatoes="",
+        imdb=None,
+        rating=None,
+        part_of_serie=False,
+    ):
         self.title = title
         self.duration = duration
         self.file_url = file_url
@@ -18,13 +27,18 @@ class Movie(object):
         return f"{self.title} - {self.duration}"
 
     def __repr__(self):
-        return (f"Movie. Title: {self.title}, Duration: {self.duration}, "
-                f"file_url (stripped): {self.file_url[10:25]}, Tomato: {self.tomatoes}."
-                f" IMDB: {self.imdb}. Rating: {self.rating}")
+        return (
+            f"Movie. Title: {self.title}, Duration: {self.duration}, "
+            f"file_url (stripped): {self.file_url[10:25]}, Tomato: {self.tomatoes}."
+            f" IMDB: {self.imdb}. Rating: {self.rating}"
+        )
 
     def __eq__(self, other):
-        return (self.title == other.title and self.duration == other.duration and
-                self.file_url == other.file_url)
+        return (
+            self.title == other.title
+            and self.duration == other.duration
+            and self.file_url == other.file_url
+        )
 
 
 class Tomatoes(object):
@@ -69,20 +83,20 @@ def parse_tomato_line(line):
     # x = rating, y = percentage, z = url
     regex = r"\s*(?P<rating>\d(.\d)?)\,\s(?P<percentage>\d*\%)\s*(?P<url>\S*)"
     m = re.match(regex, line)
-    rating, percentage, url = m.group('rating'), m.group('percentage'), m.group('url')
+    rating, percentage, url = m.group("rating"), m.group("percentage"), m.group("url")
     return Tomatoes(rating, percentage, url)
 
 
 def parse_imdb_line(line):
     # file is like this: "x         z"
     m = re.match(r"\s*(?P<rating>\d(.\d)?)\s*(?P<url>\S*)", line)
-    rating, url = m.group('rating'), m.group('url')
+    rating, url = m.group("rating"), m.group("url")
     return IMDB(rating, url)
 
 
 def parse_movie_information(current_movie, line):
-    ''' This method takes a movie and a line, and if it can, it adds new
-    information from the line to the movie. It returns the movie again. '''
+    """This method takes a movie and a line, and if it can, it adds new
+    information from the line to the movie. It returns the movie again."""
     is_file_line = "file://" in line
     is_tomato_line = "rottentomatoes.com" in line
     is_imdb_line = "imdb.com" in line
@@ -103,11 +117,11 @@ def parse_movie_information(current_movie, line):
 
 
 def build(lines):
-    ''' This method groups certain indentation levels together'.
+    """This method groups certain indentation levels together'.
 
     Example: input: lines = ['  a', '    b', '    c', '  d', '    e']
     build(lines) will return [['  a', '    b', '    c'], ['  d', '    e']]
-    '''
+    """
     groups = list()
     initial_indentation = len(lines[0]) - len(lines[0].lstrip())
     # TODO: how to name a? It's an iterator which iterates over the lines.
@@ -146,7 +160,7 @@ def parse_multiple(lines, series=False):
     movies = list()
     groups = build(lines)
     for group in groups:
-        if '(series)' in group[0]:
+        if "(series)" in group[0]:
             # nested multiple movies, recursively call parse_multiple
             movies.extend(parse_multiple(group[1:], series=True))
             continue
@@ -167,19 +181,22 @@ def convert_to_xml(movies):
     page = etree.Element("Movies")
     doc = etree.ElementTree(page)
     for movie in movies:
-        title = movie.title.replace(' ', '_')
+        title = movie.title.replace(" ", "_")
         if title[0].isdigit():
-            title = 'm' + title
-        etree.SubElement(page, title,
-                         duration=str(movie.duration),
-                         tomatoes=str(movie.tomatoes),
-                         imdb=str(movie.imdb))
-    out_file = open('output.xml', 'wb')
-    doc.write(out_file, xml_declaration=True, encoding='utf8', pretty_print=True)
+            title = "m" + title
+        etree.SubElement(
+            page,
+            title,
+            duration=str(movie.duration),
+            tomatoes=str(movie.tomatoes),
+            imdb=str(movie.imdb),
+        )
+    out_file = open("output.xml", "wb")
+    doc.write(out_file, xml_declaration=True, encoding="utf8", pretty_print=True)
 
 
-if __name__ == '__main__':
-    movies, series = parse_total(list(open('movies.txt')))
+if __name__ == "__main__":
+    movies, series = parse_total(list(open("movies.txt")))
     # print("Movies")
     # print(*movies, sep='\n')
     convert_to_xml(movies)

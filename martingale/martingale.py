@@ -12,7 +12,7 @@ def bet(amount, chance):
     return (-amount, False)
 
 
-def start(a: 'Amount' = 1, t: 'Total_money' = 10000, g: 'Goal' = 50000, chance=0.5):
+def start(a: "Amount" = 1, t: "Total_money" = 10000, g: "Goal" = 50000, chance=0.5):
     initial = a
     money = t
     losses = 0
@@ -28,8 +28,9 @@ def start(a: 'Amount' = 1, t: 'Total_money' = 10000, g: 'Goal' = 50000, chance=0
             losses += 1
             a *= 2
             if losses > 12:
-                logging.info("{} losses in a row, betting amount: €{:,}"
-                             .format(losses, a))
+                logging.info(
+                    "{} losses in a row, betting amount: €{:,}".format(losses, a)
+                )
                 logging.info("Currently have €{:,}".format(money))
     logging.info("Finished, money is €{:,}.".format(money))
     return money
@@ -37,8 +38,13 @@ def start(a: 'Amount' = 1, t: 'Total_money' = 10000, g: 'Goal' = 50000, chance=0
 
 @begin.start(auto_convert=True)
 @begin.logging
-def multiple_tries(a: 'Amount' = 1, t: 'Total_money' = 10000,
-                   g: 'Goal' = 50000, r: 'Rounds' = 1, chance=0.5):
+def multiple_tries(
+    a: "Amount" = 1,
+    t: "Total_money" = 10000,
+    g: "Goal" = 50000,
+    r: "Rounds" = 1,
+    chance=0.5,
+):
     scores = dict()
     for x in tqdm(range(r)):
         logging.info("\nStarting round number {}.".format(x + 1))
@@ -46,5 +52,8 @@ def multiple_tries(a: 'Amount' = 1, t: 'Total_money' = 10000,
 
     logging.debug("\nEnd result:")
     logging.debug(scores.values())
-    print("Initial amount: €{:,}. Final amount: €{:,}. Winnings: €{:,}"
-          .format(t * r, sum(scores.values()), sum(scores.values()) - t * r))
+    print(
+        "Initial amount: €{:,}. Final amount: €{:,}. Winnings: €{:,}".format(
+            t * r, sum(scores.values()), sum(scores.values()) - t * r
+        )
+    )

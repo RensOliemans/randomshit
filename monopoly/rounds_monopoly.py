@@ -15,10 +15,8 @@ UTILITIES = [12, 28]
 RAILROADS = [5, 15, 25, 35]
 
 # these refer to the location jumping the chance/chest cards send you to
-CHANCE_CARDS = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5,
-                39, 40, 40, 40]
-CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40,
-               40, 40, 40, 40]
+CHANCE_CARDS = [0, 24, 11, "U", "R", 40, 40, "B", 10, 40, 40, 5, 39, 40, 40, 40]
+CHEST_CARDS = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
 
 
 def run(rolls_per_game=30, excel=False):
@@ -56,14 +54,14 @@ def run(rolls_per_game=30, excel=False):
 
         # Following if statement is if you want to have to throw doubles
         # to get out of jail
-#            if position == JAIL:
-#                if dice1 == dice2 or jail_turns >= 2:
-#                    position = (position + total) % 40
-#                    jail_turns = 0
-#                else:
-#                    jail_turns += 1
-#            else:
-#                position = (position + total) % 40
+        #            if position == JAIL:
+        #                if dice1 == dice2 or jail_turns >= 2:
+        #                    position = (position + total) % 40
+        #                    jail_turns = 0
+        #                else:
+        #                    jail_turns += 1
+        #            else:
+        #                position = (position + total) % 40
 
         # Following line of code is if you want to ignore the throwing of
         # doubles to get out of jail
@@ -85,15 +83,15 @@ def run(rolls_per_game=30, excel=False):
                     tiles_count[position] += 1
                     position = int(card)
                 except ValueError:
-                    if position == 'B':
+                    if position == "B":
                         # B indicates go back three places
                         position = (position - 3) % 40
-                    elif position == 'U':
+                    elif position == "U":
                         # U indicates go to the next utility card
                         for x in range(40):
                             if (position + x) % 40 in UTILITIES:
                                 position = (position + x) % 40
-                    elif position == 'R':
+                    elif position == "R":
                         # R indicates go to the next railroad card
                         for x in range(40):
                             if (position + x) % 40 in RAILROADS:
@@ -125,24 +123,30 @@ def pretty_format(tiles_count, excel=False):
         result += "Item;chance\n"
     for item in tiles_count:
         if excel:
-            result += "{};{:.3%}\n".format(
-                item, (tiles_count[item] / throws))
+            result += "{};{:.3%}\n".format(item, (tiles_count[item] / throws))
         else:
             result += "Item: {}, chance: {:.3%}\n".format(
-                item, (tiles_count[item] / throws))
+                item, (tiles_count[item] / throws)
+            )
     return result
 
 
 @begin.start(auto_convert=True)
-def main(g: 'Amount of games' = 1000, r: 'Rolls per game' = 30,
-         e: 'Format Excel-friendly' = False):
-    """ Simulates monopoly games and outputs the frequency of the tiles
-    visited, including jail workings and chance/community cards. """
+def main(
+    g: "Amount of games" = 1000,
+    r: "Rolls per game" = 30,
+    e: "Format Excel-friendly" = False,
+):
+    """Simulates monopoly games and outputs the frequency of the tiles
+    visited, including jail workings and chance/community cards."""
     start = time.time()
     dicts = list()
     for _ in tqdm(range(g)):
         dicts.append(run(r, e))
     end_dict = {k: sum(d[k] for d in dicts) for k in dicts[0]}
     print(pretty_format(end_dict, e))
-    print("Running {:,} games (with {} rounds) took {:.3} seconds".format(
-          g, r, time.time() - start))
+    print(
+        "Running {:,} games (with {} rounds) took {:.3} seconds".format(
+            g, r, time.time() - start
+        )
+    )

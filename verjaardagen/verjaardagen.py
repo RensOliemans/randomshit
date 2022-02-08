@@ -41,11 +41,15 @@ class PartyDate:
 
     @property
     def years_total(self):
-        return self._add_multiple(lambda x: x.age_relative(self.moment), relativedelta()).years
+        return self._add_multiple(
+            lambda x: x.age_relative(self.moment), relativedelta()
+        ).years
 
     def __str__(self):
-        return f"On {self.moment.strftime('%Y-%m-%d')} {self.years} years, {self.days} days, " \
-               f"{self.years_total} 'total' years old."
+        return (
+            f"On {self.moment.strftime('%Y-%m-%d')} {self.years} years, {self.days} days, "
+            f"{self.years_total} 'total' years old."
+        )
 
     def _add_multiple(self, method, start=0):
         assert len(self.entities) > 1, "At least 2 entities"
@@ -58,16 +62,16 @@ class PartyDate:
 
 a = datetime.now()
 
-pa = Entity('pa', datetime(1963, 1, 25))
-ma = Entity('ma', datetime(1965, 4, 29))
-jelle = Entity('jelle', datetime(1994, 7, 30))
-rens = Entity('rens', datetime(1997, 3, 15))
-ruben = Entity('ruben', datetime(1999, 7, 14))
+pa = Entity("pa", datetime(1963, 1, 25))
+ma = Entity("ma", datetime(1965, 4, 29))
+jelle = Entity("jelle", datetime(1994, 7, 30))
+rens = Entity("rens", datetime(1997, 3, 15))
+ruben = Entity("ruben", datetime(1999, 7, 14))
 
-titia = Entity('titia', datetime(1992, 9, 29))
-iris = Entity('iris', datetime(1997, 12, 19))
+titia = Entity("titia", datetime(1992, 9, 29))
+iris = Entity("iris", datetime(1997, 12, 19))
 
-wammes = Entity('wammes', datetime(2010, 5, 6))
+wammes = Entity("wammes", datetime(2010, 5, 6))
 
 gezin = [pa, ma, jelle, rens, ruben]
 met_aanhang = gezin + [titia, iris]
@@ -96,5 +100,3 @@ date = datetime(2021, 6, 30)
 print(PartyDate(gezin, date))
 print(PartyDate(met_aanhang, date))
 print(PartyDate(met_wams, date))
-
-

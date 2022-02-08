@@ -10,15 +10,15 @@ N = 10000
 
 
 def run():
-    analyze('verdeeld2', verdeeld2)
-    analyze('verdeeld_een_uur', verdeeld_een_uur)
-    analyze('verdeeld_twee_uur', verdeeld_twee_uur, factor=2)
-    analyze('verdeeld_acht_uur', verdeeld_acht_uur, factor=8)
-    analyze('verdeeld_dag_uur', verdeeld_dag, factor=24)
-    analyze('verdeeld_37_uur', verdeeld_37, factor=37)
-    analyze('random_in_uur', random_in_uur)
-    analyze('vicky', vicky)
-    analyze('verspreid', verspreid)
+    analyze("verdeeld2", verdeeld2)
+    analyze("verdeeld_een_uur", verdeeld_een_uur)
+    analyze("verdeeld_twee_uur", verdeeld_twee_uur, factor=2)
+    analyze("verdeeld_acht_uur", verdeeld_acht_uur, factor=8)
+    analyze("verdeeld_dag_uur", verdeeld_dag, factor=24)
+    analyze("verdeeld_37_uur", verdeeld_37, factor=37)
+    analyze("random_in_uur", random_in_uur)
+    analyze("vicky", vicky)
+    analyze("verspreid", verspreid)
 
 
 def analyze(name, f, factor=1):
@@ -28,8 +28,8 @@ def analyze(name, f, factor=1):
     wins = len([s for s in results if s]) * factor
     chance = wins / N
     chance = 1 - (1 - chance) ** factor
-    print(f'Win % for {name}: {chance:.2%}')
-    print(f'Took {time.time() - start:.2f}s')
+    print(f"Win % for {name}: {chance:.2%}")
+    print(f"Took {time.time() - start:.2f}s")
     p.close()
 
 
@@ -100,5 +100,5 @@ def verdeeld_37(x=X, c=C):
     return verdeeld(x, c, 60 * 37)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run()

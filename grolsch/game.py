@@ -20,7 +20,7 @@ class Person:
 
 class DirtyA(Person):
     def __repr__(self):
-        return f'<DirtyA. Guess: {self.guess}>'
+        return f"<DirtyA. Guess: {self.guess}>"
 
 
 class Vicky(Person):
@@ -29,9 +29,9 @@ class Vicky(Person):
         self.guess = r.uniform(0.0, 15.0)
 
     def __repr__(self):
-        return f'<Vicky. Guess: {self.guess}>'
+        return f"<Vicky. Guess: {self.guess}>"
 
 
 class Other(Person):
     def __repr__(self):
-        return f'<Other. Guess: {self.guess}>'
+        return f"<Other. Guess: {self.guess}>"

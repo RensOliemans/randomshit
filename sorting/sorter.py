@@ -24,9 +24,11 @@ def main(length=10):
     items = list()
     for _ in range(length):
         items.append(random.randrange(1, 100))
-    print("List: {}. Starting sorting sequence."
-          .format(items))
+    print("List: {}. Starting sorting sequence.".format(items))
     start = time.time()
     sort(items)
-    print("Finished sorting. Sorted list: {}, time taken: {}"
-          .format(items, (time.time() - start)))
+    print(
+        "Finished sorting. Sorted list: {}, time taken: {}".format(
+            items, (time.time() - start)
+        )
+    )

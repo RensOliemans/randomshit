@@ -10,15 +10,20 @@ from datetime import datetime
 import sqlite3
 
 # Relevant for files
-FILE_DIRECTORY = 'chats'
-FILENAME_INPUT = FILE_DIRECTORY + '/' + 'chat-iris.txt'
-FILENAME_DB = FILE_DIRECTORY + '/' + 'db.sqlite'
-FILENAME_DATA = FILE_DIRECTORY + '/' + 'messages'
+FILE_DIRECTORY = "chats"
+FILENAME_INPUT = FILE_DIRECTORY + "/" + "chat-iris.txt"
+FILENAME_DB = FILE_DIRECTORY + "/" + "db.sqlite"
+FILENAME_DATA = FILE_DIRECTORY + "/" + "messages"
 
 # Relevant for message format
-NAMES = {'Iris': ['Iris Bergers', 'Iris <3'], 'Rens': ['Rens Oliemans', 'Rens']}
-FORMATS = ['%d-%m-%y, %H:%M', '%d-%m-%Y %H:%M', '%Y-%m-%d %H:%M:%S',
-           '%d/%m/%Y, %H:%M', '%m/%d/%y, %H:%M']
+NAMES = {"Iris": ["Iris Bergers", "Iris <3"], "Rens": ["Rens Oliemans", "Rens"]}
+FORMATS = [
+    "%d-%m-%y, %H:%M",
+    "%d-%m-%Y %H:%M",
+    "%Y-%m-%d %H:%M:%S",
+    "%d/%m/%Y, %H:%M",
+    "%m/%d/%y, %H:%M",
+]
 # The \< and 3 are for the person name
 PATTERN = r"(?P<date>(\S| )+) - (?P<person>(\w|\<|3| )+): (?P<message>(\S| )+)"
 message_prog = re.compile(PATTERN)
@@ -40,7 +45,7 @@ class MessageConverter:
         self._show_results(out)
 
     def _backup_file(self):
-        copyfile(self._input_file, self._input_file + '.bak')
+        copyfile(self._input_file, self._input_file + ".bak")
 
     def _get_new_messages(self):
         with open(self._input_file) as f:
@@ -56,10 +61,14 @@ class MessageConverter:
         self._conn = sqlite3.connect(self._dbname)
         c = self._conn.cursor()
 
-        count = c.execute('SELECT COUNT(*) FROM messages').fetchone()
+        count = c.execute("SELECT COUNT(*) FROM messages").fetchone()
         added = self._insert_messages(messages)
 
-        go = bool(input(f'Want to add new messages? had {count}, chat contained {len(messages)} new, adding {added} '))
+        go = bool(
+            input(
+                f"Want to add new messages? had {count}, chat contained {len(messages)} new, adding {added} "
+            )
+        )
 
         if go:
             self._conn.commit()
@@ -71,9 +80,11 @@ class MessageConverter:
         c = self._conn.cursor()
         for message in messages:
             m = (message.date_time, message.person, message.message)
-            entry = c.execute('SELECT * FROM messages WHERE (date=? AND person=? AND message=?)', m).fetchone()
+            entry = c.execute(
+                "SELECT * FROM messages WHERE (date=? AND person=? AND message=?)", m
+            ).fetchone()
             if entry is None:
-                c.execute('INSERT INTO messages VALUES (?, ?, ?)', m)
+                c.execute("INSERT INTO messages VALUES (?, ?, ?)", m)
                 added += 1
 
         return added
@@ -81,16 +92,18 @@ class MessageConverter:
     @staticmethod
     def _show_results(out):
         count, new, added = out
-        print(f'The database had {count} messages before.'
-              f'The chats contained {new} messages, of which {added} were added.')
+        print(
+            f"The database had {count} messages before."
+            f"The chats contained {new} messages, of which {added} were added."
+        )
 
     @staticmethod
     def parse_message(message):
         result = message_prog.match(message)
         if result:
-            date = result.group('date')
-            person = result.group('person')
-            message = result.group('message')
+            date = result.group("date")
+            person = result.group("person")
+            message = result.group("message")
             for form in FORMATS:
                 try:
                     date_object = datetime.strptime(date, form)
@@ -143,6 +156,6 @@ class Message:
         return self.date_time
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     mc = MessageConverter(FILENAME_DB, FILENAME_INPUT)
     mc.update_messages()

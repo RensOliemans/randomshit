@@ -3,7 +3,6 @@ import Set
 
 
 class NaiveAI(object):
-
     def __init__(self):
         self.cards = []
 

@@ -47,21 +47,25 @@ class Card(object):
         return diffs
 
     def __eq__(self, other):
-        return (self.colour == other.colour and self.form == other.form
-                and self.amount == other.amount and self.fill == other.fill)
+        return (
+            self.colour == other.colour
+            and self.form == other.form
+            and self.amount == other.amount
+            and self.fill == other.fill
+        )
 
     def __ne__(self, other):
         return not self == other
 
     def __repr__(self):
         return "Card. Colour: {}, Amount: {}, Fill: {}, Form: {}.".format(
-                self.colour.name, self.amount, self.fill.name,
-                self.form.name)
+            self.colour.name, self.amount, self.fill.name, self.form.name
+        )
 
     def __str__(self):
         return "{}, {}, {} card with amount {}".format(
-                self.colour.name, self.form.name, self.fill.name,
-                self.amount)
+            self.colour.name, self.form.name, self.fill.name, self.amount
+        )
 
 
 class Colour(Enum):
@@ -115,7 +119,6 @@ BOARD_SIZE = constants.GAME_AMOUNT * constants.GAME_AMOUNT
 
 
 class Board(object):
-
     def __init__(self):
         self.deck = Deck()
         self.board = self.deck.take(BOARD_SIZE)

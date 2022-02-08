@@ -3,7 +3,7 @@ import math
 
 def is_h_r_number(number, pow_level=3):
     ways = list()
-    min_number = math.ceil(pow(number, 1/pow_level))
+    min_number = math.ceil(pow(number, 1 / pow_level))
     for i in range(1, min_number):
         for j in range(1, min_number):
             if (j, i) not in ways:

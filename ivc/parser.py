@@ -3,9 +3,9 @@ import pytesseract
 from pytesseract import Output
 from Levenshtein import distance
 
-FILENAME = 'index.jpg'
-OUTPUT = 'output.jpg'
-TEAM = 'Inter-Actief'
+FILENAME = "index.jpg"
+OUTPUT = "output.jpg"
+TEAM = "Inter-Actief"
 
 PIXELWIDTH = 5
 DIST = 3
@@ -36,9 +36,9 @@ def find_all_boxes(data, team, dist, expected):
 
 
 def find_boxes(data, text, dist):
-    for i, box in enumerate(data['text']):
+    for i, box in enumerate(data["text"]):
         if same(box, text, dist):
-            yield data['left'][i], data['top'][i], data['width'][i], data['height'][i]
+            yield data["left"][i], data["top"][i], data["width"][i], data["height"][i]
 
 
 def highlight_boxes(img, boxes, pixelwidth, color):
@@ -58,9 +58,9 @@ def output(img, filename=None):
     if filename:
         cv2.imwrite(filename, img)
     else:
-        cv2.imshow('img', img)
+        cv2.imshow("img", img)
         cv2.waitKey(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

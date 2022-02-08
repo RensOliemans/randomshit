@@ -10,9 +10,9 @@ class Board(object):
     position of players, chance/community cards, properties owned
     by whom, houses placed, etc.
     """
-    CHANCE = [0, 24, 11, 'U', 'R', 40, 40, 'B', 10, 40, 40, 5, 39, 40, 40, 40]
-    COMMUNITY = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40,
-                 40]
+
+    CHANCE = [0, 24, 11, "U", "R", 40, 40, "B", 10, 40, 40, 5, 39, 40, 40, 40]
+    COMMUNITY = [0, 40, 40, 40, 40, 10, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40]
     GO = 0
     JAIL = 10
     FREE_PARKING = 20
@@ -67,12 +67,14 @@ class Board(object):
 def validate_arguments(position, owned_by, houses, mortgaged):
     if owned_by is None and not houses == 0:
         raise NoOwnerAndHousesException(
-            "Tile {} has owner {}, yet there are {} houses."
-            .format(position, owned_by, houses))
+            "Tile {} has owner {}, yet there are {} houses.".format(
+                position, owned_by, houses
+            )
+        )
     if mortgaged and not houses == 0:
         raise HousesYetMortgagedException(
-            "Tile {} has {} houses yet is mortgaged"
-            .format(position, houses))
+            "Tile {} has {} houses yet is mortgaged".format(position, houses)
+        )
 
 
 # Tiles maps the unique positions to a colour (the numbers) or something
@@ -83,11 +85,10 @@ TILES = {
     2: "Community",
     3: 0,
     4: "Tax ",
-
 }
 
 
-Tile = namedtuple('Tile', 'position owned_by houses mortgaged colour price')
+Tile = namedtuple("Tile", "position owned_by houses mortgaged colour price")
 
 
 class Move(object):

@@ -5,20 +5,20 @@ import matplotlib.pyplot as plt
 import sqlite3
 from converter import Message
 
-FILENAME = 'chats/db.sqlite'
+FILENAME = "chats/db.sqlite"
 # Time at which the poop becomes counted as next day
 NIGHT_HOUR = 4
 
 
 # Relevant for format of the messages
-DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 MESSAGE_PATTERN = r"(?P<date>(\S|\s)+)--(?P<person>(\w|\s)+)--(?P<message>(\S|\s)+)"
 message_prog = re.compile(MESSAGE_PATTERN)
 
 # Poop icon
-EMOTICON_UNI = '\U0001f4a9'
-NAME_RENS = 'Rens'
-NAME_IRIS = 'Iris'
+EMOTICON_UNI = "\U0001f4a9"
+NAME_RENS = "Rens"
+NAME_IRIS = "Iris"
 
 
 def parse_file(filename):
@@ -29,17 +29,28 @@ def parse_file(filename):
     :returns two lists of days, belonging to two people
     """
     chat = get_messages(filename)
-    rens = [message for message in chat if message is not None and message.person == NAME_RENS]
-    iris = [message for message in chat if message is not None and message.person == NAME_IRIS]
+    rens = [
+        message
+        for message in chat
+        if message is not None and message.person == NAME_RENS
+    ]
+    iris = [
+        message
+        for message in chat
+        if message is not None and message.person == NAME_IRIS
+    ]
     return iris, rens
 
 
 def get_messages(dbname):
     conn = sqlite3.connect(dbname)
     c = conn.cursor()
-    messages = c.execute('SELECT * FROM messages').fetchall()
+    messages = c.execute("SELECT * FROM messages").fetchall()
     conn.close()
-    return [Message(datetime.datetime.strptime(m[0], DATE_FORMAT), m[1], m[2]) for m in messages]
+    return [
+        Message(datetime.datetime.strptime(m[0], DATE_FORMAT), m[1], m[2])
+        for m in messages
+    ]
 
 
 def average_times(iris, rens):
@@ -51,10 +62,12 @@ def average_times(iris, rens):
     total = iris + rens
 
     def average_time(person):
-        """ Determines the average shit time of a single person. """
+        """Determines the average shit time of a single person."""
         if not person:
-            raise ValueError("Pooped zero times, can't calculate average time "
-                             "(are the names correct?)")
+            raise ValueError(
+                "Pooped zero times, can't calculate average time "
+                "(are the names correct?)"
+            )
         times = list()
         for poop in person:
             poop_hour = poop.date.hour
@@ -74,13 +87,15 @@ def average_times(iris, rens):
 
 
 def frequencies(iris, rens):
-    """ Determines the frequencies of two people. """
+    """Determines the frequencies of two people."""
 
     def frequency(person):
-        """ Determines the frequencies of one person. """
+        """Determines the frequencies of one person."""
         if not person:
-            raise ValueError("Pooped zero times, can't calculate average time "
-                             "(are the names correct?)")
+            raise ValueError(
+                "Pooped zero times, can't calculate average time "
+                "(are the names correct?)"
+            )
         first_poop, last_poop = min(person).date, max(person).date
         difference = last_poop - first_poop
 
@@ -103,7 +118,9 @@ def get_date_list(iris, rens):
     last_date: Day = max(max(iris), max(rens))
     total_days = (last_date.date - first_date.date).days
 
-    return [first_date.date.date() + datetime.timedelta(days=x) for x in range(total_days)]
+    return [
+        first_date.date.date() + datetime.timedelta(days=x) for x in range(total_days)
+    ]
 
 
 def create_plot(iris, rens):
@@ -113,10 +130,8 @@ def create_plot(iris, rens):
     date_list = get_date_list(sorted_iris, sorted_rens)
     iris_days = [i.date.date() for i in sorted_iris]
     rens_days = [r.date.date() for r in sorted_rens]
-    iris_poops = {d: iris_days.count(d)
-                  for d in date_list}
-    rens_poops = {d: rens_days.count(d)
-                  for d in date_list}
+    iris_poops = {d: iris_days.count(d) for d in date_list}
+    rens_poops = {d: rens_days.count(d) for d in date_list}
 
     x = date_list
     iris_y = build_y(iris_poops.values())
@@ -126,10 +141,10 @@ def create_plot(iris, rens):
 
 def build_plt(x, iris_y, rens_y):
     fig, ax = plt.subplots()
-    ax.plot(x, iris_y, color='tab:blue', label='Iris')
-    ax.plot(x, rens_y, color='tab:orange', label='Rens')
-    plt.legend(loc='lower right')
-    fig.savefig('test.pdf', format='pdf')
+    ax.plot(x, iris_y, color="tab:blue", label="Iris")
+    ax.plot(x, rens_y, color="tab:orange", label="Rens")
+    plt.legend(loc="lower right")
+    fig.savefig("test.pdf", format="pdf")
 
 
 def build_y(poops):
@@ -142,30 +157,43 @@ def build_y(poops):
 
 
 def main():
-    """ Main method. """
+    """Main method."""
     iris, rens = parse_file(FILENAME)
     days, iris_frequency, rens_frequency = frequencies(iris, rens)
-    print("Counter:\nIris: {}, Rens: {}, Total: {}, over {:.2f} days.\n"
-          .format(len(iris), len(rens), len(iris + rens), days))
+    print(
+        "Counter:\nIris: {}, Rens: {}, Total: {}, over {:.2f} days.\n".format(
+            len(iris), len(rens), len(iris + rens), days
+        )
+    )
 
     iris_time, rens_time, total_time = average_times(iris, rens)
-    print("Average poop time (before {} will be counted as night, so "
-          "+ 24 hours):\nIris: {}, Rens: {}, Total: {}"
-          .format(NIGHT_HOUR, iris_time, rens_time, total_time))
+    print(
+        "Average poop time (before {} will be counted as night, so "
+        "+ 24 hours):\nIris: {}, Rens: {}, Total: {}".format(
+            NIGHT_HOUR, iris_time, rens_time, total_time
+        )
+    )
 
     # regular frequency
-    print("Average frequency:\n"
-          "Iris: one poop per {:.2f} days, Rens: one poop per {:.2f} days"
-          .format(iris_frequency, rens_frequency))
+    print(
+        "Average frequency:\n"
+        "Iris: one poop per {:.2f} days, Rens: one poop per {:.2f} days".format(
+            iris_frequency, rens_frequency
+        )
+    )
     # inverse frequency
-    print("Average frequency:\n"
-          "Iris: {:.2f} poops per day, Rens: {:.2f} poops per day"
-          .format(1 / iris_frequency, 1 / rens_frequency))
+    print(
+        "Average frequency:\n"
+        "Iris: {:.2f} poops per day, Rens: {:.2f} poops per day".format(
+            1 / iris_frequency, 1 / rens_frequency
+        )
+    )
     create_plot(iris, rens)
 
 
 class Day(object):
-    """ Represents a single day, belonging to a person. """
+    """Represents a single day, belonging to a person."""
+
     def __init__(self, date, person):
         self.date = date
         self.person = person

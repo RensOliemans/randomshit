@@ -11,7 +11,7 @@ ALL_THROWS = {x: list(product(*[range(1, 7) for _ in range(x)])) for x in range(
 
 
 def spel(force_minimum=False, force_maximum=False, score=False):
-    """ This method plays the actual game.
+    """This method plays the actual game.
     :param minimum: whether to go for the minimum score possible
 
     :return: (keep, sum(keep)), with keep = the hand that is kept, and
@@ -29,26 +29,34 @@ def spel(force_minimum=False, force_maximum=False, score=False):
     minimum = force_minimum or (not force_maximum and strategy)
     minimum = (
         # this is hardcoded TODO
-        not force_maximum and
-        (force_minimum or
-         (worp.count(1) > worp.count(6) + 1)
-         or sum(worp) <= 10))
+        not force_maximum
+        and (force_minimum or (worp.count(1) > worp.count(6) + 1) or sum(worp) <= 10)
+    )
     # (worp.count(1) >= 2 and worp.count(6) < 2) or
     # (worp.count(6) == 0 and worp.count(1) > 1)))
 
     while len(keep) < AMOUNT:
-        if (minimum and not force_minimum and
-                sum(keep) + sum([1] * (AMOUNT - len(keep) - 1)) + min(worp) > 10):
+        if (
+            minimum
+            and not force_minimum
+            and sum(keep) + sum([1] * (AMOUNT - len(keep) - 1)) + min(worp) > 10
+        ):
             if not force_maximum:
                 # this is hardcoded TODO
-                logging.debug('My hand is %s, but the throw is %s, so changing '
-                              'strategy to max', keep, worp)
+                logging.debug(
+                    "My hand is %s, but the throw is %s, so changing "
+                    "strategy to max",
+                    keep,
+                    worp,
+                )
                 minimum = False
 
-        keep_round = decide_minimum(worp, keep, AMOUNT + 4) if minimum \
-            else decide_maximum(worp)
-        logging.debug("My hand is %s, the throw is %s so I'll keep %s",
-                      keep, worp, keep_round)
+        keep_round = (
+            decide_minimum(worp, keep, AMOUNT + 4) if minimum else decide_maximum(worp)
+        )
+        logging.debug(
+            "My hand is %s, the throw is %s so I'll keep %s", keep, worp, keep_round
+        )
         keep += keep_round
         worp = []
         for _ in range(AMOUNT - len(keep)):
@@ -101,7 +109,7 @@ def decide_maximum(dice):
 
 
 def decide_minimum(dice, chosen=None, goal=10):
-    """ The same as decide_maximum(), but then for a minimal score. """
+    """The same as decide_maximum(), but then for a minimal score."""
     chosen = chosen or [1] * (AMOUNT - len(dice))
     if sum(dice) + sum(chosen) <= goal:
         return dice
@@ -121,7 +129,7 @@ def decide_minimum(dice, chosen=None, goal=10):
 
 
 def kans_10_of_lager():
-    """ What's the chance of throwing <= 10 with 6 dice in 1 try? """
+    """What's the chance of throwing <= 10 with 6 dice in 1 try?"""
     all_throws = list(product(*[range(1, 7) for _ in range(6)]))
     possible_options = len(all_throws)
     good_options = len([x for x in all_throws if sum(x) <= 10])
@@ -129,7 +137,7 @@ def kans_10_of_lager():
 
 
 def kans_boven_30():
-    """ What's the chance of throwing > 30 with 6 dice in 1 try? """
+    """What's the chance of throwing > 30 with 6 dice in 1 try?"""
     all_throws = list(product(*[range(1, 7) for _ in range(6)]))
     possible_options = len(all_throws)
     good_options = len([x for x in all_throws if sum(x) > 30])
@@ -138,16 +146,19 @@ def kans_boven_30():
 
 def game(minimum, maximum, score=True):
     score = spel(force_minimum=minimum, force_maximum=maximum, score=True)
-    logging.info('%s', score)
-    logging.debug('\n')
+    logging.info("%s", score)
+    logging.debug("\n")
     return score
 
 
 @begin.start(auto_convert=True)
 @begin.logging
-def main(minimum: "Force minimum strategy" = False,
-         maximum: "Force maximum strategy" = False, runs=1):
-    '''Spel'''
+def main(
+    minimum: "Force minimum strategy" = False,
+    maximum: "Force maximum strategy" = False,
+    runs=1,
+):
+    """Spel"""
     total = 0
     if logging.getLogger().getEffectiveLevel() > 20:
         for _ in tqdm(range(runs)):
@@ -157,4 +168,4 @@ def main(minimum: "Force minimum strategy" = False,
             total += game(minimum, maximum, score=True)
 
     if runs > 1:
-        print(f'Average: {total / runs:.2f}')
+        print(f"Average: {total / runs:.2f}")

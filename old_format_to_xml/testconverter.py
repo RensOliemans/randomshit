@@ -1,44 +1,47 @@
 import unittest
 
 from converter import Movie
-from converter import parse_first_line, parse_single, parse_movie_information, parse_multiple
+from converter import (
+    parse_first_line,
+    parse_single,
+    parse_movie_information,
+    parse_multiple,
+)
 
 
 class TestFirstLine(unittest.TestCase):
-
     def test_normal_line(self):
-        line = '    Whiplash                            1h49m'
+        line = "    Whiplash                            1h49m"
         title, duration = parse_first_line(line)
-        self.assertEqual(title, 'Whiplash')
-        self.assertEqual(duration, '1h49m')
+        self.assertEqual(title, "Whiplash")
+        self.assertEqual(duration, "1h49m")
 
     def test_different_indentation(self):
-        line = '        The Godfather 1                 2h55m'
+        line = "        The Godfather 1                 2h55m"
         title, duration = parse_first_line(line)
-        self.assertEqual(title, 'The Godfather 1')
-        self.assertEqual(duration, '2h55m')
+        self.assertEqual(title, "The Godfather 1")
+        self.assertEqual(duration, "2h55m")
 
     def test_series(self):
-        line = '    Kung Fu Panda (series)              (2h56m)'
+        line = "    Kung Fu Panda (series)              (2h56m)"
         title, duration = parse_first_line(line)
-        self.assertEqual(title, 'Kung Fu Panda series')
-        self.assertEqual(duration, '2h56m')
+        self.assertEqual(title, "Kung Fu Panda series")
+        self.assertEqual(duration, "2h56m")
 
     def test_watched_movie(self):
         line = "    '''The Grand Budapest Hotel'''      1h39m"
         title, duration = parse_first_line(line)
-        self.assertEqual(title, 'The Grand Budapest Hotel')
-        self.assertEqual(duration, '1h39m')
+        self.assertEqual(title, "The Grand Budapest Hotel")
+        self.assertEqual(duration, "1h39m")
 
     def test_different_timing(self):
-        line = '    Big Fish                            2h5m'
+        line = "    Big Fish                            2h5m"
         title, duration = parse_first_line(line)
-        self.assertEqual(title, 'Big Fish')
-        self.assertEqual(duration, '2h5m')
+        self.assertEqual(title, "Big Fish")
+        self.assertEqual(duration, "2h5m")
 
 
 class TestSingleMovie(unittest.TestCase):
-
     def test_regular_movie(self):
         lines = movielines[1:6]  # whiplash movie
         movie = parse_single(lines)
@@ -53,7 +56,6 @@ class TestSingleMovie(unittest.TestCase):
 
 
 class TestMultipleMovies(unittest.TestCase):
-
     def test_two_movies(self):
         lines = movielines[1:10]
         movies = parse_multiple(lines)
@@ -89,7 +91,7 @@ def correctly_build_movie(lines):
     return movie
 
 
-movielines = '''films:
+movielines = """films:
     Whiplash                            1h49m
         file://///130.89.168.233/Movies/Whiplash%20%282014%29/
         8.6, 94%    http://www.rottentomatoes.com/m/whiplash_2014/
@@ -113,8 +115,10 @@ movielines = '''films:
         The Godfather 3                 2h50m
             file://130.89.166.148/Movies/1080p/The.Godfather.Part.III.1990.1080p.BluRay.DTS.x264-ESiR/
             6.4, 67%    http://www.rottentomatoes.com/m/godfather_part_iii/
-            7.6         http://www.imdb.com/title/tt0099674/'''.split('\n')
+            7.6         http://www.imdb.com/title/tt0099674/""".split(
+    "\n"
+)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
