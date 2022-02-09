@@ -17,6 +17,13 @@ parser.add_argument(
     help="numbers to get diceware words from",
 )
 parser.add_argument(
+    "-a",
+    "--amount",
+    type=int,
+    default=1,
+    help="amount of numbers to generate",
+)
+parser.add_argument(
     "-f", "--filename", default="nl-comp", help="filename of the diceware list"
 )
 parser.add_argument(
@@ -118,13 +125,14 @@ def main(args):
         output_passphrase(" ".join(interactive(words)), args)
         return
 
-    if args.numbers:
-        try:
-            output_passphrase(" ".join(words[int(n)] for n in args.numbers), args)
-        except KeyError:
-            print("Number does not exist")
-    else:
-        output_passphrase(" ".join(generate_pw(words, args.length)), args)
+    for _ in range(args.amount):
+        if args.numbers:
+            try:
+                output_passphrase(" ".join(words[int(n)] for n in args.numbers), args)
+            except KeyError:
+                print("Number does not exist")
+        else:
+            output_passphrase(" ".join(generate_pw(words, args.length)), args)
 
 
 if __name__ == "__main__":
