@@ -80,25 +80,26 @@ def output_passphrase(passphrase, args):
 
 
 def interactive(words):
-    passphrase = []
+    number = input(
+        "Enter 5-digit numbers as many times as the desired length of your passphrase. "
+        "Leave empty to finish.\n"
+    )
     while True:
-        number = input("Enter a 5-digit number. Leave empty to quit.\n")
         if number == "":
-            print(" ".join(passphrase))
             return
         try:
-            word = words[int(number)]
-            print(word)
-            passphrase.append(word)
+            yield words[int(number)]
         except (KeyError, ValueError):
             print("Invalid number.")
+
+        number = input()
 
 
 def main(args):
     f = get_file(args.filename)
     words = get_words(f)
     if args.interactive:
-        interactive(words)
+        output_passphrase(" ".join(interactive(words)), args)
         return
 
     if args.numbers:
