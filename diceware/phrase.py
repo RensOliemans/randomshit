@@ -1,4 +1,6 @@
 import argparse
+import sys
+
 import pyperclip
 from pathlib import Path
 from random import SystemRandom
@@ -91,19 +93,22 @@ def output_passphrase(passphrase, args):
 
 
 def interactive(words):
-    number = input(
-        "Enter 5-digit numbers as many times as the desired length of your passphrase. "
-        "Leave empty to finish.\n"
-    )
-    while True:
-        if number == "":
+    if sys.stdin.isatty():
+        print(
+            "Enter 5-digit numbers as many times as the desired length "
+            "of your passphrase. Leave empty to finish."
+        )
+
+    for line in sys.stdin:
+        if line == "\n":
             return
         try:
-            yield words[int(number)]
+            yield words[int(line)]
         except (KeyError, ValueError):
-            print("Invalid number.")
-
-        number = input()
+            print(
+                "Invalid number. Give me 5-digit numbers, using digits 1-6, "
+                "seperated by newlines. "
+            )
 
 
 def main(args):
