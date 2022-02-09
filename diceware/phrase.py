@@ -1,3 +1,4 @@
+from pathlib import Path
 from random import SystemRandom
 
 import begin
@@ -26,6 +27,7 @@ def main(
     f: "Name of file" = "composites-nl",
     l: "Length of passphrase" = 6,
 ):
+    f = Path(__file__).parent.absolute().joinpath(f)
     words = get_words(f)
     if n:
         try:
