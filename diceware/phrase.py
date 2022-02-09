@@ -1,9 +1,15 @@
 import argparse
 import sys
 
-import pyperclip
+from pyperclipbackup import PyperclipBackup
+
+try:
+    import pyperclip
+except ModuleNotFoundError:
+    pyperclip = PyperclipBackup
 from pathlib import Path
 from random import SystemRandom
+
 
 r = SystemRandom()
 
