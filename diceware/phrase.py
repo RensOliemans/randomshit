@@ -33,7 +33,7 @@ output = parser.add_argument_group("output")
 output.add_argument(
     "-C",
     dest="only_copy",
-    help="Alias for -c --no-s",
+    help="Alias for -c --no-s -a 1",
     action=argparse.BooleanOptionalAction,
 )
 output.add_argument(
@@ -131,7 +131,8 @@ def main(args):
         except KeyError:
             print("Number does not exist")
     else:
-        for _ in range(args.amount):
+        amount = 1 if args.only_copy else args.amount
+        for _ in range(amount):
             output_passphrase(" ".join(generate_pw(words, args.length)), args)
 
 
