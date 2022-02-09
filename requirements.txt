@@ -12,3 +12,4 @@ begins
 matplotlib
 scipy
 tqdm
+pyperclip
