@@ -8,7 +8,7 @@ try:
 except ModuleNotFoundError:
     pyperclip = PyperclipBackup
 from pathlib import Path
-from random import SystemRandom
+from secrets import SystemRandom
 
 
 r = SystemRandom()
