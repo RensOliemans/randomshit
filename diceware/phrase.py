@@ -34,6 +34,13 @@ parser.add_argument(
     action=argparse.BooleanOptionalAction,
     help="Print the passphrase to stdout",
 )
+parser.add_argument(
+    "-i",
+    "--interactive",
+    default=False,
+    action=argparse.BooleanOptionalAction,
+    help="Interactive mode",
+)
 
 
 def get_file(filename):
@@ -72,9 +79,28 @@ def output_passphrase(passphrase, args):
         pyperclip.copy(passphrase)
 
 
+def interactive(words):
+    passphrase = []
+    while True:
+        number = input("Enter a 5-digit number. Leave empty to quit.\n")
+        if number == "":
+            print(" ".join(passphrase))
+            return
+        try:
+            word = words[int(number)]
+            print(word)
+            passphrase.append(word)
+        except (KeyError, ValueError):
+            print("Invalid number.")
+
+
 def main(args):
     f = get_file(args.filename)
     words = get_words(f)
+    if args.interactive:
+        interactive(words)
+        return
+
     if args.numbers:
         try:
             output_passphrase(" ".join(words[int(n)] for n in args.numbers), args)
