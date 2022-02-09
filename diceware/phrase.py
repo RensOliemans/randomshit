@@ -20,14 +20,21 @@ parser.add_argument(
 parser.add_argument(
     "-l", "--length", default=6, type=int, help="length of the passphrase"
 )
-parser.add_argument(
+output = parser.add_argument_group("output")
+output.add_argument(
+    "-C",
+    dest="only_copy",
+    help="Alias for -c --no-s",
+    action=argparse.BooleanOptionalAction,
+)
+output.add_argument(
     "-c",
     "--copy",
     default=False,
     action=argparse.BooleanOptionalAction,
-    help="Copy the passphrase to the clipboard",
+    help="Copy the passphrase to the clipboard. Disables stdout",
 )
-parser.add_argument(
+output.add_argument(
     "-s",
     "--show",
     default=True,
@@ -73,10 +80,14 @@ def generate_pw(words, length):
 
 
 def output_passphrase(passphrase, args):
-    if args.show:
-        print(passphrase)
+    if args.only_copy:
+        pyperclip.copy(passphrase)
+        return
+
     if args.copy:
         pyperclip.copy(passphrase)
+    if args.show:
+        print(passphrase)
 
 
 def interactive(words):
