@@ -125,13 +125,13 @@ def main(args):
         output_passphrase(" ".join(interactive(words)), args)
         return
 
-    for _ in range(args.amount):
-        if args.numbers:
-            try:
-                output_passphrase(" ".join(words[int(n)] for n in args.numbers), args)
-            except KeyError:
-                print("Number does not exist")
-        else:
+    if args.numbers:
+        try:
+            output_passphrase(" ".join(words[int(n)] for n in args.numbers), args)
+        except KeyError:
+            print("Number does not exist")
+    else:
+        for _ in range(args.amount):
             output_passphrase(" ".join(generate_pw(words, args.length)), args)
 
 
