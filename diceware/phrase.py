@@ -15,7 +15,7 @@ parser.add_argument(
     help="numbers to get diceware words from",
 )
 parser.add_argument(
-    "-f", "--filename", default="composites-nl", help="filename of the diceware list"
+    "-f", "--filename", default="nl-comp", help="filename of the diceware list"
 )
 parser.add_argument(
     "-l", "--length", default=6, type=int, help="length of the passphrase"
@@ -37,7 +37,17 @@ parser.add_argument(
 
 
 def get_file(filename):
-    return Path(__file__).parent.absolute().joinpath(filename)
+    file_in_source_dir = (
+        Path(__file__).parent.absolute().joinpath("wordlists", filename)
+    )
+    if file_in_source_dir.exists():
+        return file_in_source_dir
+
+    file_in_working_dir = Path(filename).absolute()
+    if file_in_working_dir.exists():
+        return file_in_working_dir
+
+    raise ValueError(f"No wordlist found with filename '{filename}'")
 
 
 def get_words(filename):
