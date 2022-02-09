@@ -1,9 +1,22 @@
+import argparse
 from pathlib import Path
 from random import SystemRandom
 
-import begin
-
 r = SystemRandom()
+
+
+parser = argparse.ArgumentParser(description="Create secure passphrases.")
+parser.add_argument(
+    "numbers",
+    metavar="N",
+    type=int,
+    nargs="*",
+    help="numbers to get diceware words from",
+)
+parser.add_argument(
+    "--filename", default="composites-nl", help="filename of the diceware list"
+)
+parser.add_argument("--length", default=6, type=int, help="length of the passphrase")
 
 
 def get_words(filename):
@@ -21,18 +34,17 @@ def generate_pw(words, length):
         x += 1
 
 
-@begin.start(auto_convert=True)
-def main(
-    n: "Get word of specific number" = None,
-    f: "Name of file" = "composites-nl",
-    l: "Length of passphrase" = 6,
-):
-    f = Path(__file__).parent.absolute().joinpath(f)
+def main(args):
+    f = Path(__file__).parent.absolute().joinpath(args.filename)
     words = get_words(f)
-    if n:
+    if args.numbers:
         try:
-            print(words[int(n)])
+            print(" ".join(words[int(n)] for n in args.numbers))
         except KeyError:
             print("Number does not exist")
     else:
-        print(" ".join(generate_pw(words, l)))
+        print(" ".join(generate_pw(words, args.length)))
+
+
+if __name__ == "__main__":
+    main(parser.parse_args())
