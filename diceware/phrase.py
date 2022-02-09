@@ -86,12 +86,9 @@ def get_words(filename):
 
 
 def generate_pw(words, length):
-    x = 0
-    keys = list(words.keys())
-    while x < length:
-        number = r.choice(keys)
-        yield words[number]
-        x += 1
+    values = list(words.values())
+    for _ in range(length):
+        yield r.choice(values)
 
 
 def output_passphrase(passphrase, args):
