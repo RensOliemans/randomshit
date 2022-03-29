@@ -3,6 +3,7 @@ __pycache__/
 .idea/
 *.swp
 tags
+*.log
 
 
 # Created by https://www.gitignore.io/api/rust
