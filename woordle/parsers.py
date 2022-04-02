@@ -1,6 +1,7 @@
 import re
 
 from message import Message
+from errors import NoScoreError
 
 
 BEGIN_RE = r"([0-9]{2}/[0-9]{2}/[0-9]{4}, [0-9]{2}:[0-9]{2}) - ([\s\S]+)"

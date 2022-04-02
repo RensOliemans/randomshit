@@ -1,0 +1,2 @@
+class NoScoreError(Exception):
+    pass

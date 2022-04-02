@@ -3,18 +3,53 @@ import re
 import logging
 from dataclasses import dataclass
 
+from parsers import GameParser
+from errors import NoScoreError
 
-class NoScoreError(Exception):
-    pass
 
-
-@dataclass
 class Message:
     date: datetime.date
     person: str
     game: str
     number: int
     score: float
+
+
+num_re = r"[0-9]+"
+basic_score_re = r"[1-6X]/6"
+
+parsers = [
+    GameParser("Wordle", rf"Wordle (?P<num>{num_re}) (?P<score>{basic_score_re}\*?)\n"),
+    GameParser("Woordle", rf"Woordle (?P<num>{num_re}) (?P<score>{basic_score_re})\n"),
+    GameParser(
+        "Woordle6", rf"Woordle6 (?P<num>{num_re}) (?P<score>{basic_score_re})\n"
+    ),
+    GameParser(
+        "Worldle",
+        r"#Worldle (?P<num>#[0-9]+) (?P<score>[1-6X]/6 (?:\([0-9]{1,3}%\))?(?: 🙈)?)\n",
+    ),
+    GameParser(
+        "Squardle",
+        r"I won Daily Squardle (?P<num>#[0-9]+) with (?P<score>[0-9]+) guess(?:es)? to spare!\n",
+    ),
+    GameParser(
+        "Squardle",
+        r"I solved (?P<score>[0-9]{1,2}/21) squares in Daily Squardle (?P<num>#[0-9]+)\n",
+    ),
+    GameParser(
+        "Crosswordle", r"Daily Crosswordle (?P<num>[0-9]+): (?P<score>[\w ]+) .*\n"
+    ),
+    GameParser("Primel", rf"Primel (?P<num>{num_re}) (?P<score>{basic_score_re})"),
+    GameParser("Letterle", r"Letterle(?P<num> )(?P<score>[0-9]{1,2}/26)"),
+    GameParser(
+        "Not Wordle", rf"Not Wordle (?P<num>{num_re}) (?P<score>{basic_score_re})\n"
+    ),
+    GameParser(
+        "Nerdle",
+        rf"(?:Nerdle|nerdlegame) (?P<num>{num_re}) (?P<score>{basic_score_re})\n",
+    ),
+    GameParser("Vardle", rf"Vardle (?P<num>{num_re}) (?P<score>[1-8X]/8)\n"),
+]
 
 
 def main():
@@ -89,100 +124,16 @@ def parse_messages(lines):
             continue
 
 
-def parse_message(line):
-    # Method that takes a line and returns a Message.
-    # Throws NoScoreError if the line doesn't contain a score.
-    if ":" not in line:
-        raise NoScoreError()
+def parse_message(message):
+    """
+    Method that takes a message from a chat and returns a Message object.
+    Throws NoScoreError if the message doesn't contain a score.
+    """
+    for parser in parsers:
+        if parser.can_parse(message):
+            return parser.parse(message)
 
-    date, rest = parse_begin(line)
-    person, rest = parse_person(rest)
-    game, number, score = parse_game(rest)
-    return Message(date, person, game, number, score)
-
-
-def parse_begin(line):
-    begin_re = r"([0-9]{2}/[0-9]{2}/[0-9]{4}, [0-9]{2}:[0-9]{2}) - ([\s\S]+)"
-    m = re.match(begin_re, line)
-    if not m:
-        raise NoScoreError()
-
-    return m.groups()
-
-
-def parse_person(line):
-    person_re = r"([\w <]+): ([\s\S]+)"
-
-    m = re.match(person_re, line)
-    if not m:
-        raise NoScoreError()
-
-    return m.groups()
-
-
-def parse_game(line):
-    num_re = r"[0-9]+"
-    basic_score_re = r"[1-6X]/6"
-    wordle_re = (
-        "Wordle",
-        rf"Wordle (?P<num>{num_re}) (?P<score>{basic_score_re}\*?)\n",
-    )
-    woordle_re = (
-        "Woordle",
-        rf"Woordle (?P<num>{num_re}) (?P<score>{basic_score_re})\n",
-    )
-    woordle6_re = (
-        "Woordle6",
-        rf"Woordle6 (?P<num>{num_re}) (?P<score>{basic_score_re})\n",
-    )
-    worldle_re = (
-        "Worldle",
-        r"#Worldle (?P<num>#[0-9]+) (?P<score>[1-6X]/6 (?:\([0-9]{1,3}%\))?(?: 🙈)?)\n",
-    )
-    squardle_win_re = (
-        "Squardle",
-        r"I won Daily Squardle (?P<num>#[0-9]+) with (?P<score>[0-9]+) guess(?:es)? to spare!\n",
-    )
-    squardle_loss_re = (
-        "Squardle",
-        r"I solved (?P<score>[0-9]{1,2}/21) squares in Daily Squardle (?P<num>#[0-9]+)\n",
-    )
-    cross_re = (
-        "Crosswordle",
-        r"Daily Crosswordle (?P<num>[0-9]+): (?P<score>[\w ]+) .*\n",
-    )
-    primel_re = ("Primel", rf"Primel (?P<num>{num_re}) (?P<score>{basic_score_re})")
-    letterle_re = ("Letterle", r"Letterle(?P<num> )(?P<score>[0-9]{1,2}/26)")
-    not_wordle_re = (
-        "Not Wordle",
-        rf"Not Wordle (?P<num>{num_re}) (?P<score>{basic_score_re})\n",
-    )
-    nerdle_re = (
-        "Nerdle",
-        rf"(?:Nerdle|nerdlegame) (?P<num>{num_re}) (?P<score>{basic_score_re})\n",
-    )
-    vardle_re = ("Vardle", rf"Vardle (?P<num>{num_re}) (?P<score>[1-8X]/8)\n")
-
-    for r in [
-        wordle_re,
-        woordle_re,
-        woordle6_re,
-        worldle_re,
-        squardle_win_re,
-        squardle_loss_re,
-        cross_re,
-        primel_re,
-        letterle_re,
-        not_wordle_re,
-        nerdle_re,
-        vardle_re,
-    ]:
-        m = re.match(r[1], line)
-        if not m:
-            continue
-        return [r[0], m.group("num"), m.group("score")]
-
-    logging.info("Couldn't parse %s", line)
+    logging.info("Couldn't parse %s", message)
     raise NoScoreError()
 
 
