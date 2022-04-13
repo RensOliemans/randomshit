@@ -32,6 +32,7 @@ class GameParser:
             return False
 
     def parse(self, message: str) -> Message:
+        print(f"MSG: {message}\n\n")
         date, rest = self._parse_begin(message)
         person, rest = self._parse_person(rest)
         number, score = self._parse_game(rest)
@@ -57,3 +58,11 @@ class GameParser:
             raise NoScoreError()
 
         return m.group("num"), m.group("score")
+
+
+def is_new_message_line(line):
+    """
+    Determines if the message constitutes the first line of a message or not,
+    in which case it would be a 'body' message.
+    """
+    return bool(re.match(BEGIN_RE, line))

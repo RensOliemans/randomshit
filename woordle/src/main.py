@@ -1,10 +1,14 @@
+import os
 import datetime
 import re
 import logging
 from dataclasses import dataclass
 
-from parsers import GameParser
+from parsers import GameParser, is_new_message_line
 from errors import NoScoreError
+
+LOG_FILE = "out.log"
+INPUT_FILE = os.path.join("..", "data", "chat.txt")
 
 
 class Message:
@@ -52,8 +56,8 @@ parsers = [
 ]
 
 
-def main():
-    with open("chat.txt") as f:
+def main(filename):
+    with open(filename) as f:
         lines = f.readlines()
 
     messages = list(parse_messages(lines))
@@ -115,13 +119,30 @@ fallbacks = {
 
 
 def parse_messages(lines):
-    while lines:
-        line = lines.pop(0)
+    messages = list(group(iter(lines)))
+
+    for message in messages:
+        message = "\n".join(message)
         try:
-            yield parse_message(line)
+            yield parse_message(message)
         except NoScoreError:
-            logging.info("Message %s was not a scoring message, skipping.", line)
+            logging.info("Message %s was not a scoring message, skipping.", message)
             continue
+
+
+def group(lines):
+    while lines:
+        line = next(lines)
+        message = [line]
+        try:
+            line = next(lines)
+            while not is_new_message_line(line):
+                message.append(line)
+                line = next(lines)
+        except StopIteration:
+            yield message
+            break
+        yield message
 
 
 def parse_message(message):
@@ -139,6 +160,6 @@ def parse_message(message):
 
 if __name__ == "__main__":
     logging.basicConfig(
-        filename="out.log", filemode="w", encoding="utf-8", level=logging.DEBUG
+        filename=LOG_FILE, filemode="w", encoding="utf-8", level=logging.DEBUG
     )
-    main()
+    main(INPUT_FILE)
